@@ -1,0 +1,19 @@
+{
+  "current_league": "",
+  "current_trophy_in_use": "",
+  "trophies": {
+
+  },
+  "leagues": {
+    "kanto": [
+      "betterbadges:boulder",
+      "betterbadges:cascade",
+      "betterbadges:thunder",
+      "betterbadges:rainbow",
+      "none",
+      "betterbadges:boulder",
+      "betterbadges:boulder",
+      "betterbadges:boulder"
+    ]
+  }
+}
