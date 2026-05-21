@@ -1,17 +1,14 @@
 package com.lay.betterbadges.item;
 
 import com.lay.betterbadges.BetterBadges;
-import com.lay.betterbadges.component.ModDataComponents;
 import com.lay.betterbadges.item.badges.BasicBadge;
 import com.lay.betterbadges.item.cases.BasicCase;
-import com.lay.betterbadges.league.LeagueRegistry;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 
 
 public class ModItems {
