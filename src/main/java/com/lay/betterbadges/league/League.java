@@ -1,25 +1,14 @@
 package com.lay.betterbadges.league;
 
-import com.google.common.collect.BiMap;
 import com.lay.betterbadges.BetterBadges;
-import com.lay.betterbadges.component.custom.BadgeContents;
-import com.lay.betterbadges.component.custom.LeagueInventoryContents;
+import com.lay.betterbadges.inventory.BadgeContainer;
 import com.mojang.serialization.Codec;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public record League(String leagueName, List<Item> badges, int minmax) {
@@ -28,14 +17,17 @@ public record League(String leagueName, List<Item> badges, int minmax) {
             League::getLeague,
             from -> from.leagueName
     );
-    public static final StreamCodec<RegistryFriendlyByteBuf, BadgeContents> STREAM_CODEC;
 
     public static final League NONE = new League("none", new ArrayList<>(), 0);
 
-    private static final HashMap<String, League> leagues = new HashMap<>();
+    private static final Map<String, League> leagues = new HashMap<>();
 
     private static void addLeague(League league){
         League.leagues.put(league.leagueName, league);
+    }
+
+    public static Map<String, League> getAllLeagues(){
+        return new HashMap<>(League.leagues);
     }
 
     public static League getLeague(String leagueName){
@@ -45,7 +37,7 @@ public record League(String leagueName, List<Item> badges, int minmax) {
     public static class Builder {
         private String leagueName;
         private int minmax;
-        List<Item> badges;
+        List<Item> badges = new ArrayList<>();
 
         public static Builder create(String leagueName, int minmax){
             Builder builder = new Builder();
@@ -55,7 +47,7 @@ public record League(String leagueName, List<Item> badges, int minmax) {
         }
 
         public static Builder create(String leagueName){
-            return Builder.create(leagueName, BadgeContents.DEFAULT_SIZE);
+            return Builder.create(leagueName, BadgeContainer.DEFAULT_SIZE);
         }
 
         public Builder addBadge(Item badge){

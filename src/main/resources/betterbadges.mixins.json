@@ -3,7 +3,7 @@
 	"package": "com.lay.betterbadges.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"WItemSlotMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

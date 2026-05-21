@@ -2,71 +2,70 @@ package com.lay.betterbadges.component.custom;
 
 import com.lay.betterbadges.league.League;
 import com.mojang.serialization.Codec;
-import net.minecraft.core.NonNullList;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LeagueInventoryContents {
 
-    public static final Codec<LeagueInventoryContents> CODEC = Codec.unboundedMap(League.CODEC, BadgeContents.CODEC).xmap(
+    public static final Codec<LeagueInventoryContents> CODEC = Codec.unboundedMap(League.CODEC, CompoundTag.CODEC).xmap(
             LeagueInventoryContents::new,
-            from -> from.leagueBadgeContents
+            from -> from.leagueBadges
     );
 
-    final Map<League, BadgeContents> leagueBadgeContents;
+    final Map<League, CompoundTag> leagueBadges;
 
-    LeagueInventoryContents(Map<League, BadgeContents> badgeContents){
-        this.leagueBadgeContents = badgeContents;
+    public LeagueInventoryContents(Map<League, CompoundTag> badgeContents){
+        this.leagueBadges = badgeContents;
     }
 
     public int amountOfLeagues(){
-        return this.leagueBadgeContents.size();
+        return this.leagueBadges.size();
     }
 
-    public Map<League, BadgeContents> getLeagueBadgeContents() {
-        return this.leagueBadgeContents;
+    public Map<League, CompoundTag> getLeagueBadgeContents() {
+        return this.leagueBadges;
     }
 
     public boolean hasLeague(League league){
-        return this.leagueBadgeContents.containsKey(league);
+        return this.leagueBadges.containsKey(league);
     }
 
-    public BadgeContents getBadgeContentsOfLeague(League league){
-        return this.leagueBadgeContents.getOrDefault(league, new BadgeContents(NonNullList.withSize(0, ItemStack.EMPTY)));
+    public CompoundTag getBadgeContentsOfLeague(League league){
+        return this.leagueBadges.get(league);
     }
 
     public String toString() {
-        return "LeagueInventoryContents@" + this.leagueBadgeContents;
+        return "LeagueInventoryContents@" + this.leagueBadges;
     }
 
     public static class Mutable {
 
-        private Map<League, BadgeContents> leagueBadgeContents;
+        private Map<League, CompoundTag> leagueBadges;
 
-        Mutable(Map<League, BadgeContents> leagueBadgeContents){
-            this.leagueBadgeContents = new HashMap<>(leagueBadgeContents);
+        Mutable(LeagueInventoryContents original){
+            this.leagueBadges = new HashMap<>(original.leagueBadges);
         }
 
-        public BadgeContents.Mutable getMutatedBadgeContents(League league){
-            return new BadgeContents.Mutable(this.leagueBadgeContents.getOrDefault(league, new BadgeContents(NonNullList.create())));
+        public CompoundTag getLeagueBadgeContents(League league){
+            return this.leagueBadges.get(league);
         }
 
-        public Map<League, BadgeContents> getAllLeagueBadgeContents(){
-            return this.leagueBadgeContents;
+        public void setLeagueBadgeContents(League league, CompoundTag tag){
+            this.leagueBadges.put(league, tag);
         }
 
-        public void setAllLeagueBadgeContents(Map<League, BadgeContents> badgeContents){
-            this.leagueBadgeContents = badgeContents;
+        public Map<League, CompoundTag> getAllLeagueBadgeContents(){
+            return this.leagueBadges;
         }
 
-        public void setMutatedBadgeContents(League league, BadgeContents.Mutable badgeContents){
-            this.leagueBadgeContents.put(league, badgeContents.toImmutable());
+        public void setAllLeagueBadgeContents(Map<League, CompoundTag> badgeContents){
+            this.leagueBadges = badgeContents;
         }
 
         public LeagueInventoryContents getImmutable(){
-            return new LeagueInventoryContents(this.leagueBadgeContents);
+            return new LeagueInventoryContents(this.leagueBadges);
         }
     }
 }

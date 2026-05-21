@@ -3,6 +3,8 @@ package com.lay.betterbadges;
 import com.lay.betterbadges.component.ModDataComponents;
 import com.lay.betterbadges.item.ModCreativeTab;
 import com.lay.betterbadges.item.ModItems;
+import com.lay.betterbadges.league.LeagueRegistry;
+import com.lay.betterbadges.screen.ModScreenHandler;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -18,5 +20,7 @@ public class BetterBadges implements ModInitializer {
 		ModDataComponents.registerDataComponents();
 		ModCreativeTab.registerItemGroups();
 		ModItems.registerModItems();
+		LeagueRegistry.registerLeagues();
+		ModScreenHandler.registerScreenHandlers();
 	}
 }
