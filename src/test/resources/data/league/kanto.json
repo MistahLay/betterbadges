@@ -1,0 +1,85 @@
+{
+  "league": "kanto",
+  "badges": [
+    {
+      "id": "betterbadges:boulder_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 46,
+      "y": 74
+    },
+    {
+      "id": "betterbadges:cascade_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 74,
+      "y": 74
+    },
+    {
+      "id": "betterbadges:thunder_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 98,
+      "y": 74
+    },
+    {
+      "id": "betterbadges:rainbow_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 126,
+      "y": 74
+    },
+    {
+      "id": "betterbadges:soul_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 38,
+      "y": 97
+    },
+    {
+      "id": "betterbadges:marsh_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 70,
+      "y": 97
+    },
+    {
+      "id": "betterbadges:volcano_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 102,
+      "y": 97
+    },
+    {
+      "id": "betterbadges:earth_badge",
+      "boosts": {
+        "player": [],
+        "spawning": [],
+        "catching": []
+      },
+      "x": 134,
+      "y": 97
+    }
+  ]
+}

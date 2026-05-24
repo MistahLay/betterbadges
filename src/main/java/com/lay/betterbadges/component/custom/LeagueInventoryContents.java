@@ -1,8 +1,14 @@
 package com.lay.betterbadges.component.custom;
 
+import com.lay.betterbadges.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.league.League;
+import com.lay.betterbadges.registry.ModRegistries;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +44,12 @@ public class LeagueInventoryContents {
 
     public String toString() {
         return "LeagueInventoryContents@" + this.leagueBadges;
+    }
+
+    public static LeagueInventoryContents createEmpty(){
+        Map<League, CompoundTag> inventories = new HashMap<>();
+
+        return new LeagueInventoryContents(inventories);
     }
 
     public static class Mutable {

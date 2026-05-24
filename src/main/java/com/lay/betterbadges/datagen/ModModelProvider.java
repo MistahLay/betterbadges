@@ -40,6 +40,15 @@ public class ModModelProvider extends FabricModelProvider  {
         registerBadgeModel(ModItems.VOLCANO_BADGE, itemModelGenerator);
         registerBadgeModel(ModItems.EARTH_BADGE, itemModelGenerator);
 
+        registerBadgeModel(ModItems.ZEPHYR_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.HIVE_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.PLAIN_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.FOG_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.STORM_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.MINERAL_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.GLACIER_BADGE, itemModelGenerator);
+        registerBadgeModel(ModItems.RISING_BADGE, itemModelGenerator);
+
         registerUniquePathFlatModel(ModItems.BADGE_CASE, itemModelGenerator, BADGE_CASE_PREFIX_PATH);
     }
 

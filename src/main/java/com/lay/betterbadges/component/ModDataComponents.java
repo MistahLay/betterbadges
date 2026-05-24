@@ -14,7 +14,10 @@ import java.util.function.UnaryOperator;
 public class ModDataComponents {
 
     public static final DataComponentType<String> ITEM_OWNER = register("item_owner", uuidBuilder -> uuidBuilder.persistent(Codec.STRING));
+    public static final DataComponentType<String> CASE_BASE = register("case_base", base -> base.persistent(Codec.STRING));
+    public static final DataComponentType<String> CASE_COVER = register("case_cover", cover -> cover.persistent(Codec.STRING));
     public static final DataComponentType<League> CURRENT_LEAGUE = register("current_league", league -> league.persistent(League.CODEC));
+
     public static final DataComponentType<LeagueInventoryContents> LEAGUE_INVENTORY_CONTENTS = register("league_inventory_contents", builder -> builder.persistent(LeagueInventoryContents.CODEC));
 
     private static <T>DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator){

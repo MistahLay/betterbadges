@@ -1,7 +1,8 @@
 package com.lay.betterbadges.screen;
 
 import com.lay.betterbadges.BetterBadges;
-import com.lay.betterbadges.screen.badgecase.BadgeCaseGui;
+//import com.lay.betterbadges.screen.badgecase.BadgeCaseGui;
+import com.lay.betterbadges.screen.badgecase.BadgeCaseScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,12 +14,12 @@ import net.minecraft.world.inventory.MenuType;
 
 public class ModScreenHandler {
 
-    public static final MenuType<BadgeCaseGui> BADGE_CASE_GUI = Registry.register(
+    public static final MenuType<BadgeCaseScreenHandler> BADGE_CASE_GUI = Registry.register(
             BuiltInRegistries.MENU,
             ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "badge_case_gui"),
             new ExtendedScreenHandlerType<>((syncId, inventory, slot) -> {
                 SlotAccess handStack = SlotAccess.forEquipmentSlot(inventory.player, slot);
-                return new BadgeCaseGui(syncId, inventory, handStack);
+                return new BadgeCaseScreenHandler(syncId, inventory, handStack);
             }, ByteBufCodecs.fromCodec(EquipmentSlot.CODEC).cast()));
 
 

@@ -16,6 +16,10 @@ repositories {
 		name = "AlexIIL"
 		url = "https://staging.alexiil.uk/maven/"
 	}
+
+	maven {
+		url 'https://maven.wispforest.io'
+	}
 }
 
 fabricApi {
@@ -33,9 +37,15 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	dependencies {
-		modImplementation include("io.github.cottonmc:LibGui:11.1.0+1.21")
-	}
+	modImplementation include("io.github.cottonmc:LibGui:11.1.0+1.21")
+
+	modImplementation "io.wispforest:owo-lib:${project.owo_version}"
+	// only if you plan to use owo-config
+	annotationProcessor "io.wispforest:owo-lib:${project.owo_version}"
+
+	// include this if you don't want force your users to install owo
+	// sentinel will warn them and give the option to download it automatically
+	include "io.wispforest:owo-sentinel:${project.owo_version}"
 
 	testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
 }

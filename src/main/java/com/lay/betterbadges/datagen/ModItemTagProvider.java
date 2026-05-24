@@ -17,8 +17,6 @@ public class ModItemTagProvider extends FabricTagProvider<Item> {
     public static final TagKey<Item> BADGES = createTag("badges");
     public static final TagKey<Item> BADGE_CASES = createTag("badge_cases");
 
-    public static final TagKey<Item> KANTO_BADGES = createRegionTag("kanto_badges");
-
     public ModItemTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.ITEM, registriesFuture);
     }
@@ -31,21 +29,30 @@ public class ModItemTagProvider extends FabricTagProvider<Item> {
         return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "regions/" + tagName));
     }
 
-    private void addKantoBadge(Item item){
+    private void addBadge(Item item){
         getOrCreateTagBuilder(BADGES).add(item);
-        getOrCreateTagBuilder(KANTO_BADGES).add(item);
     }
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        addKantoBadge(ModItems.BOULDER_BADGE);
-        addKantoBadge(ModItems.CASCADE_BADGE);
-        addKantoBadge(ModItems.THUNDER_BADGE);
-        addKantoBadge(ModItems.RAINBOW_BADGE);
-        addKantoBadge(ModItems.SOUL_BADGE);
-        addKantoBadge(ModItems.MARSH_BADGE);
-        addKantoBadge(ModItems.VOLCANO_BADGE);
-        addKantoBadge(ModItems.EARTH_BADGE);
+        addBadge(ModItems.BOULDER_BADGE);
+        addBadge(ModItems.CASCADE_BADGE);
+        addBadge(ModItems.THUNDER_BADGE);
+        addBadge(ModItems.RAINBOW_BADGE);
+        addBadge(ModItems.SOUL_BADGE);
+        addBadge(ModItems.MARSH_BADGE);
+        addBadge(ModItems.VOLCANO_BADGE);
+        addBadge(ModItems.EARTH_BADGE);
+
+        addBadge(ModItems.ZEPHYR_BADGE);
+        addBadge(ModItems.HIVE_BADGE);
+        addBadge(ModItems.PLAIN_BADGE);
+        addBadge(ModItems.FOG_BADGE);
+        addBadge(ModItems.STORM_BADGE);
+        addBadge(ModItems.MINERAL_BADGE);
+        addBadge(ModItems.GLACIER_BADGE);
+        addBadge(ModItems.RISING_BADGE);
+
         getOrCreateTagBuilder(BADGE_CASES)
                 .add(ModItems.BADGE_CASE);
     }
