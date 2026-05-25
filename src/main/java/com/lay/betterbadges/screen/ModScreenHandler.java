@@ -14,7 +14,7 @@ import net.minecraft.world.inventory.MenuType;
 
 public class ModScreenHandler {
 
-    public static final MenuType<BadgeCaseScreenHandler> BADGE_CASE_GUI = Registry.register(
+    public static final MenuType<BadgeCaseScreenHandler> BADGE_CASE_SCREEN_HANDLER = Registry.register(
             BuiltInRegistries.MENU,
             ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "badge_case_gui"),
             new ExtendedScreenHandlerType<>((syncId, inventory, slot) -> {

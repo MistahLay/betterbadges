@@ -22,15 +22,18 @@ public class League {
                 League league = ModRegistries.LEAGUE.get(ResourceLocation.parse(to));
                 return league == null ? League.EMPTY : league;
             },
-            from -> from.id
+            from -> from.id.toString()
     );
 
     public static final League EMPTY = Builder.create("empty").addBadge(new Badge(Items.AIR, 0, 0, 0)).build();
 
-    private final String id;
+    /**
+     * betterbadges:name_league
+     */
+    private final ResourceLocation id;
     private final List<Badge> badges;
 
-    private League(String id, List<Badge> badges){
+    private League(ResourceLocation id, List<Badge> badges){
         this.id = id;
         this.badges = badges;
     }
@@ -41,6 +44,10 @@ public class League {
 
     public String toString(){
         return "League@" + this.id + this.badges;
+    }
+
+    public ResourceLocation getId(){
+        return this.id;
     }
 
     public boolean canInsertBadgeAtSlot(Item item, int slot){
@@ -120,13 +127,14 @@ public class League {
             if(count == 0){
                 BetterBadges.LOGGER.error("League: {} has no badges added", this.id);
             }
-            League league = new League(this.id, this.badges);
-            Registry.register(ModRegistries.LEAGUE, this.createPath(), league);
+            ResourceLocation id = createPath();
+            League league = new League(id, this.badges);
+            Registry.register(ModRegistries.LEAGUE, id, league);
             return league;
         }
 
         private ResourceLocation createPath(){
-            return ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, this.id);
+            return ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, this.id + "_league");
         }
     }
 

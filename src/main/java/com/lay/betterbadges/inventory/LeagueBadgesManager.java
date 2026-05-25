@@ -1,5 +1,6 @@
 package com.lay.betterbadges.inventory;
 
+import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.component.ModDataComponents;
 import com.lay.betterbadges.component.custom.LeagueInventoryContents;
 import com.lay.betterbadges.item.ModItems;
@@ -27,25 +28,25 @@ import java.util.Map;
  */
 public class LeagueBadgesManager {
 
-    private final ItemStack activeCase;
     private final Map<League, SimpleContainer> inventories;
 
-    private LeagueBadgesManager(ItemStack activeCase, Map<League, SimpleContainer> inventories){
-        this.activeCase = activeCase;
+    private LeagueBadgesManager(Map<League, SimpleContainer> inventories){
         this.inventories = inventories;
     }
 
-    public static LeagueBadgesManager createEmpty(ItemStack badgeCase){
+    public static LeagueBadgesManager createEmpty(){
         Map<League, SimpleContainer> inventories = new HashMap<>();
         for (League league : ModRegistries.LEAGUE){
+            if(league == League.EMPTY) continue;
+            BetterBadges.LOGGER.info("From Empty: {}", league.toString());
             inventories.put(league, new SimpleContainer(league.getTotalBadges()));
         }
-        return new LeagueBadgesManager(badgeCase, inventories);
+        return new LeagueBadgesManager(inventories);
     }
 
     public static LeagueBadgesManager createFromItem(ItemStack itemStack, RegistryAccess registryAccess){
         LeagueInventoryContents contents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS);
-        if(contents == null) return createEmpty(itemStack);
+        if(contents == null) return createEmpty();
 
         Map<League, CompoundTag> inventoryContents = contents.getLeagueBadgeContents();
 
@@ -66,8 +67,7 @@ public class LeagueBadgesManager {
 
             inventories.put(league, leagueInventory);
         });
-
-        return new LeagueBadgesManager(itemStack, inventories);
+        return new LeagueBadgesManager(inventories);
     }
 
     // Serialization part
@@ -79,10 +79,6 @@ public class LeagueBadgesManager {
             serializedResult.put(league, tag);
         }
         return new LeagueInventoryContents(serializedResult);
-    }
-
-    public ItemStack getActiveCase(){
-        return this.activeCase;
     }
 
     public @NotNull SimpleContainer getBadgeContainer(League league){

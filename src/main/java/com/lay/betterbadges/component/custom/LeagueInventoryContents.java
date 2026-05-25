@@ -1,5 +1,6 @@
 package com.lay.betterbadges.component.custom;
 
+import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.league.League;
 import com.lay.betterbadges.registry.ModRegistries;

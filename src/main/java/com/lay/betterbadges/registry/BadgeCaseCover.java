@@ -14,9 +14,9 @@ public class BadgeCaseCover {
     public static void registerFromConfig(){
         for (String cover : ModConfigs.DESIGN_CONFIG.cover()){
             Registry.register(
-                    ModRegistries.BADGE_CASE_BASE,
-                    ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "base/" + cover),
-                    new BadgeCaseBase(cover, createTranslation(cover), createTexturePath(cover))
+                    ModRegistries.BADGE_CASE_COVER,
+                    ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "cover/" + cover),
+                    new BadgeCaseCover(cover, createTranslation(cover), createTexturePath(cover))
             );
         }
     }

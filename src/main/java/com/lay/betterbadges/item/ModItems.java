@@ -45,9 +45,6 @@ public class ModItems {
                     .rarity(Rarity.EPIC)
                     .stacksTo(1)
                     .fireResistant()
-                    .component(ModDataComponents.LEAGUE_INVENTORY_CONTENTS, LeagueInventoryContents.createEmpty())
-                    .component(ModDataComponents.CURRENT_LEAGUE, League.EMPTY)
-                    .component(ModDataComponents.ITEM_OWNER, "none")
     ));
 
     private static League getInitializedLeague(){
