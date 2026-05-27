@@ -45,10 +45,10 @@ public class LeagueBadgesManager {
     }
 
     public static LeagueBadgesManager createFromItem(ItemStack itemStack, RegistryAccess registryAccess){
-        LeagueInventoryContents contents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS);
-        if(contents == null) return createEmpty();
 
-        Map<League, CompoundTag> inventoryContents = contents.getLeagueBadgeContents();
+        Map<League, CompoundTag> inventoryContents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS);
+
+        if(inventoryContents == null) return createEmpty();
 
         Map<League, SimpleContainer> inventories = new HashMap<>();
 
@@ -71,14 +71,14 @@ public class LeagueBadgesManager {
     }
 
     // Serialization part
-    public LeagueInventoryContents getLeagueInventoryContents(RegistryAccess registryAccess){
+    public Map<League, CompoundTag> getLeagueInventoryContents(RegistryAccess registryAccess){
         Map<League, CompoundTag> serializedResult = new HashMap<>();
         for (League league : this.inventories.keySet()){
             CompoundTag tag = new CompoundTag();
             ContainerHelper.saveAllItems(tag, this.inventories.get(league).items, registryAccess);
             serializedResult.put(league, tag);
         }
-        return new LeagueInventoryContents(serializedResult);
+        return serializedResult;
     }
 
     public @NotNull SimpleContainer getBadgeContainer(League league){

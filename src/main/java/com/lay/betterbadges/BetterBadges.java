@@ -7,6 +7,7 @@ import com.lay.betterbadges.item.ModCreativeTab;
 import com.lay.betterbadges.item.ModItems;
 import com.lay.betterbadges.league.Badge;
 import com.lay.betterbadges.league.ModLeagues;
+import com.lay.betterbadges.network.ModNetworkChannel;
 import com.lay.betterbadges.registry.BadgeCaseBase;
 import com.lay.betterbadges.registry.BadgeCaseCover;
 import com.lay.betterbadges.registry.ModRegistries;
@@ -46,6 +47,9 @@ public class BetterBadges implements ModInitializer {
 
 		// Screens, duh
 		ModScreenHandler.registerScreenHandlers();
+
+		// Networking
+		ModNetworkChannel.initialize();
 	}
 
 }

@@ -65,7 +65,7 @@ public class League {
     }
 
     public List<Badge> getBadges(){
-        return this.badges;
+        return new ArrayList<>(this.badges);
     }
 
     public int getTotalBadges(){

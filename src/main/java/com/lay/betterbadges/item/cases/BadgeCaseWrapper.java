@@ -26,8 +26,11 @@ public class BadgeCaseWrapper {
     }
 
     public League getCurrentLeague() {
-        BetterBadges.LOGGER.info("{}", this.badgeCase.get(ModDataComponents.CURRENT_LEAGUE).toString());
         return this.badgeCase.get(ModDataComponents.CURRENT_LEAGUE);
+    }
+
+    public void setCurrentLeague(League league){
+        this.badgeCase.set(ModDataComponents.CURRENT_LEAGUE, league);
     }
 
     public String getItemOwner(){

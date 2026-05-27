@@ -7,8 +7,10 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.Map;
 import java.util.function.UnaryOperator;
 
 public class ModDataComponents {
@@ -18,8 +20,9 @@ public class ModDataComponents {
     public static final DataComponentType<String> CASE_COVER = register("case_cover", cover -> cover.persistent(Codec.STRING));
     public static final DataComponentType<League> CURRENT_LEAGUE = register("current_league", league -> league.persistent(League.CODEC));
 
-    public static final DataComponentType<LeagueInventoryContents> LEAGUE_INVENTORY_CONTENTS = register("league_inventory_contents", builder -> builder.persistent(LeagueInventoryContents.CODEC));
+    public static final DataComponentType<Map<League, CompoundTag>> LEAGUE_INVENTORY_CONTENTS = register("league_inventory_contents", builder -> builder.persistent(Codec.unboundedMap(League.CODEC, CompoundTag.CODEC)));
 
+    // TODO: To avoid losing data whenever there's a config change, try and change the Map's key to a string rather than the LEAGUE
     private static <T>DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator){
         return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, name), builderUnaryOperator.apply(DataComponentType.builder()).build());
     }

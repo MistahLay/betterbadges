@@ -15,7 +15,6 @@ public class LeaguesConfigModel {
 
     @Expanded
     @RestartRequired
-    @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     public List<League> leagues = new ArrayList<>();
 
     public LeaguesConfigModel(){

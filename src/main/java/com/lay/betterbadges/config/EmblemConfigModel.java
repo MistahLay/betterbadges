@@ -14,7 +14,6 @@ public class EmblemConfigModel{
 
     @Expanded
     @RestartRequired
-    @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     public List<Emblem> emblems = new ArrayList<>();
 
     public EmblemConfigModel(){

@@ -3,6 +3,7 @@ package com.lay.betterbadges.item.cases;
 import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.component.ModDataComponents;
 import com.lay.betterbadges.league.League;
+import com.lay.betterbadges.registry.ModRegistries;
 import com.lay.betterbadges.screen.badgecase.BadgeCaseScreenHandler;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
@@ -41,7 +42,8 @@ public class BasicCase extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, InteractionHand interactionHand) {
-        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+        if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
+        if(ModRegistries.LEAGUE.size() == 1) return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
 
         EquipmentSlot slot = switch (interactionHand) {
             case MAIN_HAND -> EquipmentSlot.MAINHAND;
