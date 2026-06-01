@@ -1,37 +1,53 @@
 package com.lay.betterbadges.league;
 
+import com.lay.betterbadges.emblem.BoostTypes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
+// Probably a bad idea making this hard coded, oh well
 public class Badge {
-
-    private final Item badgeItem;
-
-    private final int posX;
-    private final int posY;
-
+    private final Item item;
+    private final int x;
+    private final int y;
     private final int slot;
+    private final Map<BoostTypes, BadgeAttribute> boosts;
 
-    public Badge(Item item, int x, int y, int slot){
-        this.badgeItem = item;
-        this.posX = x;
-        this.posY = y;
+    public static final Badge EMPTY = new Badge(Items.AIR, 0, 0, 0, new HashMap<>());
+
+    public Badge(Item item, int x, int y, int slot, Map<BoostTypes, BadgeAttribute> boosts) {
+        this.item = item;
+        this.x = x;
+        this.y = y;
         this.slot = slot;
+        this.boosts = boosts;
     }
 
-    public Item getItem(){
-        return this.badgeItem;
+    @Nullable
+    public BadgeAttribute getAttribute(BoostTypes type){
+        return this.boosts.get(type);
     }
 
-    public int getX(){
-        return this.posX;
+    public boolean containsBoost(BoostTypes type){
+        return this.boosts.containsKey(type);
     }
 
-    public int getY(){
-        return this.posY;
+    public int getX() {
+        return x;
     }
 
-    public int getSlot(){
-        return this.slot;
+    public int getY() {
+        return y;
     }
 
+    public int getSlot() {
+        return slot;
+    }
+
+    public Item getItem() {
+        return item;
+    }
 }

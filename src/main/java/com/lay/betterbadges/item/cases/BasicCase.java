@@ -2,6 +2,8 @@ package com.lay.betterbadges.item.cases;
 
 import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.component.ModDataComponents;
+import com.lay.betterbadges.emblem.Emblem;
+import com.lay.betterbadges.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.league.League;
 import com.lay.betterbadges.registry.ModRegistries;
 import com.lay.betterbadges.screen.badgecase.BadgeCaseScreenHandler;
@@ -20,14 +22,15 @@ import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class BasicCase extends Item {
 
@@ -69,27 +72,63 @@ public class BasicCase extends Item {
                     );
                 }
             }
-        } else if (!badgeCase.hasActiveLeague()) {
-            serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("actionbar.custom.invalid-case")));
         } else {
-            serverPlayer.openMenu(new ExtendedScreenHandlerFactory<EquipmentSlot>() {
-                @Override
-                public EquipmentSlot getScreenOpeningData(ServerPlayer player) {
-                    return slot;
+            if (slot == EquipmentSlot.MAINHAND) {
+                ItemStack offHand = player.getOffhandItem();
+                BetterBadges.LOGGER.info("in main hand");
+                if (offHand != ItemStack.EMPTY) {
+                    Emblem emblem = this.canConsumeEmblem(badgeCase, offHand, player);
+                    BetterBadges.LOGGER.info("trying to consume");
+                    if (emblem != null) {
+                        BetterBadges.LOGGER.info("got to consume");
+                        offHand.shrink(1);
+                        EmblemBadgesManager emblemManager = badgeCase.getEmblemInventoryManager();
+                        emblemManager.addEmblem(emblem);
+                        badgeCase.setEmblemInventoryManager(emblemManager);
+                        return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+                    }
                 }
+            }
+            if (!badgeCase.hasActiveLeague()) {
+                serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("actionbar.custom.invalid-case")));
+            } else {
+                serverPlayer.openMenu(new ExtendedScreenHandlerFactory<EquipmentSlot>() {
+                    @Override
+                    public EquipmentSlot getScreenOpeningData(ServerPlayer player) {
+                        return slot;
+                    }
 
-                @Override
-                public @NotNull Component getDisplayName() {
-                    return stack.getDisplayName();
-                }
+                    @Override
+                    public @NotNull Component getDisplayName() {
+                        return stack.getDisplayName();
+                    }
 
-                @Override
-                public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-                    return new BadgeCaseScreenHandler(i, player.getInventory(), SlotAccess.forEquipmentSlot(player, slot));
-                }
-            });
+                    @Override
+                    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+                        return new BadgeCaseScreenHandler(i, player.getInventory(), SlotAccess.forEquipmentSlot(player, slot));
+                    }
+                });
+            }
         }
         return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+    }
+
+    @Nullable
+    private Emblem canConsumeEmblem(BadgeCaseWrapper badgeCase, ItemStack emblemItem, Player player){
+        Emblem emblem = Emblem.getEmblemFromItem(emblemItem.getItem());
+        EmblemBadgesManager emblemBadgesManager = badgeCase.getEmblemInventoryManager();
+        if (emblemBadgesManager == null) {
+            emblemBadgesManager = new EmblemBadgesManager(new HashMap<>());
+            badgeCase.setEmblemInventoryManager(emblemBadgesManager);
+        }
+        if (Objects.equals(player.getUUID().toString(), emblemItem.get(ModDataComponents.ITEM_OWNER))
+                && emblemBadgesManager.getTargets(emblem) == null) return emblem;
+        return null;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
     }
 
 }

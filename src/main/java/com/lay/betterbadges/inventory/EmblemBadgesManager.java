@@ -1,0 +1,102 @@
+package com.lay.betterbadges.inventory;
+
+import com.lay.betterbadges.emblem.Emblem;
+import com.lay.betterbadges.emblem.EmblemTargetItem;
+import com.lay.betterbadges.league.Badge;
+import com.lay.betterbadges.league.BadgeAttribute;
+import com.lay.betterbadges.league.League;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.SimpleContainer;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class EmblemBadgesManager {
+
+    private final Map<Emblem, NonNullList<EmblemTargetItem>> targetItems;
+
+    public Map<Emblem, List<EmblemTargetItem>> serialize(){
+        Map<Emblem, List<EmblemTargetItem>> newMap = new HashMap<>();
+        for (Map.Entry<Emblem, NonNullList<EmblemTargetItem>> item : targetItems.entrySet()){
+            Emblem key = item.getKey();
+            List<EmblemTargetItem> newList = new ArrayList<>();
+            for (EmblemTargetItem targetItem : item.getValue()) if (targetItem != EmblemTargetItem.EMPTY) newList.add(targetItem.currentSlot(), targetItem);
+            newMap.put(key, newList);
+        }
+        return newMap;
+    }
+
+    public static EmblemBadgesManager deserialize(Map<Emblem, List<EmblemTargetItem>> targetItems){
+        Map<Emblem, NonNullList<EmblemTargetItem>> newMap = new HashMap<>();
+        for (Map.Entry<Emblem, List<EmblemTargetItem>> item : targetItems.entrySet()){
+            Emblem key = item.getKey();
+            System.out.println(targetItems);
+            NonNullList<EmblemTargetItem> newList = NonNullList.withSize(key.getTotalSlots(), EmblemTargetItem.EMPTY);
+            for (EmblemTargetItem targetItem : item.getValue()) newList.set(targetItem.currentSlot(), targetItem);
+            newMap.put(item.getKey(), newList);
+        }
+        return new EmblemBadgesManager(newMap);
+    }
+
+    public EmblemBadgesManager(Map<Emblem, NonNullList<EmblemTargetItem>> targetItems) {
+        this.targetItems = targetItems;
+    }
+
+    @Nullable
+    public List<BadgeAttribute> getBoosts(Emblem emblem, LeagueBadgesManager badgesInventories){
+        List<EmblemTargetItem> targets = targetItems.get(emblem);
+        if(targets == null || targets.isEmpty()) return null;
+        List<BadgeAttribute> boosts = new ArrayList<>();
+        for (EmblemTargetItem item : targets) {
+            League league = item.league();
+            SimpleContainer targetContainer = badgesInventories.getBadgeContainer(league);
+            Badge badge = league.getBadgeFromItem(targetContainer.getItem(item.targetSlot()));
+            boosts.add(badge.getAttribute(emblem.getSlot(item.currentSlot()).category()));
+        }
+        return boosts;
+    }
+
+    public void removeTarget(Emblem emblem, int targetSlot){
+        List<EmblemTargetItem> targets = this.targetItems.get(emblem);
+        if(targets == null) return;
+        targets.remove(targetSlot);
+    }
+
+    public void setTarget(Emblem emblem, League league, int targetSlot, int slotIndex){
+        setTarget(emblem, league, targetSlot, slotIndex, false);
+    }
+
+    public void setTarget(Emblem emblem, League league, int targetSlot, int slotIndex, boolean override){
+        List<EmblemTargetItem> targets = this.targetItems.get(emblem);
+        if(targets == null) return;
+        EmblemTargetItem target = targets.get(slotIndex);
+        if(!override && target != EmblemTargetItem.EMPTY) return;
+        if(target.targetSlot() == targetSlot && target.league() == league) {
+            targets.set(slotIndex, new EmblemTargetItem(league, targetSlot, slotIndex));
+        }
+    }
+
+    public void addEmblem(Emblem emblem) {
+        targetItems.put(emblem, NonNullList.withSize(emblem.getTotalSlots(), EmblemTargetItem.EMPTY));
+    }
+
+    public NonNullList<EmblemTargetItem> getTargets(Emblem emblem){
+        return this.targetItems.get(emblem);
+    }
+
+    public EmblemTargetItem getTarget(Emblem emblem, int slotIndex){
+        return this.targetItems.get(emblem).get(slotIndex);
+    }
+
+    public boolean targetExists(Emblem emblem){
+        return this.targetItems.containsKey(emblem);
+    }
+
+    public Map<Emblem, NonNullList<EmblemTargetItem>> getTargetItems(){
+        return targetItems;
+    }
+
+}

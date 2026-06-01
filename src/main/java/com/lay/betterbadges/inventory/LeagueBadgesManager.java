@@ -2,24 +2,17 @@ package com.lay.betterbadges.inventory;
 
 import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.component.ModDataComponents;
-import com.lay.betterbadges.component.custom.LeagueInventoryContents;
-import com.lay.betterbadges.item.ModItems;
 import com.lay.betterbadges.league.League;
 import com.lay.betterbadges.registry.ModRegistries;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,7 +37,7 @@ public class LeagueBadgesManager {
         return new LeagueBadgesManager(inventories);
     }
 
-    public static LeagueBadgesManager createFromItem(ItemStack itemStack, RegistryAccess registryAccess){
+    public static LeagueBadgesManager deserialize(ItemStack itemStack, RegistryAccess registryAccess){
 
         Map<League, CompoundTag> inventoryContents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS);
 
@@ -71,7 +64,7 @@ public class LeagueBadgesManager {
     }
 
     // Serialization part
-    public Map<League, CompoundTag> getLeagueInventoryContents(RegistryAccess registryAccess){
+    public Map<League, CompoundTag> serialize(RegistryAccess registryAccess){
         Map<League, CompoundTag> serializedResult = new HashMap<>();
         for (League league : this.inventories.keySet()){
             CompoundTag tag = new CompoundTag();

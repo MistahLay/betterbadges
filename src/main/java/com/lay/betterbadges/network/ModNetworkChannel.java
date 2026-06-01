@@ -5,7 +5,6 @@ import com.lay.betterbadges.screen.badgecase.BadgeCaseScreenHandler;
 import io.wispforest.owo.network.OwoNetChannel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 
 public class ModNetworkChannel {
 
@@ -16,6 +15,13 @@ public class ModNetworkChannel {
             Player player = access.player();
             if (player.containerMenu instanceof BadgeCaseScreenHandler badgeCaseMenu && validateMenu(player)) {
                 badgeCaseMenu.switchLeague(message.getRegisteredLeague());
+            }
+        }));
+
+        CHANNEL.registerServerbound(ChangeEmblemPacket.class, ((message, access) -> {
+            Player player = access.player();
+            if (player.containerMenu instanceof BadgeCaseScreenHandler badgeCaseMenu && validateMenu(player)) {
+                badgeCaseMenu.switchEmblem(message.getRegisteredEmblem());
             }
         }));
     }

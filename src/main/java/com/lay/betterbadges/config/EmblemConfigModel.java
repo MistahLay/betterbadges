@@ -1,85 +1,54 @@
 package com.lay.betterbadges.config;
 
-import io.wispforest.owo.config.Option;
-import io.wispforest.owo.config.annotation.Config;
-import io.wispforest.owo.config.annotation.Expanded;
-import io.wispforest.owo.config.annotation.RestartRequired;
-import io.wispforest.owo.config.annotation.Sync;
+import io.wispforest.owo.config.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(name = "emblem-config", wrapperName = "EmblemConfig")
+@Config(name = "betterbadges/emblem-config", wrapperName = "EmblemConfig")
 public class EmblemConfigModel{
 
     @Expanded
     @RestartRequired
     public List<Emblem> emblems = new ArrayList<>();
 
-    public EmblemConfigModel(){
-
-    }
+    public EmblemConfigModel(){ }
 
     public static class Emblem {
         public String id;
+        public String item;
 
         @Expanded
-        public List<SlotPosition> player;
+        public List<BoostConfig> adventure;
 
         @Expanded
-        public List<SlotPosition> spawning;
+        public List<BoostConfig> spawning;
 
         @Expanded
-        public List<SlotPosition> catching;
+        public List<BoostConfig> catching;
 
         public Emblem(){
 
         }
 
-        public Emblem(String id, List<SlotPosition> player, List<SlotPosition> spawning, List<SlotPosition> catching){
+        public Emblem(String id, String item, List<BoostConfig> adventure, List<BoostConfig> spawning, List<BoostConfig> catching){
             this.id = id;
-            this.player = player;
+            this.item = item;
+            this.adventure = adventure;
             this.spawning = spawning;
             this.catching = catching;
         }
-
-        public List<SlotPosition> player(){
-            return player;
-        }
-
-        public List<SlotPosition> spawning(){
-            return spawning;
-        }
-
-        public List<SlotPosition> catching(){
-            return catching;
-        }
-
-        public String id(){
-            return this.id;
-        }
     }
 
-    public static class SlotPosition {
+    public static class BoostConfig {
         public int x;
         public int y;
 
-        public SlotPosition(){
+        public BoostConfig(){ }
 
-        }
-
-        public SlotPosition(int x, int y){
+        public BoostConfig(int x, int y){
             this.x = x;
             this.y = y;
         }
-
-        public int x(){
-            return x;
-        }
-
-        public int y(){
-            return y;
-        }
     }
-
 }

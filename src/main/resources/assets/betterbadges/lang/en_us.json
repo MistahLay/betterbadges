@@ -2,6 +2,8 @@
   "itemGroup.better-badges": "Better Badges",
   "actionbar.custom.not-owner": "You're not the owner! Please return it to: %s",
   "actionbar.custom.invalid-case": "This badge case has invalid data.",
-  "button.custom.next-league": "Next",
-  "button.custom.previous-league": "Previous"
+  "button.custom.next-league": "Next League",
+  "button.custom.previous-league": "Previous League",
+  "button.custom.previous-emblem": "Previous Emblem",
+  "button.custom.next-emblem": "Next Emblem"
 }

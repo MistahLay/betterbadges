@@ -3,9 +3,9 @@ package com.lay.betterbadges;
 import com.lay.betterbadges.component.ModDataComponents;
 import com.lay.betterbadges.config.ConfigEndecs;
 import com.lay.betterbadges.config.ModConfigs;
+import com.lay.betterbadges.emblem.ModEmblems;
 import com.lay.betterbadges.item.ModCreativeTab;
 import com.lay.betterbadges.item.ModItems;
-import com.lay.betterbadges.league.Badge;
 import com.lay.betterbadges.league.ModLeagues;
 import com.lay.betterbadges.network.ModNetworkChannel;
 import com.lay.betterbadges.registry.BadgeCaseBase;
@@ -14,9 +14,6 @@ import com.lay.betterbadges.registry.ModRegistries;
 import com.lay.betterbadges.screen.ModScreenHandler;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +39,7 @@ public class BetterBadges implements ModInitializer {
 
 		// Custom Registries
 		ModLeagues.registerLeagues();
+		ModEmblems.registerEmblems();
 		BadgeCaseBase.registerFromConfig();
 		BadgeCaseCover.registerFromConfig();
 

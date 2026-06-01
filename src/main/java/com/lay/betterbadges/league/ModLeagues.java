@@ -8,7 +8,7 @@ public class ModLeagues {
     public static void registerLeagues(){
         BetterBadges.LOGGER.info("Registering Better Badges leagues");
 
-        League.Builder.fromConfig();
+        League.createAndRegisterFromConfig();
     }
 
 

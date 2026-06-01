@@ -25,17 +25,19 @@ abstract class ConfigWrapperMixin {
     @Mutable
     protected ReflectiveEndecBuilder builder;
 
+    // Why do I have to do this?
     @Inject(method = "<init>(Ljava/lang/Class;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "blue/endless/jankson/Jankson$Builder.registerDeserializer (Ljava/lang/Class;Ljava/lang/Class;Lblue/endless/jankson/api/DeserializerFunction;)Lblue/endless/jankson/Jankson$Builder;"))
     public void onConstruct(Class clazz, Consumer janksonBuilder, CallbackInfo ci){
         if(clazz == LeaguesConfigModel.class){
             this.builder = MinecraftEndecs.addDefaults(new ReflectiveEndecBuilder()
-                    .register(ConfigEndecs.LEAGUE_ENDEC, LeaguesConfigModel.League.class)
-                    .register(ConfigEndecs.BADGE_ENDEC, LeaguesConfigModel.Badge.class)
+                    .register(ConfigEndecs.LEAGUE_ENDEC, LeaguesConfigModel.LeagueConfig.class)
+                    .register(ConfigEndecs.BADGE_ENDEC, LeaguesConfigModel.BadgeConfig.class)
+                    .register(ConfigEndecs.BADGE_ATTRIBUTE_ENDEC, LeaguesConfigModel.BadgeAttributeConfig.class)
             );
         } else if (clazz == EmblemConfigModel.class){
             this.builder = MinecraftEndecs.addDefaults(new ReflectiveEndecBuilder()
                     .register(ConfigEndecs.EMBLEM_ENDEC, EmblemConfigModel.Emblem.class)
-                    .register(ConfigEndecs.SLOT_POSITION_ENDEC, EmblemConfigModel.SlotPosition.class)
+                    .register(ConfigEndecs.BOOST_ENDEC, EmblemConfigModel.BoostConfig.class)
             );
         }
     }

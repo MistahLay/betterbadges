@@ -3,19 +3,25 @@ package com.lay.betterbadges.league;
 import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.config.LeaguesConfigModel;
 import com.lay.betterbadges.config.ModConfigs;
+import com.lay.betterbadges.config.ModConfigurationException;
+import com.lay.betterbadges.emblem.BoostTypes;
 import com.lay.betterbadges.registry.ModRegistries;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.Nullable;
 
-import javax.naming.ConfigurationException;
 import java.util.*;
 
-
 public class League {
+
+    public static final TagKey<Item> LEAGUE_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "league"));
 
     public static final Codec<League> CODEC = Codec.STRING.xmap(
             to -> {
@@ -25,10 +31,10 @@ public class League {
             from -> from.id.toString()
     );
 
-    public static final League EMPTY = Builder.create("empty").addBadge(new Badge(Items.AIR, 0, 0, 0)).build();
+    public static final League EMPTY = Builder.create("empty").addBadge(Badge.EMPTY).build();
 
     /**
-     * betterbadges:name_league
+     * e.g. "betterbadges:name_league"
      */
     private final ResourceLocation id;
     private final List<Badge> badges;
@@ -64,6 +70,17 @@ public class League {
         return slot;
     }
 
+    public Badge getBadgeFromItem(ItemStack stack){
+        return this.getBadgeFromItem(stack.getItem());
+    }
+
+    public Badge getBadgeFromItem(Item item){
+        for (Badge badge : this.badges) {
+            if (badge.getItem() == item) return badge;
+        }
+        return Badge.EMPTY;
+    }
+
     public List<Badge> getBadges(){
         return new ArrayList<>(this.badges);
     }
@@ -72,40 +89,58 @@ public class League {
         return this.badges.size();
     }
 
-    public static class Builder {
+    public static void createAndRegisterFromConfig(){
+        List<LeaguesConfigModel.LeagueConfig> configLeagues = ModConfigs.LEAGUE_CONFIG.leagues();
 
-        public static void fromConfig(){
-            List<LeaguesConfigModel.League> configLeagues = ModConfigs.LEAGUE_CONFIG.leagues();
+        if(configLeagues.isEmpty()) {
+            BetterBadges.LOGGER.error("Provided Empty Leagues at Mod Config");
+            ModConfigs.throwException("Provided Empty Leagues at Mod Config");
+        }
 
-            if(configLeagues.isEmpty()) {
-                BetterBadges.LOGGER.error("Provided Empty Leagues at Mod Config");
-                ModConfigs.throwException("Provided Empty Leagues at Mod Config");
-            }
+        for(LeaguesConfigModel.LeagueConfig configLeague : configLeagues){
+            Builder builder = Builder.create(configLeague.id);
 
-            for(LeaguesConfigModel.League configLeague : configLeagues){
-                Builder builder = Builder.create(configLeague.id);
+            for (int i = 0; i < configLeague.badges.size(); i++) {
+                LeaguesConfigModel.BadgeConfig configBadge = configLeague.badges.get(i);
 
-                for (int i = 0; i < configLeague.badges.size(); i++) {
-                    LeaguesConfigModel.Badge configBadge = configLeague.badges.get(i);
+                ResourceLocation itemPath = ResourceLocation.parse(configBadge.id);
 
-                    Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(configBadge.id));
+                Item item = BuiltInRegistries.ITEM.get(itemPath);
 
-                    if(item == Items.AIR) {
-                        BetterBadges.LOGGER.error("Provided Invalid Item. Provided id: {}. In {} league", configBadge.id, configLeague.id);
-                        ModConfigs.throwException("Provided Invalid Item.");
-                    }
-
-                    builder.addBadge(new Badge(
-                            BuiltInRegistries.ITEM.get(ResourceLocation.parse(configBadge.id)),
-                            configBadge.x,
-                            configBadge.y,
-                            i
-                    ));
+                if(item == Items.AIR) {
+                    BetterBadges.LOGGER.error("Provided Invalid Item. Provided item id: {}. In {} league", configBadge.id, configLeague.id);
+                    ModConfigs.throwException("Provided Invalid Item.");
                 }
 
-                builder.build();
+                // Currently Hard Coded ahh, can only have the big three
+                Map<BoostTypes, BadgeAttribute> badgeAttributes = new HashMap<>();
+                badgeAttributes.put(BoostTypes.ADVENTURE, createAttributeFromConfig(BoostTypes.ADVENTURE, configBadge.adventure, itemPath));
+                badgeAttributes.put(BoostTypes.CATCHING, createAttributeFromConfig(BoostTypes.CATCHING, configBadge.catching, itemPath));
+                badgeAttributes.put(BoostTypes.SPAWNING, createAttributeFromConfig(BoostTypes.SPAWNING, configBadge.spawning, itemPath));
+
+                builder.addBadge(new Badge(
+                        item,
+                        configBadge.x,
+                        configBadge.y,
+                        i,
+                        badgeAttributes
+                ));
             }
+
+            builder.build();
         }
+    }
+
+    @Nullable
+    private static BadgeAttribute createAttributeFromConfig(BoostTypes type, LeaguesConfigModel.BadgeAttributeConfig config, ResourceLocation item){
+        if (config == null) return null;
+        ResourceLocation attributeLocation = ResourceLocation.parse(config.id);
+        var attribute = BuiltInRegistries.ATTRIBUTE.get(attributeLocation);
+        if(attribute == null) throw new ModConfigurationException("Attribute: " + config.id + " does not exists");
+        return new BadgeAttribute(item, attributeLocation, type, config.operation, config.value);
+    }
+
+    public static class Builder {
 
         private String id;
         List<Badge> badges = new ArrayList<>();

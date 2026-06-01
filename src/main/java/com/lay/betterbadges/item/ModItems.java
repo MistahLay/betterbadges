@@ -1,8 +1,6 @@
 package com.lay.betterbadges.item;
 
 import com.lay.betterbadges.BetterBadges;
-import com.lay.betterbadges.component.ModDataComponents;
-import com.lay.betterbadges.component.custom.LeagueInventoryContents;
 import com.lay.betterbadges.config.ModConfigs;
 import com.lay.betterbadges.item.badges.BasicBadge;
 import com.lay.betterbadges.item.cases.BasicCase;
@@ -14,7 +12,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import org.jetbrains.annotations.NotNull;
 
 
 public class ModItems {

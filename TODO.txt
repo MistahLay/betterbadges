@@ -1,0 +1,36 @@
+CURRENT TODO LIST
+
+IMPLEMENT INVENTORY AND SCREEN FOR EMBLEM
+- Emblem Inventory Codec
+- Adjust Inventory Slot
+    - Badge Slots First
+    - Player Inventory Second
+    - Emblem Slots Last
+- Quick Move only Implementation
+
+EMBLEM AND LEAGUE BADGES INVENTORY SYNC
+- League Badges hide slot whenever the current emblem contains the badge
+
+CREATE BADGE CASE 3D MODEL
+
+IMPLEMENT & REGISTER BADGE CASE CONDITIONAL DESIGN
+- Badge Case Base
+- Bade Case Cover
+
+APPLY CONDITIONAL DESIGN TO UI AND 3D MODEL
+- Badge Case Base
+- Badge Case Cover
+
+IMPLEMENT WORKING EMBLEM ATTRIBUTES
+
+CREATE CUSTOM ATTRIBUTES VIA COBBLEMON
+- Spawning Mechanics
+- Catching Attributes
+
+LATER TODO LIST
+
+IMPLEMENT QUICK MOVE ANIMATION
+
+IMPLEMENT BADGE SHINE
+
+IMPLEMENT RADICAL TRAINERS COMPATIBILITY

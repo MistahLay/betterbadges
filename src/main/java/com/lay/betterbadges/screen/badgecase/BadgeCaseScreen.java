@@ -1,6 +1,8 @@
 package com.lay.betterbadges.screen.badgecase;
 
+import com.lay.betterbadges.emblem.Emblem;
 import com.lay.betterbadges.league.League;
+import com.lay.betterbadges.network.ChangeEmblemPacket;
 import com.lay.betterbadges.network.ChangeLeaguePacket;
 import com.lay.betterbadges.network.ModNetworkChannel;
 import com.lay.betterbadges.registry.ModRegistries;
@@ -45,6 +47,24 @@ public class BadgeCaseScreen extends BaseOwoHandledScreen<FlowLayout, BadgeCaseS
                 button -> System.out.println("previous")
         ));
 
+        rootComponent.child(Components.button(
+                Component.translatable("button.custom.previous-emblem"),
+                button -> System.out.println("previous emblem")
+        ));
+
+        rootComponent.child(Components.button(
+                Component.translatable("button.custom.next-emblem"),
+                button -> {
+                    Emblem league = this.getNextEmblem();
+                    // Update Render's Handler
+                    this.menu.switchEmblem(league);
+
+                    // Update Server's Handler
+                    ModNetworkChannel.CHANNEL.clientHandle().send(new ChangeEmblemPacket(league.getId().toString()));
+                    System.out.println("next emblem");
+                }
+        ));
+
     }
 
     private League getNextLeague(){
@@ -66,5 +86,20 @@ public class BadgeCaseScreen extends BaseOwoHandledScreen<FlowLayout, BadgeCaseS
         // And if it's still an empty, then that's crazy
         if(firstLeague != null) return firstLeague;
         throw new RuntimeException("Empty League Registries");
+    }
+
+    private Emblem getNextEmblem(){
+        boolean next = false;
+        Emblem firstEmblem = null;
+        for (Emblem emblem : ModRegistries.EMBLEM){
+            if(firstEmblem == null && emblem != Emblem.EMPTY) firstEmblem = emblem;
+
+            if(next) return emblem;
+
+            if(emblem == this.menu.getEmblem()) next = true;
+            System.out.println(emblem.getId().toString());
+        }
+        if(firstEmblem != null) return firstEmblem;
+        throw new RuntimeException("Empty Emblem Registries");
     }
 }

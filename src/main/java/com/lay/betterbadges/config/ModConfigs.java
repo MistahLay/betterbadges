@@ -22,8 +22,4 @@ public class ModConfigs {
             throw new RuntimeException(e);
         }
     }
-
-    public static class ModConfigurationException extends RuntimeException {
-
-    }
 }
