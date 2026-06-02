@@ -83,6 +83,7 @@ public class BadgeCaseScreen extends BaseOwoHandledScreen<FlowLayout, BadgeCaseS
     @Override
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
+        this.renderEmblemSlots(context);
         if(this.menu.getHighlightedSlot() == null) return;
         Slot slot = this.menu.getHighlightedSlot();
         context.blit(
@@ -91,6 +92,20 @@ public class BadgeCaseScreen extends BaseOwoHandledScreen<FlowLayout, BadgeCaseS
                 0, 0,
                 18, 18, 18, 18
         );
+    }
+
+    private void renderEmblemSlots(GuiGraphics context){
+        for (Emblem.EmblemSlot slot : this.menu.getEmblem().getSlots()) {
+            int x = slot.x() + BadgeCaseScreenHandler.EMBLEM_CONTAINER_POS.x() + this.leftPos - 1;
+            int y = slot.y() + BadgeCaseScreenHandler.EMBLEM_CONTAINER_POS.y() + this.topPos - 1;
+            ResourceLocation path = ModScreenHandler.getGuiTexture("slot/" + slot.category().name().toLowerCase() + "_slot");
+            context.blit(
+                    path,
+                    x, y,
+                    0, 0,
+                    18, 18, 18, 18
+            );
+        }
     }
 
     private League getNextLeague(){

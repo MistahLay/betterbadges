@@ -8,6 +8,8 @@ import com.lay.betterbadges.league.League;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,7 @@ import java.util.Map;
 
 public class EmblemBadgesManager {
 
+    private static final Logger log = LoggerFactory.getLogger(EmblemBadgesManager.class);
     private final Map<Emblem, NonNullList<EmblemTargetItem>> targetItems;
 
     public Map<Emblem, List<EmblemTargetItem>> serialize(){
@@ -90,10 +93,13 @@ public class EmblemBadgesManager {
         return this.targetItems.get(emblem).get(slotIndex);
     }
 
-    public EmblemTargetItem findTarget(League league, int targetSlot, Emblem emblem){
+    public EmblemTargetItem findTarget(League league, int targetSlot, Emblem emblem, int exclude){
         if(!containsEmblem(emblem)) return null;
         for (EmblemTargetItem target : this.targetItems.get(emblem)){
-            if(target.league() == league && target.targetSlot() == targetSlot) return target;
+            if(target == EmblemTargetItem.EMPTY) continue;
+//            log.info("current {} : target {} : targetLeague {} : exclude {} : size {} : league {} : targetSlot {}", target.currentSlot(), target.targetSlot(), target.league().getId().toString(), exclude, this.targetItems.size(), league.getId().toString(), targetSlot);
+//            log.info("{}", targetSlot == target.targetSlot());
+            if(target.league() == league && target.targetSlot() == targetSlot && target.currentSlot() != exclude) return target;
         }
         return null;
     }
