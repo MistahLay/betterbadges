@@ -10,5 +10,8 @@
   "command.betterbadges.badges.success": "Successfully given the badges for league: %s",
 
 
-  "tooltip.betterbadges.owner": "Owner: "
+  "tooltip.betterbadges.owner": "Owner: ",
+  "tooltip.betterbadges.boost.adventure": "When Applied To Adventure: ",
+  "tooltip.betterbadges.boost.spawning": "When Applied To Spawning: ",
+  "tooltip.betterbadges.boost.catching": "When Applied To Catching: "
 }

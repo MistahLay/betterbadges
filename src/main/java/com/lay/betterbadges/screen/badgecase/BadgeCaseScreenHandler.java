@@ -22,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -244,7 +243,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         ((SlotMixin) slot).betterbadges$setContainer(this.currentContainer);
         ((SlotMixin) slot).betterbadges$setSlot(index);
         this.broadcastChanges();
-        itemSlot.get().set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS, this.emblemBadgesManager.serialize());
+        this.badgeCase.setEmblemInventoryManager(this.emblemBadgesManager);
         return true;
     }
 

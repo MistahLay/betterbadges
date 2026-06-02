@@ -1,24 +1,36 @@
 package com.lay.betterbadges.item.cases;
 
 import com.lay.betterbadges.component.ModDataComponents;
+import com.lay.betterbadges.emblem.BoostTypes;
 import com.lay.betterbadges.emblem.Emblem;
 import com.lay.betterbadges.emblem.EmblemTargetItem;
 import com.lay.betterbadges.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.item.OwnedItemWrapper;
+import com.lay.betterbadges.league.Badge;
+import com.lay.betterbadges.league.BadgeAttribute;
 import com.lay.betterbadges.league.League;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 public class BadgeCaseWrapper extends OwnedItemWrapper {
+
+    private static final Logger log = LoggerFactory.getLogger(BadgeCaseWrapper.class);
 
     public BadgeCaseWrapper(ItemStack item) {
         super(item);
@@ -33,6 +45,23 @@ public class BadgeCaseWrapper extends OwnedItemWrapper {
         return currentLeague != League.EMPTY;
     }
 
+    private void updateBoosts(EmblemBadgesManager manager, Emblem currentEmblem){
+        ItemAttributeModifiers modifiers = ItemAttributeModifiers.EMPTY;
+        for (EmblemTargetItem target : manager.getTargets(currentEmblem)) {
+            BoostTypes boost = currentEmblem.getSlot(target.currentSlot()).category();
+            Badge badge = target.league().getRequiredBadgeAt(target.targetSlot());
+            if (!badge.containsBoost(boost)) continue;
+            BadgeAttribute badgeAttribute = badge.getAttribute(boost);
+            Holder.Reference<Attribute> attribute = badgeAttribute.getAttribute().orElseThrow();
+            modifiers = modifiers.withModifierAdded(
+                attribute,
+                badgeAttribute.createModifier(),
+                EquipmentSlotGroup.ANY
+            );
+        }
+        this.item.set(DataComponents.ATTRIBUTE_MODIFIERS, modifiers);
+    }
+
     // Emblems
     public Emblem getCurrentEmblem() {
         return this.item.get(ModDataComponents.CURRENT_EMBLEM);
@@ -40,10 +69,12 @@ public class BadgeCaseWrapper extends OwnedItemWrapper {
 
     public void setCurrentEmblem(Emblem emblem) {
         this.item.set(ModDataComponents.CURRENT_EMBLEM, emblem);
+        this.updateBoosts(this.getEmblemInventoryManager(), emblem);
     }
 
     public void setEmblemInventoryManager(EmblemBadgesManager manager){
         this.item.set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS, manager.serialize());
+        this.updateBoosts(manager, this.getCurrentEmblem());
     }
 
     public EmblemBadgesManager getEmblemInventoryManager(){

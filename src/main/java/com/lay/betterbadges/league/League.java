@@ -163,12 +163,14 @@ public class League {
                 BetterBadges.LOGGER.error("League: {} has no badges added", this.id);
             }
             ResourceLocation id = createPath();
+
+            Map<Item, Badge> itemBadgeMap = new HashMap<>();
             League league = new League(id, this.badges);
             Registry.register(ModRegistries.LEAGUE, id, league);
             return league;
         }
 
-        private ResourceLocation createPath(){
+        private ResourceLocation createPath() {
             return ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, this.id + "_league");
         }
     }

@@ -83,7 +83,7 @@ public class BadgeCaseScreen extends BaseOwoHandledScreen<FlowLayout, BadgeCaseS
     @Override
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        this.renderEmblemSlots(context);
+        if(this.menu.getEmblemBadgesManager().containsEmblem(this.menu.getEmblem())) this.renderEmblemSlots(context);
         if(this.menu.getHighlightedSlot() == null) return;
         Slot slot = this.menu.getHighlightedSlot();
         context.blit(

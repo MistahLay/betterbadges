@@ -22,7 +22,6 @@ public class ModScreenHandler {
                 return new BadgeCaseScreenHandler(syncId, inventory, handStack);
             }, ByteBufCodecs.fromCodec(EquipmentSlot.CODEC).cast()));
 
-
     public static ResourceLocation getGuiTexture(String path){
         return ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "textures/gui/" + path).withSuffix(".png");
     }
