@@ -19,4 +19,8 @@ public interface SlotMixin {
     @Mutable
     @Accessor("y")
     void betterbadges$setY(int y);
+
+    @Mutable
+    @Accessor("slot")
+    void betterbadges$setSlot(int slot);
 }

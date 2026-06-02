@@ -23,7 +23,9 @@ public class EmblemBadgesManager {
         for (Map.Entry<Emblem, NonNullList<EmblemTargetItem>> item : targetItems.entrySet()){
             Emblem key = item.getKey();
             List<EmblemTargetItem> newList = new ArrayList<>();
-            for (EmblemTargetItem targetItem : item.getValue()) if (targetItem != EmblemTargetItem.EMPTY) newList.add(targetItem.currentSlot(), targetItem);
+            for (EmblemTargetItem targetItem : item.getValue()) if (targetItem != EmblemTargetItem.EMPTY) {
+                newList.add(targetItem);
+            }
             newMap.put(key, newList);
         }
         return newMap;
@@ -33,7 +35,6 @@ public class EmblemBadgesManager {
         Map<Emblem, NonNullList<EmblemTargetItem>> newMap = new HashMap<>();
         for (Map.Entry<Emblem, List<EmblemTargetItem>> item : targetItems.entrySet()){
             Emblem key = item.getKey();
-            System.out.println(targetItems);
             NonNullList<EmblemTargetItem> newList = NonNullList.withSize(key.getTotalSlots(), EmblemTargetItem.EMPTY);
             for (EmblemTargetItem targetItem : item.getValue()) newList.set(targetItem.currentSlot(), targetItem);
             newMap.put(item.getKey(), newList);
@@ -62,7 +63,7 @@ public class EmblemBadgesManager {
     public void removeTarget(Emblem emblem, int targetSlot){
         List<EmblemTargetItem> targets = this.targetItems.get(emblem);
         if(targets == null) return;
-        targets.remove(targetSlot);
+        targets.set(targetSlot, EmblemTargetItem.EMPTY);
     }
 
     public void setTarget(Emblem emblem, League league, int targetSlot, int slotIndex){
@@ -73,10 +74,8 @@ public class EmblemBadgesManager {
         List<EmblemTargetItem> targets = this.targetItems.get(emblem);
         if(targets == null) return;
         EmblemTargetItem target = targets.get(slotIndex);
-        if(!override && target != EmblemTargetItem.EMPTY) return;
-        if(target.targetSlot() == targetSlot && target.league() == league) {
-            targets.set(slotIndex, new EmblemTargetItem(league, targetSlot, slotIndex));
-        }
+        if(!override) if(target != EmblemTargetItem.EMPTY) return;
+        targets.set(slotIndex, new EmblemTargetItem(league, targetSlot, slotIndex));
     }
 
     public void addEmblem(Emblem emblem) {
@@ -91,7 +90,15 @@ public class EmblemBadgesManager {
         return this.targetItems.get(emblem).get(slotIndex);
     }
 
-    public boolean targetExists(Emblem emblem){
+    public EmblemTargetItem findTarget(League league, int targetSlot, Emblem emblem){
+        if(!containsEmblem(emblem)) return null;
+        for (EmblemTargetItem target : this.targetItems.get(emblem)){
+            if(target.league() == league && target.targetSlot() == targetSlot) return target;
+        }
+        return null;
+    }
+
+    public boolean containsEmblem(Emblem emblem){
         return this.targetItems.containsKey(emblem);
     }
 

@@ -48,6 +48,7 @@ public class Emblem {
             if(emblemConfig.spawning != null) for (EmblemConfigModel.BoostConfig slot : emblemConfig.spawning) emblemSlots.add(new EmblemSlot(BoostTypes.SPAWNING, slot.x, slot.y, i++));
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, emblemConfig.id + "_emblem");
             Registry.register(ModRegistries.EMBLEM, id, new Emblem(emblemSlots, id, item));
+            BetterBadges.LOGGER.info("Registed Emblem: {}", id);
         }
     }
 

@@ -5,5 +5,10 @@
   "button.custom.next-league": "Next League",
   "button.custom.previous-league": "Previous League",
   "button.custom.previous-emblem": "Previous Emblem",
-  "button.custom.next-emblem": "Next Emblem"
+  "button.custom.next-emblem": "Next Emblem",
+
+  "command.betterbadges.badges.success": "Successfully given the badges for league: %s",
+
+
+  "tooltip.betterbadges.owner": "Owner: "
 }

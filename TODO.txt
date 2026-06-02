@@ -1,16 +1,5 @@
 CURRENT TODO LIST
 
-IMPLEMENT INVENTORY AND SCREEN FOR EMBLEM
-- Emblem Inventory Codec
-- Adjust Inventory Slot
-    - Badge Slots First
-    - Player Inventory Second
-    - Emblem Slots Last
-- Quick Move only Implementation
-
-EMBLEM AND LEAGUE BADGES INVENTORY SYNC
-- League Badges hide slot whenever the current emblem contains the badge
-
 CREATE BADGE CASE 3D MODEL
 
 IMPLEMENT & REGISTER BADGE CASE CONDITIONAL DESIGN

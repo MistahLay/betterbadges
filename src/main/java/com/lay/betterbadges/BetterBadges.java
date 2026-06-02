@@ -1,9 +1,11 @@
 package com.lay.betterbadges;
 
+import com.lay.betterbadges.command.ModCommands;
 import com.lay.betterbadges.component.ModDataComponents;
 import com.lay.betterbadges.config.ConfigEndecs;
 import com.lay.betterbadges.config.ModConfigs;
 import com.lay.betterbadges.emblem.ModEmblems;
+import com.lay.betterbadges.event.ModEvents;
 import com.lay.betterbadges.item.ModCreativeTab;
 import com.lay.betterbadges.item.ModItems;
 import com.lay.betterbadges.league.ModLeagues;
@@ -14,16 +16,21 @@ import com.lay.betterbadges.registry.ModRegistries;
 import com.lay.betterbadges.screen.ModScreenHandler;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BetterBadges implements ModInitializer {
 	public static final String MOD_ID = "betterbadges";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static MinecraftServer SERVER;
 
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing Better Badges");
+
+		ServerLifecycleEvents.SERVER_STARTED.register(server -> SERVER = server);
 
 		ConfigEndecs.registerEndecs();
 
@@ -48,6 +55,9 @@ public class BetterBadges implements ModInitializer {
 
 		// Networking
 		ModNetworkChannel.initialize();
+
+		ModEvents.initialize();
+		ModCommands.registerCommands();
 	}
 
 }

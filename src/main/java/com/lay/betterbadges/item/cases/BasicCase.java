@@ -8,10 +8,15 @@ import com.lay.betterbadges.league.League;
 import com.lay.betterbadges.registry.ModRegistries;
 import com.lay.betterbadges.screen.badgecase.BadgeCaseScreenHandler;
 import com.mojang.authlib.GameProfile;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.world.InteractionHand;
@@ -58,20 +63,9 @@ public class BasicCase extends Item {
         BadgeCaseWrapper badgeCase = new BadgeCaseWrapper(stack);
 
         if (!badgeCase.canPlayerUse(player)) {
-            GameProfileCache cache = serverPlayer.server.getProfileCache();
-            if (cache != null) {
-                String owner = badgeCase.getItemOwner();
-                if (owner == null || owner.length() != 33) {
-                    serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(
-                            Component.translatable("actionbar.custom.not-owner", "unknown")
-                    ));
-                } else {
-                    Optional<GameProfile> profile = cache.get(UUID.fromString(owner));
-                    serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(
-                            Component.translatable("actionbar.custom.not-owner", profile.isPresent() ? profile.get().getName() : "unknown"))
-                    );
-                }
-            }
+            serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(
+                Component.translatable("actionbar.custom.not-owner", badgeCase.getItemOwnerName(serverPlayer.server)))
+            );
         } else {
             if (slot == EquipmentSlot.MAINHAND) {
                 ItemStack offHand = player.getOffhandItem();
@@ -128,6 +122,11 @@ public class BasicCase extends Item {
 
     @Override
     public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list, TooltipFlag tooltipFlag) {
+        if(BetterBadges.SERVER != null) {
+            BadgeCaseWrapper badgeCase = new BadgeCaseWrapper(itemStack);
+            String ownerName = badgeCase.getItemOwnerName(BetterBadges.SERVER);
+            list.add(Component.translatable("tooltip.betterbadges.owner").withStyle(ChatFormatting.RED).append(Component.literal(ownerName).withStyle(ChatFormatting.AQUA)));
+        }
         super.appendHoverText(itemStack, tooltipContext, list, tooltipFlag);
     }
 

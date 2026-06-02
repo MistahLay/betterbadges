@@ -114,9 +114,9 @@ public class League {
 
                 // Currently Hard Coded ahh, can only have the big three
                 Map<BoostTypes, BadgeAttribute> badgeAttributes = new HashMap<>();
-                badgeAttributes.put(BoostTypes.ADVENTURE, createAttributeFromConfig(BoostTypes.ADVENTURE, configBadge.adventure, itemPath));
-                badgeAttributes.put(BoostTypes.CATCHING, createAttributeFromConfig(BoostTypes.CATCHING, configBadge.catching, itemPath));
-                badgeAttributes.put(BoostTypes.SPAWNING, createAttributeFromConfig(BoostTypes.SPAWNING, configBadge.spawning, itemPath));
+                if(configBadge.adventure != null) badgeAttributes.put(BoostTypes.ADVENTURE, createAttributeFromConfig(BoostTypes.ADVENTURE, configBadge.adventure, itemPath));
+                if(configBadge.catching != null) badgeAttributes.put(BoostTypes.CATCHING, createAttributeFromConfig(BoostTypes.CATCHING, configBadge.catching, itemPath));
+                if(configBadge.spawning != null) badgeAttributes.put(BoostTypes.SPAWNING, createAttributeFromConfig(BoostTypes.SPAWNING, configBadge.spawning, itemPath));
 
                 builder.addBadge(new Badge(
                         item,

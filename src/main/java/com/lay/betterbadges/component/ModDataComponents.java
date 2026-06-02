@@ -3,7 +3,6 @@ package com.lay.betterbadges.component;
 import com.lay.betterbadges.BetterBadges;
 import com.lay.betterbadges.emblem.Emblem;
 import com.lay.betterbadges.emblem.EmblemTargetItem;
-import com.lay.betterbadges.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.league.League;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
