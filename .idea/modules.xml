@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/betterbadges.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/betterbadges.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/betterbadges.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/betterbadges.common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/betterbadges.common.test.iml" filepath="$PROJECT_DIR$/.idea/modules/common/betterbadges.common.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/betterbadges.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/betterbadges.fabric.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/betterbadges.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/betterbadges.fabric.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/betterbadges.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/betterbadges.neoforge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/betterbadges.neoforge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/betterbadges.neoforge.test.iml" />
+    </modules>
+  </component>
+</project>
