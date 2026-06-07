@@ -16,17 +16,18 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.lay.betterbadges.BetterBadgesFabric"
+      "com.lay.betterbadges.fabric.BetterBadgesFabric"
     ],
     "fabric-datagen": [
-      "com.lay.betterbadges.datagen.DataGenerator"
+      "com.lay.betterbadges.fabric.datagen.DataGenerator"
     ],
     "client": [
-      "com.lay.betterbadges.BetterBadgesFabricClient"
+      "com.lay.betterbadges.fabric.BetterBadgesFabricClient"
     ]
   },
   "mixins": [
-    "betterbadges.mixins.json"
+    "betterbadges.mixins.json",
+    "betterbadges.widener.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.3",

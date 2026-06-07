@@ -1,5 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" factoryName="Application" name="Minecraft Client (:fabric)" type="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="21"/>
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true"/>
     <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime"/>
     <module name="betterbadges.fabric.main"/>
     <option name="PROGRAM_PARAMETERS" value="--username MistahLay --uuid 74b8e9e1-71e4-3eb0-a60f-c45b79d0cacb"/>

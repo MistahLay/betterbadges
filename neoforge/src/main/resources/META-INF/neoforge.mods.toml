@@ -11,7 +11,6 @@ authors = "MistahLay"
 description = '''
 Better Badges for the Cobblemon Mod
 '''
-#logoFile = ""
 
 [[dependencies.betterbadges]]
 modId = "minecraft"
@@ -33,3 +32,6 @@ mandatory = true
 versionRange = "[1.7.3,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[mixins]]
+config="betterbadges.mixins.json"

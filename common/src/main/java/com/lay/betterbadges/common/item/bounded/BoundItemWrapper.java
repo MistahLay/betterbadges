@@ -1,0 +1,40 @@
+package com.lay.betterbadges.common.item.bounded;
+
+import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.item.ItemStackWrapper;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.players.GameProfileCache;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.Optional;
+import java.util.UUID;
+
+public class BoundItemWrapper extends ItemStackWrapper {
+
+    public BoundItemWrapper(ItemStack item) {
+        super(item);
+    }
+
+    public UUID getItemOwner(){
+        return this.item.get(ModDataComponents.ITEM_OWNER);
+    }
+
+    public String getItemOwnerName(MinecraftServer server){
+        UUID uuid = this.getItemOwner();
+        GameProfileCache cache = server.getProfileCache();
+        if(cache == null) return "unknown";
+        Optional<GameProfile> profile = cache.get(uuid);
+        if(profile.isEmpty()) return "unknown";
+        return profile.get().getName();
+    }
+
+    public void setItemOwner(Player player){
+        this.setItemOwner(player.getUUID());
+    }
+
+    public void setItemOwner(UUID uuid){
+        this.item.set(ModDataComponents.ITEM_OWNER, uuid);
+    }
+}
