@@ -43,11 +43,9 @@ public final class BetterBadges {
 		ModCreativeTab.registerItemGroups();
 		ModItems.registerModItems();
 
-		// Custom Registries
+		// Registries
 		ModLeagues.registerLeagues();
 		ModEmblems.registerEmblems();
-		BadgeCaseBase.registerFromConfig();
-		BadgeCaseCover.registerFromConfig();
 
 		// Screens, duh
 		ModScreens.registerScreenHandlers();

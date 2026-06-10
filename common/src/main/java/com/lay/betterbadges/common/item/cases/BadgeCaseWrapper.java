@@ -28,12 +28,12 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     }
 
     public boolean canPlayerUse(Player player){
-        return Objects.equals(getItemOwner(), player.getUUID().toString());
+        return Objects.equals(getItemOwner(), player.getUUID());
     }
 
     public boolean hasActiveLeague(){
         League currentLeague = getCurrentLeague();
-        return currentLeague != League.EMPTY;
+        return currentLeague != League.EMPTY && currentLeague != null;
     }
 
     private void updateBoosts(EmblemBadgesManager manager, Emblem currentEmblem){
@@ -86,12 +86,9 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     public void setInventoryManager(LeagueBadgesManager manager, RegistryAccess access){
         this.item.set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS, manager.serialize(access));
     }
+
     public LeagueBadgesManager getLeagueInventoryManager(RegistryAccess registryAccess){
         return LeagueBadgesManager.deserialize(this.item, registryAccess);
-    }
-
-    public void resetInventoryManager(){
-
     }
 
 }

@@ -1,0 +1,82 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.21/owo-ui.xsd">
+    <components>
+        <flow-layout direction="vertical"> <!--Root-->
+            <children>
+                <flow-layout direction="vertical"> <!--Inventory Stuff-->
+                    <children>
+                        <flow-layout direction="horizontal" id="layout.inventory@badgecase"> <!--Badge Case-->
+                            <children>
+                                <texture texture="betterbadges:textures/gui/badgecase/badge_case.png"
+                                         texture-width="256" texture-height="256"
+                                         region-width="176" region-height="95">
+                                </texture>
+                                <flow-layout direction="horizontal"> <!-- Top Badge Case -->
+                                    <children>
+                                        <button id="button.previous.league@badgecase">
+                                            <sizing>
+                                                <horizontal method="fixed">6</horizontal>
+                                                <vertical method="fixed">11</vertical>
+                                            </sizing>
+                                            <cursor-style>pointer</cursor-style>
+                                        </button>
+                                        <flow-layout direction="horizontal" id="league.tag@badgecase">
+                                            <children>
+
+                                            </children>
+                                            <vertical-alignment>center</vertical-alignment>
+                                            <horizontal-alignment>center</horizontal-alignment>
+                                        </flow-layout>
+                                        <button id="button.next.league@badgecase">
+                                            <sizing>
+                                                <horizontal method="fixed">6</horizontal>
+                                                <vertical method="fixed">11</vertical>
+                                            </sizing>
+                                            <cursor-style>pointer</cursor-style>
+                                        </button>
+                                    </children>
+                                    <positioning type="relative">50,5</positioning>
+                                    <vertical-alignment>center</vertical-alignment>
+                                    <horizontal-alignment>center</horizontal-alignment>
+                                    <gap>5</gap>
+                                </flow-layout>
+                            </children>
+                        </flow-layout>
+
+                        <stack-layout> <!--Inventory-->
+                            <children>
+                                <texture texture="betterbadges:textures/gui/badgecase/player_inventory.png"
+                                         texture-width="256" texture-height="256"
+                                         region-width="176" region-height="102">
+                                </texture>
+                                <label>
+                                    <text>Inventory</text>
+                                    <color>#6d4511</color>
+                                    <positioning type="relative">8,6</positioning>
+                                </label>
+                            </children>
+                        </stack-layout>
+                    </children>
+
+                    <margins>
+                        <left>2</left>
+                        <top>8</top>
+                    </margins>
+                </flow-layout>
+                <flow-layout direction="vertical"> <!--Emblem Container-->
+                    <children>
+
+                    </children>
+                </flow-layout>
+            </children>
+
+            <surface>
+                <vanilla-translucent/>
+            </surface>
+
+            <vertical-alignment>center</vertical-alignment>
+            <horizontal-alignment>center</horizontal-alignment>
+
+        </flow-layout>
+    </components>
+</owo-ui>

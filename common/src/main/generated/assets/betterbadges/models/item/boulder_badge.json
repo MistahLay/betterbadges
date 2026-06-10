@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "betterbadges:item/badge/boulder_badge"
+    "layer0": "betterbadges:item/badge/boulder_badge",
+    "layer1": "betterbadges:item/shine"
   }
 }

@@ -1,8 +1,13 @@
 package com.lay.betterbadges.common.item;
 
 import com.lay.betterbadges.common.BetterBadges;
+import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.emblem.ModEmblems;
+import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
+import com.lay.betterbadges.common.item.cases.BasicCase;
 import com.lay.betterbadges.common.league.LeagueKeys;
+import com.lay.betterbadges.common.league.ModLeagues;
 import dev.architectury.registry.registries.RegistrySupplier;
 import dev.architectury.registry.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
@@ -26,6 +31,15 @@ public class ModItems {
     public static final RegistrySupplier<BadgeItem> VOLCANO_BADGE = registerBadge(LeagueKeys.KANTO, "volcano");
     public static final RegistrySupplier<BadgeItem> EARTH_BADGE = registerBadge(LeagueKeys.KANTO, "earth");
 
+    // Badge Case
+    public static final RegistrySupplier<BasicCase> BADGE_CASE = registerItem("badge_case", () -> new BasicCase(
+            new Item.Properties()
+                    .rarity(Rarity.EPIC)
+                    .stacksTo(1)
+                    .fireResistant()
+                    .arch$tab(ModCreativeTab.BETTER_BADGES_ITEM_GROUP)
+    ));
+
     // Johto Badges
     public static final RegistrySupplier<BadgeItem> ZEPHYR_BADGE = registerBadge(LeagueKeys.JOHTO, "zephyr");
     public static final RegistrySupplier<BadgeItem> HIVE_BADGE = registerBadge(LeagueKeys.JOHTO, "hive");
@@ -36,21 +50,13 @@ public class ModItems {
     public static final RegistrySupplier<BadgeItem> GLACIER_BADGE = registerBadge(LeagueKeys.JOHTO, "glacier");
     public static final RegistrySupplier<BadgeItem> RISING_BADGE = registerBadge(LeagueKeys.JOHTO, "rising");
 
-    // Badge Case
-    public static final RegistrySupplier<Item> BADGE_CASE = registerItem("badge_case", () -> new Item(
-            new Item.Properties()
-                    .rarity(Rarity.EPIC)
-                    .stacksTo(1)
-                    .fireResistant()
-    ));
-
     public static void registerModItems(){
         BetterBadges.LOGGER.info("Registering custom items for " + BetterBadges.MOD_ID);
         ITEMS.register();
     }
 
     private static <T extends Item> RegistrySupplier<T> registerItem(String name, Supplier<T> item){
-        return ITEMS.register(ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, name), item);
+        return ITEMS.register(BetterBadges.of(name), item);
     }
 
     private static RegistrySupplier<BadgeItem> registerBadge(ResourceLocation league, String badgeName){

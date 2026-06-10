@@ -26,11 +26,8 @@ public class League {
             from -> from.id.toString()
     );
 
-    public static final RegistrySupplier<League> EMPTY = Builder.create(BetterBadges.of("none_league")).build();
+    public static final RegistrySupplier<League> EMPTY = Builder.create(BetterBadges.of("none")).build();
 
-    /**
-     * e.g. "betterbadges:name_league"
-     */
     private final ResourceLocation id;
     private final List<BadgeSlot> badgeSlots;
 
@@ -80,6 +77,10 @@ public class League {
 
     public List<BadgeSlot> getBadges(){
         return new ArrayList<>(this.badgeSlots);
+    }
+
+    public BadgeSlot getBadge(int index){
+        return this.badgeSlots.get(index);
     }
 
     public int getTotalBadges(){

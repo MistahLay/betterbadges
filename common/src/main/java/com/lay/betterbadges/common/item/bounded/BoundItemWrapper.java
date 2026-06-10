@@ -13,6 +13,8 @@ import java.util.UUID;
 
 public class BoundItemWrapper extends ItemStackWrapper {
 
+    public static String UNKNOWN = "unknown";
+
     public BoundItemWrapper(ItemStack item) {
         super(item);
     }
@@ -24,9 +26,9 @@ public class BoundItemWrapper extends ItemStackWrapper {
     public String getItemOwnerName(MinecraftServer server){
         UUID uuid = this.getItemOwner();
         GameProfileCache cache = server.getProfileCache();
-        if(cache == null) return "unknown";
+        if(cache == null || uuid == null) return UNKNOWN;
         Optional<GameProfile> profile = cache.get(uuid);
-        if(profile.isEmpty()) return "unknown";
+        if(profile.isEmpty()) return UNKNOWN;
         return profile.get().getName();
     }
 
@@ -36,5 +38,9 @@ public class BoundItemWrapper extends ItemStackWrapper {
 
     public void setItemOwner(UUID uuid){
         this.item.set(ModDataComponents.ITEM_OWNER, uuid);
+    }
+
+    public boolean hasOwner() {
+        return this.item.get(ModDataComponents.ITEM_OWNER) != null;
     }
 }

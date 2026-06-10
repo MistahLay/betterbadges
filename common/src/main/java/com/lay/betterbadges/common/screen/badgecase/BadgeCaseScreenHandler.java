@@ -8,6 +8,7 @@ import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.item.cases.BadgeCaseWrapper;
+import com.lay.betterbadges.common.league.BadgeSlot;
 import com.lay.betterbadges.common.league.League;
 import com.lay.betterbadges.common.mixin.SlotMixin;
 import com.lay.betterbadges.common.screen.AbstractItemContainerMenu;
@@ -45,11 +46,9 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     private final EmblemBadgesManager emblemBadgesManager;
     private final SimpleContainer dummyContainer = new SimpleContainer(16);
 
-    public final League initializedLeague;
-
-    public static final Vector2d BADGE_CONTAINER_POS = new Vector2d(0, 20);
+    public static final Vector2d BADGE_CONTAINER_POS = new Vector2d(0, 0);
     public static final Vector2d EMBLEM_CONTAINER_POS = new Vector2d(150, 150);
-    public static final Vector2d INVENTORY_CONTAINER_POS = new Vector2d(0, 0);
+    public static final Vector2d INVENTORY_CONTAINER_POS = new Vector2d(9, 103);
 
     public BadgeCaseScreenHandler(int i, Inventory inventory, SlotAccess slot) {
         super(ModScreens.BADGE_CASE_SCREEN_HANDLER.get(), i, inventory, slot);
@@ -57,8 +56,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         this.leagueBadgesManager = this.badgeCase.getLeagueInventoryManager(inventory.player.registryAccess());
         this.emblemBadgesManager = this.badgeCase.getEmblemInventoryManager();
 
-        this.initializedLeague = this.badgeCase.getCurrentLeague();
-        this.currentLeague = initializedLeague;
+        this.currentLeague = this.badgeCase.getCurrentLeague();
 
         this.currentEmblem = this.badgeCase.getCurrentEmblem();
 
@@ -125,16 +123,16 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     }
 
     public void switchLeague(League league){
-        if(this.badgeCase.getCurrentLeague() == league || league == League.EMPTY) return;
+        if(this.badgeCase.getCurrentLeague() == league || league == League.EMPTY || league == null) return;
         SimpleContainer container = this.leagueBadgesManager.getBadgeContainer(league);
-        List<com.lay.betterbadges.common.league.BadgeSlot> badgeSlots = league.getBadges();
+        List<BadgeSlot> badgeSlots = league.getBadges();
 
         this.setLeague(league);
 
         for (int i = 0; i < 8; i++){
             Slot slot = this.slots.get(i);
             if(slot.container == this.currentContainer) {
-                com.lay.betterbadges.common.league.BadgeSlot badgeSlot = badgeSlots.removeFirst();
+                BadgeSlot badgeSlot = badgeSlots.removeFirst();
                 ((SlotMixin) slot).betterbadges$setX(BADGE_CONTAINER_POS.x() + badgeSlot.x());
                 ((SlotMixin) slot).betterbadges$setY(BADGE_CONTAINER_POS.y() + badgeSlot.y());
                 ((SlotMixin) slot).betterbadges$setContainer(container);
@@ -248,7 +246,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     }
 
     private void createLeagueBadgesSlots() {
-        for (com.lay.betterbadges.common.league.BadgeSlot badgeSlot : this.badgeCase.getCurrentLeague().getBadges()){
+        for (BadgeSlot badgeSlot : this.badgeCase.getCurrentLeague().getBadges()){
             this.addSlot(new ScreenBadgeSlot(
                     this.currentContainer,
                     badgeSlot.slot() ,

@@ -9,7 +9,7 @@ public class LeagueKeys {
     public static final ResourceLocation JOHTO = createLeaguePath("johto");
 
     public static ResourceLocation createLeaguePath(String path){
-        return BetterBadges.of(path).withSuffix("_league");
+        return BetterBadges.of(path);
     }
 
 }

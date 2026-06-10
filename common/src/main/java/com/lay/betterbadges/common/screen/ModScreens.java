@@ -16,14 +16,14 @@ public class ModScreens {
     private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BetterBadges.MOD_ID, Registries.MENU);
 
     public static final RegistrySupplier<MenuType<BadgeCaseScreenHandler>> BADGE_CASE_SCREEN_HANDLER = MENU_TYPES
-            .register(ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "badge_case_gui"),
+            .register(BetterBadges.of("badge_case_gui"),
                     () -> MenuRegistry.ofExtended(((id, inventory, buf) -> {
                         SlotAccess handStack = SlotAccess.forEquipmentSlot(inventory.player, buf.readJsonWithCodec(EquipmentSlot.CODEC));
                         return new BadgeCaseScreenHandler(id, inventory, handStack);
             })));
 
     public static ResourceLocation getGuiTexture(String path){
-        return ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "textures/gui/" + path).withSuffix(".png");
+        return BetterBadges.of("textures/gui/" + path).withSuffix(".png");
     }
 
     public static void registerScreenHandlers(){

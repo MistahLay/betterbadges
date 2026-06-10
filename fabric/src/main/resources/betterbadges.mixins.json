@@ -4,7 +4,9 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"SlotMixin",
-		"ConfigWrapperMixin"
+		"ConfigWrapperMixin",
+		"AbstractContainerScreenMixin",
+		"TextureComponentMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
