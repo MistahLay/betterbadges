@@ -12,16 +12,16 @@ public record LeagueTexture(League league) {
         return new LeagueTexture(league);
     }
 
-    public ResourceLocation getLeaguePath(){
+    public ResourceLocation leaguePath(){
         return TextureHelper.ofBadgeCase("league/" + league.getId().getPath() + "/", false);
     }
 
     public ResourceLocation tag(){
-        return TextureHelper.png(getLeaguePath().withSuffix("tag"));
+        return TextureHelper.png(leaguePath().withSuffix("tag"));
     }
 
     public ResourceLocation base(){
-        return TextureHelper.png(getLeaguePath().withSuffix("base"));
+        return TextureHelper.png(leaguePath().withSuffix("base"));
     }
 
     public ResourceLocation badge(int index){
@@ -33,7 +33,7 @@ public record LeagueTexture(League league) {
     }
 
     public ResourceLocation badge(Item item){
-        return TextureHelper.png(this.getLeaguePath().withSuffix(BuiltInRegistries.ITEM.getKey(item).getPath()));
+        return TextureHelper.png(this.leaguePath().withSuffix(BuiltInRegistries.ITEM.getKey(item).getPath()));
     }
 
 }

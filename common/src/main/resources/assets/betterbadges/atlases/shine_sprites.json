@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "type": "animation_overlay",
+      "textures": [
+        "betterbadges:textures/item/badge/boulder_badge",
+        "betterbadges:textures/item/badge/cascade_badge",
+        "betterbadges:textures/item/badge/thunder_badge",
+        "betterbadges:textures/item/badge/rainbow_badge",
+        "betterbadges:textures/item/badge/soul_badge",
+        "betterbadges:textures/item/badge/marsh_badge",
+        "betterbadges:textures/item/badge/volcano_badge",
+        "betterbadges:textures/item/badge/earth_badge",
+        "betterbadges:textures/item/badge/zephyr_badge"
+      ],
+      "frames": 10,
+      "animation_sprite": "betterbadges:textures/animation/shine"
+    }
+  ]
+}

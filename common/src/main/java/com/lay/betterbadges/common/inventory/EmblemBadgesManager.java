@@ -9,10 +9,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EmblemBadgesManager {
 
@@ -22,6 +19,7 @@ public class EmblemBadgesManager {
         Map<Emblem, List<EmblemTargetItem>> newMap = new HashMap<>();
         for (Map.Entry<Emblem, NonNullList<EmblemTargetItem>> item : targetItems.entrySet()){
             Emblem key = item.getKey();
+            if (key == Emblem.EMPTY.get()) continue;
             List<EmblemTargetItem> newList = new ArrayList<>();
             for (EmblemTargetItem targetItem : item.getValue()) if (targetItem != EmblemTargetItem.EMPTY) {
                 newList.add(targetItem);
@@ -35,6 +33,7 @@ public class EmblemBadgesManager {
         Map<Emblem, NonNullList<EmblemTargetItem>> newMap = new HashMap<>();
         for (Map.Entry<Emblem, List<EmblemTargetItem>> item : targetItems.entrySet()){
             Emblem key = item.getKey();
+            if (key == Emblem.EMPTY.get()) continue;
             NonNullList<EmblemTargetItem> newList = NonNullList.withSize(key.getTotalSlots(), EmblemTargetItem.EMPTY);
             for (EmblemTargetItem targetItem : item.getValue()) newList.set(targetItem.currentSlot(), targetItem);
             newMap.put(item.getKey(), newList);
@@ -107,6 +106,10 @@ public class EmblemBadgesManager {
 
     public Map<Emblem, NonNullList<EmblemTargetItem>> getTargetItems(){
         return targetItems;
+    }
+
+    public Set<Emblem> getEmblems(){
+        return this.targetItems.keySet();
     }
 
 }

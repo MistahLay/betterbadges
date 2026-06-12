@@ -1,7 +1,7 @@
-package com.lay.betterbadges.common.screen;
+package com.lay.betterbadges.common.render.screen;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.screen.badgecase.BadgeCaseScreenHandler;
+import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
 import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;

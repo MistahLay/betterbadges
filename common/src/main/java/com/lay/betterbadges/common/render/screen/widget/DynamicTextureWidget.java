@@ -1,7 +1,6 @@
-package com.lay.betterbadges.common.screen.widget;
+package com.lay.betterbadges.common.render.screen.widget;
 
 import com.lay.betterbadges.common.mixin.TextureComponentMixin;
-import com.mojang.blaze3d.systems.RenderSystem;
 import io.wispforest.owo.ui.component.TextureComponent;
 import io.wispforest.owo.ui.core.OwoUIDrawContext;
 import io.wispforest.owo.ui.core.Positioning;

@@ -9,10 +9,8 @@ import com.lay.betterbadges.common.item.ModCreativeTab;
 import com.lay.betterbadges.common.item.ModItems;
 import com.lay.betterbadges.common.league.ModLeagues;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
-import com.lay.betterbadges.common.registry.BadgeCaseBase;
-import com.lay.betterbadges.common.registry.BadgeCaseCover;
 import com.lay.betterbadges.common.registry.ModRegistries;
-import com.lay.betterbadges.common.screen.ModScreens;
+import com.lay.betterbadges.common.render.screen.ModScreens;
 
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.platform.Platform;

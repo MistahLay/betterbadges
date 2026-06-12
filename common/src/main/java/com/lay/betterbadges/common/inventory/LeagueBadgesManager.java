@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Implements the league badge inventory
@@ -30,8 +31,7 @@ public class LeagueBadgesManager {
     public static LeagueBadgesManager createEmpty(){
         Map<League, SimpleContainer> inventories = new HashMap<>();
         for (League league : ModRegistries.LEAGUE){
-            if(league == League.EMPTY) continue;
-            BetterBadges.LOGGER.info("From Empty: {}", league.toString());
+            if(league == League.EMPTY.get()) continue;
             inventories.put(league, new SimpleContainer(league.getTotalBadges()));
         }
         return new LeagueBadgesManager(inventories);
@@ -46,7 +46,7 @@ public class LeagueBadgesManager {
         Map<League, SimpleContainer> inventories = new HashMap<>();
 
         ModRegistries.LEAGUE.forEach(league -> {
-            if(league == League.EMPTY) return;
+            if(league == League.EMPTY.get()) return;
 
             if(!inventoryContents.containsKey(league)){
                 inventories.put(league, new SimpleContainer(league.getTotalBadges()));
@@ -76,6 +76,10 @@ public class LeagueBadgesManager {
 
     public @NotNull SimpleContainer getBadgeContainer(League league){
         return this.inventories.get(league);
+    }
+
+    public Set<League> getLeagues(){
+        return this.inventories.keySet();
     }
 
 }

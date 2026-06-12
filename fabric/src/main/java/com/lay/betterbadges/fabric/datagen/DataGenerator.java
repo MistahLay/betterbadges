@@ -9,6 +9,7 @@ public class DataGenerator implements DataGeneratorEntrypoint {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModItemTagProvider::new);
 		pack.addProvider(ModModelProvider::new);
+		pack.addProvider((FabricDataGenerator.Pack.Factory<BadgeTextureProvider>) BadgeTextureProvider::new);
 	}
 
 	public void registerBadge(){

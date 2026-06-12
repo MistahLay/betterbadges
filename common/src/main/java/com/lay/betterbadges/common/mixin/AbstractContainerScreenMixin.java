@@ -1,14 +1,11 @@
 package com.lay.betterbadges.common.mixin;
 
-import com.lay.betterbadges.common.league.League;
-import com.lay.betterbadges.common.screen.CustomHighlightSlot;
-import com.lay.betterbadges.common.screen.badgecase.BadgeCaseScreen;
-import com.lay.betterbadges.common.util.texture.LeagueTexture;
+import com.lay.betterbadges.common.render.screen.CustomHighlightSlot;
+import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreen;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.Nullable;

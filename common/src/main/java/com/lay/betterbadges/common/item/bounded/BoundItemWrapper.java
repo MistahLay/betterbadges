@@ -43,4 +43,28 @@ public class BoundItemWrapper extends ItemStackWrapper {
     public boolean hasOwner() {
         return this.item.get(ModDataComponents.ITEM_OWNER) != null;
     }
+
+    public boolean canUse(Player player){
+        return canUse(player.getUUID(), false);
+    }
+
+    public boolean canUse(UUID uuid){
+        return canUse(uuid, false);
+    }
+
+    public boolean canUse(Player player, boolean overrideEmpty){
+        return canUse(player.getUUID(), overrideEmpty);
+    }
+
+    public boolean canUse(UUID uuid, boolean overrideEmpty){
+        UUID owner = this.getItemOwner();
+        if (owner == null) {
+            if (overrideEmpty) {
+                this.setItemOwner(uuid);
+                return true;
+            }
+            return false;
+        }
+        return owner.equals(uuid);
+    }
 }

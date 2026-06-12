@@ -1,7 +1,7 @@
 package com.lay.betterbadges.common.network;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.screen.badgecase.BadgeCaseScreenHandler;
+import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
 import io.wispforest.owo.network.OwoNetChannel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;

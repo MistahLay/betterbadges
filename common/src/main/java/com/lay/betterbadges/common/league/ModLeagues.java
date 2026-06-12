@@ -7,14 +7,14 @@ import dev.architectury.registry.registries.RegistrySupplier;
 public class ModLeagues {
 
     public static final RegistrySupplier<League> KANTO = League.Builder.create(LeagueKeys.KANTO)
-            .add(ModItems.BOULDER_BADGE.get(), 46, 74)
-            .add(ModItems.CASCADE_BADGE.get(), 74, 74)
-            .add(ModItems.THUNDER_BADGE.get(), 98, 74)
-            .add(ModItems.RAINBOW_BADGE.get(), 126, 74)
-            .add(ModItems.SOUL_BADGE.get(), 38, 97)
-            .add(ModItems.MARSH_BADGE.get(), 70, 97)
-            .add(ModItems.VOLCANO_BADGE.get(), 102, 97)
-            .add(ModItems.EARTH_BADGE.get(), 134, 97)
+            .add(ModItems.BOULDER_BADGE.get(), 46, 18)
+            .add(ModItems.CASCADE_BADGE.get(), 74, 18)
+            .add(ModItems.THUNDER_BADGE.get(), 98, 18)
+            .add(ModItems.RAINBOW_BADGE.get(), 126, 18)
+            .add(ModItems.SOUL_BADGE.get(), 38, 36)
+            .add(ModItems.MARSH_BADGE.get(), 70, 36)
+            .add(ModItems.VOLCANO_BADGE.get(), 102, 36)
+            .add(ModItems.EARTH_BADGE.get(), 134, 36)
             .build();
 
     public static final RegistrySupplier<League> JOHTO = League.Builder.create(LeagueKeys.JOHTO)

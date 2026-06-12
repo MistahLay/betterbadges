@@ -6,7 +6,8 @@
 		"SlotMixin",
 		"ConfigWrapperMixin",
 		"AbstractContainerScreenMixin",
-		"TextureComponentMixin"
+		"TextureComponentMixin",
+		"SpriteSourcesMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

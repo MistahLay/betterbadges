@@ -1,8 +1,21 @@
 <owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.21/owo-ui.xsd">
     <components>
-        <flow-layout direction="vertical"> <!--Root-->
+        <flow-layout direction="horizontal"> <!--Root-->
             <children>
+                <flow-layout direction="horizontal" id="emblem@badgecase"> <!--Emblem Container-->
+                    <children> </children>
+                    <positioning type="layout">10,10</positioning>
+                    <sizing>
+                        <vertical method="fixed">117</vertical>
+                        <horizontal method="fixed">108</horizontal>
+                    </sizing>
+                    <margins>
+                        <top>86</top>
+                    </margins>
+                    <vertical-alignment>center</vertical-alignment>
+                    <horizontal-alignment>center</horizontal-alignment>
+                </flow-layout>
                 <flow-layout direction="vertical"> <!--Inventory Stuff-->
                     <children>
                         <flow-layout direction="horizontal" id="layout.inventory@badgecase"> <!--Badge Case-->
@@ -57,25 +70,23 @@
                             </children>
                         </stack-layout>
                     </children>
-
                     <margins>
                         <left>2</left>
-                        <top>8</top>
+                        <top>7</top>
                     </margins>
-                </flow-layout>
-                <flow-layout direction="vertical"> <!--Emblem Container-->
-                    <children>
-
-                    </children>
-                </flow-layout>
+                </flow-layout >
             </children>
 
             <surface>
                 <vanilla-translucent/>
             </surface>
 
+
             <vertical-alignment>center</vertical-alignment>
             <horizontal-alignment>center</horizontal-alignment>
+            <padding>
+                <right>108</right>
+            </padding>
 
         </flow-layout>
     </components>

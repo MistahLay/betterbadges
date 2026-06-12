@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.screen;
+package com.lay.betterbadges.common.render.screen;
 
 import io.wispforest.owo.client.screens.SlotGenerator;
 import net.minecraft.world.InteractionHand;

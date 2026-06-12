@@ -10,6 +10,8 @@ import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.league.BadgeSlot;
 import com.lay.betterbadges.common.league.BadgeAttribute;
 import com.lay.betterbadges.common.league.League;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
@@ -27,16 +29,13 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
         super(item);
     }
 
-    public boolean canPlayerUse(Player player){
-        return Objects.equals(getItemOwner(), player.getUUID());
-    }
-
     public boolean hasActiveLeague(){
         League currentLeague = getCurrentLeague();
-        return currentLeague != League.EMPTY && currentLeague != null;
+        return currentLeague != League.EMPTY.get() && currentLeague != null;
     }
 
     private void updateBoosts(EmblemBadgesManager manager, Emblem currentEmblem){
+        if (Platform.getEnv() == Env.CLIENT.toPlatform()) return;
         ItemAttributeModifiers modifiers = ItemAttributeModifiers.EMPTY;
         for (EmblemTargetItem target : manager.getTargets(currentEmblem)) {
             Boost boost = currentEmblem.getSlot(target.currentSlot()).category();

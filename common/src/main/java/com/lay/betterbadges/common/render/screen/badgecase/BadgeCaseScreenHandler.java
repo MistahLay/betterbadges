@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.screen.badgecase;
+package com.lay.betterbadges.common.render.screen.badgecase;
 
 import com.lay.betterbadges.common.component.ModDataComponents;
 import com.lay.betterbadges.common.emblem.Emblem;
@@ -11,9 +11,9 @@ import com.lay.betterbadges.common.item.cases.BadgeCaseWrapper;
 import com.lay.betterbadges.common.league.BadgeSlot;
 import com.lay.betterbadges.common.league.League;
 import com.lay.betterbadges.common.mixin.SlotMixin;
-import com.lay.betterbadges.common.screen.AbstractItemContainerMenu;
-import com.lay.betterbadges.common.screen.ModScreens;
-import com.lay.betterbadges.common.screen.Vector2d;
+import com.lay.betterbadges.common.render.screen.AbstractItemContainerMenu;
+import com.lay.betterbadges.common.render.screen.ModScreens;
+import com.lay.betterbadges.common.render.screen.Vector2d;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -34,7 +34,6 @@ import java.util.Objects;
 public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
     private static final Logger log = LoggerFactory.getLogger(BadgeCaseScreenHandler.class);
-    private SimpleContainer currentContainer;
     private League currentLeague;
     private Emblem currentEmblem;
 
@@ -44,10 +43,12 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     private final BadgeCaseWrapper badgeCase;
     private final LeagueBadgesManager leagueBadgesManager;
     private final EmblemBadgesManager emblemBadgesManager;
-    private final SimpleContainer dummyContainer = new SimpleContainer(16);
+
+    // 8 League Badges 36 Player Inventory 20 Emblem Badges
+    private final SimpleContainer dummyContainer = new SimpleContainer(32);
 
     public static final Vector2d BADGE_CONTAINER_POS = new Vector2d(0, 0);
-    public static final Vector2d EMBLEM_CONTAINER_POS = new Vector2d(150, 150);
+    public static final Vector2d EMBLEM_CONTAINER_POS = new Vector2d(-103, 83);
     public static final Vector2d INVENTORY_CONTAINER_POS = new Vector2d(9, 103);
 
     public BadgeCaseScreenHandler(int i, Inventory inventory, SlotAccess slot) {
@@ -61,8 +62,6 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         this.currentEmblem = this.badgeCase.getCurrentEmblem();
 
         if(!this.emblemBadgesManager.containsEmblem(currentEmblem)) this.currentEmblem = null;
-
-        this.currentContainer = this.leagueBadgesManager.getBadgeContainer(this.badgeCase.getCurrentLeague());
 
         this.createLeagueBadgesSlots();
 
@@ -87,29 +86,19 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
             if(target < 0) return;
             if(this.changeHighlightedSlot(stack, i)) this.highlightedSlot = null;
-        }
-        else if(clickType == ClickType.PICKUP){
+        } else if(clickType == ClickType.PICKUP){
             if (i < 0) {
                 return;
             }
             Slot slot = this.slots.get(i);
-            if(!(slot instanceof ScreenEmblemSlot)) return;
-            if(this.highlightedSlot != null && this.highlightedSlot.index == slot.index) {
+            if (!(slot instanceof ScreenEmblemSlot emblemSlot)) return;
+            if (emblemSlot.emblem == Emblem.EMPTY) return;
+            if (this.highlightedSlot != null && this.highlightedSlot.index == slot.index) {
                 this.highlightedSlot = null;
                 return;
             }
             this.highlightedSlot = slot;
         }
-    }
-
-    public void setLeague(League league){
-        if(league == League.EMPTY) return;
-        this.badgeCase.setCurrentLeague(league);
-        this.currentLeague = league;
-    }
-
-    public League getLeague(){
-        return this.currentLeague;
     }
 
     public void setEmblem(Emblem emblem){
@@ -122,33 +111,6 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         return this.currentEmblem;
     }
 
-    public void switchLeague(League league){
-        if(this.badgeCase.getCurrentLeague() == league || league == League.EMPTY || league == null) return;
-        SimpleContainer container = this.leagueBadgesManager.getBadgeContainer(league);
-        List<BadgeSlot> badgeSlots = league.getBadges();
-
-        this.setLeague(league);
-
-        for (int i = 0; i < 8; i++){
-            Slot slot = this.slots.get(i);
-            if(slot.container == this.currentContainer) {
-                BadgeSlot badgeSlot = badgeSlots.removeFirst();
-                ((SlotMixin) slot).betterbadges$setX(BADGE_CONTAINER_POS.x() + badgeSlot.x());
-                ((SlotMixin) slot).betterbadges$setY(BADGE_CONTAINER_POS.y() + badgeSlot.y());
-                ((SlotMixin) slot).betterbadges$setContainer(container);
-                ((ScreenBadgeSlot) slot).setWhitelist(badgeSlot.item());
-            }
-        }
-
-        this.currentContainer = container;
-
-        this.broadcastChanges();
-    }
-
-    public EmblemBadgesManager getEmblemBadgesManager(){
-        return this.emblemBadgesManager;
-    }
-
     private boolean isEmblemValid(Emblem emblem){
         return emblem != null && emblem != Emblem.EMPTY && this.emblemBadgesManager != null && this.emblemBadgesManager.containsEmblem(emblem) && emblem != this.currentEmblem;
     }
@@ -159,24 +121,81 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         highlightedSlot = null;
         this.setEmblem(emblem);
 
-        if(this.slots.size() >= this.getEmblemIndex() + 7) for (int i = 0; i < 8; i++) {
-            Slot slot = this.slots.get(i + this.getEmblemIndex());
-            EmblemSlot emblemSlot = emblem.getSlot(i);
-            EmblemTargetItem target = this.emblemBadgesManager.getTarget(emblem, i);
-            ((SlotMixin) slot).betterbadges$setX(EMBLEM_CONTAINER_POS.x() + emblemSlot.x());
-            ((SlotMixin) slot).betterbadges$setY(EMBLEM_CONTAINER_POS.y() + emblemSlot.y());
-            if(target == null || target == EmblemTargetItem.EMPTY){
-                ((SlotMixin) slot).betterbadges$setContainer(this.dummyContainer);
-            } else {
-                ((SlotMixin) slot).betterbadges$setSlot(target.targetSlot());
-                SimpleContainer targetContainer = this.leagueBadgesManager.getBadgeContainer(target.league());
-                ((SlotMixin) slot).betterbadges$setContainer(targetContainer);
+        if(this.slots.size() >= this.getEmblemIndex() + 7) {
+            for (int i = 0; i < Emblem.MAX_SLOTS; i++) {
+                Slot slot = this.slots.get(i + this.getEmblemIndex());
+                EmblemSlot emblemSlot = emblem.getSlot(i);
+
+                if (!(slot instanceof ScreenEmblemSlot screenEmblemSlot)) continue;
+
+                if (emblemSlot == null){
+                    if (screenEmblemSlot.emblem == Emblem.EMPTY) break;
+                    screenEmblemSlot.setEmblem(emblem);
+                    ((SlotMixin) slot).betterbadges$setContainer(this.dummyContainer);
+                    ((SlotMixin) slot).betterbadges$setSlot(i);
+                    ((SlotMixin) slot).betterbadges$setX(1000000);
+                    ((SlotMixin) slot).betterbadges$setY(1000000);
+                    continue;
+                }
+
+                EmblemTargetItem target = this.emblemBadgesManager.getTarget(emblem, i);
+                ((SlotMixin) slot).betterbadges$setX(EMBLEM_CONTAINER_POS.x() + emblemSlot.x());
+                ((SlotMixin) slot).betterbadges$setY(EMBLEM_CONTAINER_POS.y() + emblemSlot.y());
+                if (target == null || target == EmblemTargetItem.EMPTY) {
+                    ((SlotMixin) slot).betterbadges$setContainer(this.dummyContainer);
+                } else {
+                    ((SlotMixin) slot).betterbadges$setSlot(target.targetSlot());
+                    SimpleContainer targetContainer = this.leagueBadgesManager.getBadgeContainer(target.league());
+                    ((SlotMixin) slot).betterbadges$setContainer(targetContainer);
+                }
             }
-        } else {
+        }
+        else {
             this.createEmblemBadgesSlots();
         }
 
         this.broadcastChanges();
+    }
+
+    public void setLeague(League league){
+        if(league == League.EMPTY) return;
+        this.badgeCase.setCurrentLeague(league);
+        this.currentLeague = league;
+    }
+
+    public League getLeague(){
+        return this.currentLeague;
+    }
+
+    public void switchLeague(League league){
+        if(this.badgeCase.getCurrentLeague() == league || league == League.EMPTY || league == null) return;
+        SimpleContainer container = this.leagueBadgesManager.getBadgeContainer(league);
+        List<BadgeSlot> badgeSlots = league.getBadges();
+
+        SimpleContainer currentContainer = this.getCurrentLeagueContainer();
+
+        this.setLeague(league);
+
+        for (int i = 0; i < 8; i++){
+            Slot slot = this.slots.get(i);
+            if(slot.container == currentContainer) {
+                BadgeSlot badgeSlot = badgeSlots.removeFirst();
+                ((SlotMixin) slot).betterbadges$setX(BADGE_CONTAINER_POS.x() + badgeSlot.x());
+                ((SlotMixin) slot).betterbadges$setY(BADGE_CONTAINER_POS.y() + badgeSlot.y());
+                ((SlotMixin) slot).betterbadges$setContainer(container);
+                ((ScreenBadgeSlot) slot).setWhitelist(badgeSlot.item());
+            }
+        }
+
+        this.broadcastChanges();
+    }
+
+    public EmblemBadgesManager getEmblemBadgesManager(){
+        return this.emblemBadgesManager;
+    }
+
+    public LeagueBadgesManager getLeagueBadgesManager(){
+        return this.leagueBadgesManager;
     }
 
     @Override
@@ -189,10 +208,10 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         ItemStack itemStack2 = slot.getItem();
         ItemStack itemStack = itemStack2.copy();
 
-        int containerSize = this.currentContainer.getContainerSize();
+        int containerSize = this.getCurrentLeagueContainer().getContainerSize();
         int target = this.currentLeague.getSlotForBadge(itemStack2.getItem());
 
-        if (target >= 0 && this.currentContainer.getItem(target).isEmpty() && Objects.equals(new BoundItemWrapper(itemStack2).getItemOwner(), this.badgeCase.getItemOwner())){
+        if (target >= 0 && this.getCurrentLeagueContainer().getItem(target).isEmpty() && Objects.equals(new BoundItemWrapper(itemStack2).getItemOwner(), this.badgeCase.getItemOwner())){
             if(!this.moveItemStackTo(itemStack2, target, target + 1, false)) {
                 return ItemStack.EMPTY;
             }
@@ -224,7 +243,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         EmblemSlot emblemSlot = this.currentEmblem.getSlot(actualSlotIndex);
 
         if(!this.currentLeague.getRequiredBadgeAt(index).containsBoost(emblemSlot.category())) return false;
-        if(ItemStack.isSameItemSameComponents(slot.getItem(), stack) && this.currentContainer == slot.container) return false;
+        if(ItemStack.isSameItemSameComponents(slot.getItem(), stack) && this.getCurrentLeagueContainer() == slot.container) return false;
 
         log.info("{}", actualSlotIndex);
 
@@ -237,8 +256,10 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
             ((SlotMixin) previousSlot).betterbadges$setContainer(dummyContainer);
         }
 
+        System.out.println("changed");
+
         this.emblemBadgesManager.setTarget(this.currentEmblem, this.currentLeague, index, actualSlotIndex, true);
-        ((SlotMixin) slot).betterbadges$setContainer(this.currentContainer);
+        ((SlotMixin) slot).betterbadges$setContainer(this.getCurrentLeagueContainer());
         ((SlotMixin) slot).betterbadges$setSlot(index);
         this.broadcastChanges();
         this.badgeCase.setEmblemInventoryManager(this.emblemBadgesManager);
@@ -248,7 +269,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     private void createLeagueBadgesSlots() {
         for (BadgeSlot badgeSlot : this.badgeCase.getCurrentLeague().getBadges()){
             this.addSlot(new ScreenBadgeSlot(
-                    this.currentContainer,
+                    this.getCurrentLeagueContainer(),
                     badgeSlot.slot() ,
                     BADGE_CONTAINER_POS.x() + badgeSlot.x(),
                     BADGE_CONTAINER_POS.y() + badgeSlot.y(),
@@ -263,15 +284,23 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         NonNullList<EmblemTargetItem> targets = this.emblemBadgesManager.getTargets(currentEmblem);
         this.currentEmblem = currentEmblem;
         if(targets == null) return;
-        for (int i = 0; i < currentEmblem.getTotalSlots(); i++) {
-            EmblemSlot emblemSlot = currentEmblem.getSlot(i);
-            EmblemTargetItem target = targets.get(i);
-            if(target == EmblemTargetItem.EMPTY) {
-                this.addSlot(createEmblemBadgeSlot(emblemSlot, i, this.dummyContainer));
+        int totalSlots = currentEmblem.getTotalSlots();
+        for (int i = 0; i < Emblem.MAX_SLOTS; i++) {
+            if (i >= totalSlots) {
+                this.addSlot(new ScreenEmblemSlot(this.dummyContainer, Emblem.EMPTY.get(), i, 1000000, 1000000));
                 continue;
             }
+            EmblemSlot emblemSlot = currentEmblem.getSlot(i);
+            EmblemTargetItem target = targets.get(i);
+
+            if(target == EmblemTargetItem.EMPTY) {
+                this.addSlot(createEmblemBadgeSlot(emblemSlot, currentEmblem, i, this.dummyContainer));
+                continue;
+            }
+
             SimpleContainer associatedContainer = this.leagueBadgesManager.getBadgeContainer(target.league());
-            this.addSlot(createEmblemBadgeSlot(emblemSlot, target.targetSlot(), associatedContainer));
+
+            this.addSlot(createEmblemBadgeSlot(emblemSlot, currentEmblem, target.targetSlot(), associatedContainer));
         }
     }
 
@@ -279,20 +308,20 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         return this.highlightedSlot;
     }
 
-    private ScreenEmblemSlot createEmblemBadgeSlot(EmblemSlot emblemSlot, int slotIndex, SimpleContainer container){
-        return new ScreenEmblemSlot(container, slotIndex, emblemSlot.x() + EMBLEM_CONTAINER_POS.x(), emblemSlot.y() + EMBLEM_CONTAINER_POS.y());
+    private ScreenEmblemSlot createEmblemBadgeSlot(EmblemSlot emblemSlot, Emblem emblem, int slotIndex, SimpleContainer container){
+        return new ScreenEmblemSlot(container, emblem, slotIndex, emblemSlot.x() + EMBLEM_CONTAINER_POS.x(), emblemSlot.y() + EMBLEM_CONTAINER_POS.y());
     }
 
-    private int getEmblemIndex(){
-        return this.currentContainer.getContainerSize() + 36;
+    public int getEmblemIndex(){
+        return this.getCurrentLeagueContainer().getContainerSize() + 36;
     }
 
-    private int getInventoryIndex(){
-        return this.currentContainer.getContainerSize();
+    public int getInventoryIndex(){
+        return this.getCurrentLeagueContainer().getContainerSize();
     }
 
-    private int getLeagueIndex(){
-        return 0;
+    public SimpleContainer getCurrentLeagueContainer(){
+        return this.leagueBadgesManager.getBadgeContainer(this.badgeCase.getCurrentLeague());
     }
 
     /**
@@ -335,9 +364,11 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
     }
 
-    private class ScreenEmblemSlot extends Slot {
-        public ScreenEmblemSlot(Container container, int i, int j, int k) {
+    public class ScreenEmblemSlot extends Slot {
+        private Emblem emblem;
+        public ScreenEmblemSlot(Container container, Emblem emblem, int i, int j, int k) {
             super(container, i, j, k);
+            this.emblem = emblem;
         }
 
         @Override
@@ -363,6 +394,14 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         @Override
         public boolean isActive() {
             return super.isActive();
+        }
+
+        public void setEmblem(Emblem emblem){
+            this.emblem = emblem;
+        }
+
+        public Emblem getEmblem(){
+            return this.emblem;
         }
     }
 

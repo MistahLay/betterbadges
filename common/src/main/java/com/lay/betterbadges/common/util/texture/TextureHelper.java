@@ -13,8 +13,16 @@ public final class TextureHelper {
         return addSuffix ? png(BetterBadges.of("textures/" + path)) : BetterBadges.of("textures/" + path);
     }
 
+    public static ResourceLocation ofAtlas(String path){
+        return ofAtlas(path, true);
+    }
+
+    public static ResourceLocation ofAtlas(String path, boolean addSuffix){
+        return ofTexture("atlas/" + path, addSuffix);
+    }
+
     public static ResourceLocation ofGui(String path){
-        return ofGui("gui/" + path, true);
+        return ofGui(path, true);
     }
 
     public static ResourceLocation ofGui(String path, boolean addSuffix){
@@ -22,7 +30,7 @@ public final class TextureHelper {
     }
 
     public static ResourceLocation ofBadgeCase(String path){
-        return ofBadgeCase("badgecase/" + path, true);
+        return ofBadgeCase(path, true);
     }
 
     public static ResourceLocation ofBadgeCase(String path, boolean addSuffix){

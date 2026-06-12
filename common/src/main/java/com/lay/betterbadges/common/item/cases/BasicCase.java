@@ -1,18 +1,15 @@
 package com.lay.betterbadges.common.item.cases;
 
-import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.component.ModDataComponents;
 import com.lay.betterbadges.common.emblem.Emblem;
 import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItem;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.league.ModLeagues;
 import com.lay.betterbadges.common.registry.ModRegistries;
-import com.lay.betterbadges.common.screen.badgecase.BadgeCaseScreenHandler;
+import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket;
@@ -25,7 +22,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -57,9 +53,7 @@ public class BasicCase extends BoundItem {
 
         BadgeCaseWrapper badgeCase = new BadgeCaseWrapper(stack);
 
-        if (!badgeCase.hasOwner()) {
-            badgeCase.setItemOwner(serverPlayer.getUUID());
-        } else if (!badgeCase.canPlayerUse(player)) {
+        if (!badgeCase.canUse(player, true)) {
             serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(
                     Component.translatable("actionbar.custom.not-owner", badgeCase.getItemOwnerName(serverPlayer.server)))
             );
@@ -67,18 +61,9 @@ public class BasicCase extends BoundItem {
         }
         if (slot == EquipmentSlot.MAINHAND) {
             ItemStack offHand = player.getOffhandItem();
-            BetterBadges.LOGGER.info("in main hand");
-            if (offHand != ItemStack.EMPTY) {
-                Emblem emblem = this.canConsumeEmblem(badgeCase, offHand, player);
-                BetterBadges.LOGGER.info("trying to consume");
-                if (emblem != null) {
-                    BetterBadges.LOGGER.info("got to consume");
-                    offHand.shrink(1);
-                    EmblemBadgesManager emblemManager = badgeCase.getEmblemInventoryManager();
-                    emblemManager.addEmblem(emblem);
-                    badgeCase.setEmblemInventoryManager(emblemManager);
-                    return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
-                }
+            if (offHand != ItemStack.EMPTY && consumeEmblem(badgeCase, offHand, player)) {
+                offHand.shrink(1);
+                return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
             }
         }
         if (!badgeCase.hasActiveLeague()) {
@@ -107,16 +92,18 @@ public class BasicCase extends BoundItem {
         return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
     }
 
-    private @Nullable Emblem canConsumeEmblem(BadgeCaseWrapper badgeCase, ItemStack emblemItem, Player player){
+    private boolean consumeEmblem(BadgeCaseWrapper badgeCase, ItemStack emblemItem, Player player){
         Emblem emblem = Emblem.getEmblemFromItem(emblemItem.getItem());
         EmblemBadgesManager emblemBadgesManager = badgeCase.getEmblemInventoryManager();
+        BoundItemWrapper boundItem = new BoundItemWrapper(emblemItem);
         if (emblemBadgesManager == null) {
             emblemBadgesManager = new EmblemBadgesManager(new HashMap<>());
-            badgeCase.setEmblemInventoryManager(emblemBadgesManager);
         }
-        if (Objects.equals(player.getUUID().toString(), emblemItem.get(ModDataComponents.ITEM_OWNER))
-                && emblemBadgesManager.getTargets(emblem) == null) return emblem;
-        return null;
+        if (!boundItem.canUse(player)) return false;
+        if (emblemBadgesManager.containsEmblem(emblem)) return false;
+        emblemBadgesManager.addEmblem(emblem);
+        badgeCase.setEmblemInventoryManager(emblemBadgesManager);
+        return true;
     }
 
 }

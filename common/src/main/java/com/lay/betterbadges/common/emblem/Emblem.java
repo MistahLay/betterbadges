@@ -21,6 +21,8 @@ public class Emblem {
             from -> from.id.toString()
     );
 
+    public static final int MAX_SLOTS = 16;
+
     public static final RegistrySupplier<Emblem> EMPTY = Emblem.registerEmptyEmblem();
 
     private static RegistrySupplier<Emblem> registerEmptyEmblem(){
@@ -43,6 +45,9 @@ public class Emblem {
 
     public Emblem(ResourceLocation id, Item item, List<EmblemSlot> slots) {
         this.slots = slots;
+        if (slots.size() > MAX_SLOTS) {
+            throw new RuntimeException("Provided more than the max provided slots");
+        }
         this.id = id;
         this.emblemItem = item;
     }

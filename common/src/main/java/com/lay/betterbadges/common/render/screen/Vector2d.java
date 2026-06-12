@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.screen;
+package com.lay.betterbadges.common.render.screen;
 
 /**
  * Pretty dang simple vector
