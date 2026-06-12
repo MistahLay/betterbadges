@@ -1,7 +1,7 @@
 package com.lay.betterbadges.common.event;
 
+import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.BadgeAttribute;
 import com.lay.betterbadges.common.league.League;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import net.minecraft.ChatFormatting;
@@ -42,7 +42,6 @@ public class ModEvents {
 
     private static @Nullable BadgeSlot findBadge(Item item){
         if(cache.containsKey(item)) return cache.get(item);
-        System.out.println("out of cache");
         for (League league : ModRegistries.LEAGUE) {
             for (BadgeSlot badgeSlot : league.getBadges()) if(badgeSlot.item() == item) {
                 cache.put(item, badgeSlot);
@@ -54,9 +53,9 @@ public class ModEvents {
 
     private static void applyBoostTooltip(BadgeAttribute attribute, List<Component> lines, ChatFormatting color){
         lines.add(Component.empty());
-        lines.add(Component.translatable("tooltip.betterbadges.boost." + attribute.getBoostType().name().toLowerCase()).withStyle(color));
+        lines.add(Component.translatable("tooltip.betterbadges.boost." + attribute.setiing().boost().name().toLowerCase()).withStyle(color));
         AttributeModifier attributeModifier = attribute.createModifier();
-        Holder<Attribute> holder = attribute.getAttribute().get();
+        Holder<Attribute> holder = attribute.setiing().attribute();
         double d = attributeModifier.amount();
 
         double e;

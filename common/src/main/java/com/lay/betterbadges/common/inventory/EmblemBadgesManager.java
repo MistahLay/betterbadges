@@ -3,7 +3,7 @@ package com.lay.betterbadges.common.inventory;
 import com.lay.betterbadges.common.emblem.Emblem;
 import com.lay.betterbadges.common.emblem.EmblemTargetItem;
 import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.BadgeAttribute;
+import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.league.League;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;

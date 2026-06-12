@@ -8,16 +8,13 @@ import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.BadgeAttribute;
+import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.league.League;
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.Env;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
@@ -35,14 +32,15 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     }
 
     private void updateBoosts(EmblemBadgesManager manager, Emblem currentEmblem){
-        if (Platform.getEnv() == Env.CLIENT.toPlatform()) return;
         ItemAttributeModifiers modifiers = ItemAttributeModifiers.EMPTY;
         for (EmblemTargetItem target : manager.getTargets(currentEmblem)) {
+            if (target.league() == League.EMPTY.get()) continue;
             Boost boost = currentEmblem.getSlot(target.currentSlot()).category();
             BadgeSlot badgeSlot = target.league().getRequiredBadgeAt(target.targetSlot());
             if (!badgeSlot.containsBoost(boost)) continue;
             BadgeAttribute badgeAttribute = badgeSlot.getAttribute(boost);
-            Holder.Reference<Attribute> attribute = badgeAttribute.getAttribute().orElseThrow();
+            if (badgeAttribute == null) continue;
+            Holder<Attribute> attribute = badgeAttribute.setiing().attribute();
             modifiers = modifiers.withModifierAdded(
                 attribute,
                 badgeAttribute.createModifier(),

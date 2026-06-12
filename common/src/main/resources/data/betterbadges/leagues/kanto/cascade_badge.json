@@ -1,0 +1,11 @@
+{
+  "item": "betterbadges:cascade_badge",
+  "modifiers": [
+    {
+      "boost": "adventure",
+      "attribute": "minecraft:generic.armor",
+      "operation":  "add_value",
+      "value": 1.0
+    }
+  ]
+}

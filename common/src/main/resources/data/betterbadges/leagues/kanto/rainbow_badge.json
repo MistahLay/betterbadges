@@ -1,0 +1,11 @@
+{
+  "item": "betterbadges:rainbow_badge",
+  "modifiers": [
+    {
+      "boost": "adventure",
+      "attribute": "minecraft:generic.armor",
+      "operation":  "add_value",
+      "value": 32.0
+    }
+  ]
+}

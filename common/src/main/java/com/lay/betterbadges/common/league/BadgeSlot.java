@@ -1,5 +1,6 @@
 package com.lay.betterbadges.common.league;
 
+import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.datapack.attributes.BadgeAttributesReloadListener;
 import com.lay.betterbadges.common.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;

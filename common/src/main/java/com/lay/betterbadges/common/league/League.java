@@ -16,8 +16,6 @@ import java.util.*;
 
 public class League {
 
-    public static final TagKey<Item> LEAGUE_TAG = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "league"));
-
     public static final Codec<League> CODEC = Codec.STRING.xmap(
             to -> {
                 League league = ModRegistries.LEAGUE.get(ResourceLocation.parse(to));

@@ -1,13 +1,18 @@
 package com.lay.betterbadges.common.datapack.attributes;
 
 import com.google.gson.*;
+import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.league.BadgeAttribute;
+import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.registry.ModRegistries;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -46,18 +51,36 @@ public class BadgeAttributesReloadListener extends SimpleJsonResourceReloadListe
     protected void apply(Map<ResourceLocation, JsonElement> result, ResourceManager resourceManager, ProfilerFiller profiler) {
         attributes = new HashMap<>();
 
-        for (Map.Entry<ResourceLocation, JsonElement> json : result.entrySet()){
-            ResourceLocation path = json.getKey();
-            JsonElement element = json.getValue();
+        int total = 0;
 
-            String[] pathSegments = path.getPath().split("/");
+        try {
+            for (Map.Entry<ResourceLocation, JsonElement> json : result.entrySet()){
+                ResourceLocation path = json.getKey();
+                JsonObject element = json.getValue().getAsJsonObject();
 
-            if (pathSegments.length >= 2) {
-                String parentFolder = pathSegments[pathSegments.length - 2];
+                String[] pathSegments = path.getPath().split("/");
 
-                System.out.println("Target folder: " + parentFolder); // Outputs: "c"
+                if (pathSegments.length >= 2) {
+                    Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(element.getAsJsonObject().get("item").getAsString()));
+                    if (item instanceof BadgeItem badgeItem) {
+                        Map<Boost, BadgeAttribute> badgeAttributes = new HashMap<>();
+                        for (JsonElement jsonSetting : element.getAsJsonArray("modifiers").asList()){
+                            BadgeAttributeModifierSetting setting = JsonOps.INSTANCE.withDecoder(BadgeAttributeModifierSetting.CODEC.decoder()).apply(jsonSetting).getOrThrow().getFirst();
+
+                            BadgeAttribute attribute = new BadgeAttribute(badgeItem, setting);
+                            badgeAttributes.put(setting.boost(), attribute);
+                        }
+                        attributes.putIfAbsent(badgeItem, badgeAttributes);
+                        total++;
+                    }
+                }
             }
+
+            BetterBadges.LOGGER.info("Successfully registered {} badge attributes", total);
+        } catch (Exception e){
+            BetterBadges.LOGGER.error("Can't register attributes {}", e.getMessage());
         }
+
     }
 
 }

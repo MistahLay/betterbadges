@@ -25,15 +25,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
 
 public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
-    private static final Logger log = LoggerFactory.getLogger(BadgeCaseScreenHandler.class);
     private League currentLeague;
     private Emblem currentEmblem;
 
@@ -245,18 +242,13 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         if(!this.currentLeague.getRequiredBadgeAt(index).containsBoost(emblemSlot.category())) return false;
         if(ItemStack.isSameItemSameComponents(slot.getItem(), stack) && this.getCurrentLeagueContainer() == slot.container) return false;
 
-        log.info("{}", actualSlotIndex);
-
         EmblemTargetItem targetItem = this.emblemBadgesManager.findTarget(this.currentLeague, index, this.currentEmblem, actualSlotIndex);
 
         if(targetItem != null) {
             Slot previousSlot = this.slots.get(this.getEmblemIndex() + targetItem.currentSlot());
-            log.info("{}", this.getEmblemIndex() + targetItem.currentSlot());
             this.emblemBadgesManager.removeTarget(this.currentEmblem, targetItem.currentSlot());
             ((SlotMixin) previousSlot).betterbadges$setContainer(dummyContainer);
         }
-
-        System.out.println("changed");
 
         this.emblemBadgesManager.setTarget(this.currentEmblem, this.currentLeague, index, actualSlotIndex, true);
         ((SlotMixin) slot).betterbadges$setContainer(this.getCurrentLeagueContainer());
