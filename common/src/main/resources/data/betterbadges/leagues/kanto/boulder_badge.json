@@ -3,9 +3,15 @@
   "modifiers": [
     {
       "boost": "adventure",
+      "attribute": "minecraft:generic.max_health",
+      "operation":  "add_value",
+      "value": 50.0
+    },
+    {
+      "boost": "catching",
       "attribute": "minecraft:generic.armor",
       "operation":  "add_value",
-      "value": 1.0
+      "value": 50.0
     }
   ]
 }

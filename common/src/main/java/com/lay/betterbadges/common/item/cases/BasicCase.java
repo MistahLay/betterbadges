@@ -1,5 +1,6 @@
 package com.lay.betterbadges.common.item.cases;
 
+import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.emblem.Emblem;
 import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
@@ -52,27 +53,36 @@ public class BasicCase extends BoundItem {
         ItemStack stack = player.getItemInHand(interactionHand);
 
         BadgeCaseWrapper badgeCase = new BadgeCaseWrapper(stack);
+        boolean modified = false;
 
         if (!badgeCase.canUse(player, true)) {
             serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(
                     Component.translatable("actionbar.custom.not-owner", badgeCase.getItemOwnerName(serverPlayer.server)))
             );
-            return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+            modified = true;
         }
         if (slot == EquipmentSlot.MAINHAND) {
             ItemStack offHand = player.getOffhandItem();
-            if (offHand != ItemStack.EMPTY && consumeEmblem(badgeCase, offHand, player)) {
+            if (!offHand.isEmpty() && consumeEmblem(badgeCase, offHand, player)) {
                 offHand.shrink(1);
-                return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
+                modified = true;
             }
         }
-        if (!badgeCase.hasActiveLeague()) {
-            serverPlayer.connection.send(new ClientboundSetActionBarTextPacket(Component.translatable("actionbar.custom.invalid-case")));
-            badgeCase.setCurrentLeague(ModLeagues.KANTO.get());
+        EmblemBadgesManager emblemBadgesManager = badgeCase.getEmblemInventoryManager();
+        if (badgeCase.getCurrentEmblem() == null && emblemBadgesManager != null && emblemBadgesManager.getEmblems() != null) {
+            badgeCase.setCurrentEmblem(emblemBadgesManager.getEmblems().getFirst(), false);
+            modified = true;
         }
         if (badgeCase.getLeagueInventoryManager(serverPlayer.registryAccess()) == null) {
             badgeCase.setInventoryManager(LeagueBadgesManager.createEmpty(), serverPlayer.registryAccess());
+            badgeCase.setCurrentLeague(ModLeagues.KANTO.get());
+            modified = true;
         }
+        if (badgeCase.getCurrentLeague() == null) {
+            badgeCase.setCurrentLeague(ModLeagues.KANTO.get());
+            modified = true;
+        }
+        if (modified) return InteractionResultHolder.pass(player.getItemInHand(interactionHand));
         MenuRegistry.openExtendedMenu(serverPlayer, new ExtendedMenuProvider() {
             @Override
             public void saveExtraData(FriendlyByteBuf buf) {
@@ -102,7 +112,8 @@ public class BasicCase extends BoundItem {
         if (!boundItem.canUse(player)) return false;
         if (emblemBadgesManager.containsEmblem(emblem)) return false;
         emblemBadgesManager.addEmblem(emblem);
-        badgeCase.setEmblemInventoryManager(emblemBadgesManager);
+        badgeCase.setEmblemInventoryManager(emblemBadgesManager, false);
+        badgeCase.setCurrentEmblem(emblem, false);
         return true;
     }
 

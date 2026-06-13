@@ -1,17 +1,12 @@
 package com.lay.betterbadges.common.event;
 
-import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.league.BadgeSlot;
 import com.lay.betterbadges.common.league.League;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -52,38 +47,6 @@ public class ModEvents {
     }
 
     private static void applyBoostTooltip(BadgeAttribute attribute, List<Component> lines, ChatFormatting color){
-        lines.add(Component.empty());
-        lines.add(Component.translatable("tooltip.betterbadges.boost." + attribute.setiing().boost().name().toLowerCase()).withStyle(color));
-        AttributeModifier attributeModifier = attribute.createModifier();
-        Holder<Attribute> holder = attribute.setiing().attribute();
-        double d = attributeModifier.amount();
-
-        double e;
-        if (attributeModifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE
-                || attributeModifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
-            e = d * 100.0;
-        } else if (holder.is(Attributes.KNOCKBACK_RESISTANCE)) {
-            e = d * 10.0;
-        } else {
-            e = d;
-        }
-
-        if (d > 0.0) {
-            lines.add(Component.translatable(
-                            "attribute.modifier.plus." + attributeModifier.operation().id(),
-                            ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(e),
-                            Component.translatable(holder.value().getDescriptionId())
-                    )
-                    .withStyle(holder.value().getStyle(true)));
-        } else if (d < 0.0) {
-            lines.add(Component.translatable(
-                            "attribute.modifier.take." + attributeModifier.operation().id(),
-                            ItemAttributeModifiers.ATTRIBUTE_MODIFIER_FORMAT.format(-e),
-                            Component.translatable(holder.value().getDescriptionId())
-                    )
-                    .withStyle(holder.value().getStyle(false)));
-        }
-        lines.add(Component.empty());
     }
 
 }

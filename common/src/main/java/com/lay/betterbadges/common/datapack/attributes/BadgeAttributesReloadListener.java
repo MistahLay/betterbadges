@@ -4,16 +4,18 @@ import com.google.gson.*;
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.league.League;
-import com.lay.betterbadges.common.registry.ModRegistries;
+import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.league.attributes.BadgeAttributeModifierSetting;
+import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
+import com.lay.betterbadges.common.network.ModNetworkChannel;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,32 +26,13 @@ public class BadgeAttributesReloadListener extends SimpleJsonResourceReloadListe
             .setPrettyPrinting()
             .create();
 
-    private static Map<BadgeItem, Map<Boost, BadgeAttribute>> attributes = new HashMap<>();
-
-    public static @Nullable HashMap<Boost, BadgeAttribute> getAttributes(BadgeItem badge){
-        if(!attributes.containsKey(badge)) return null;
-        return new HashMap<>(attributes.get(badge));
-    }
-
-    public static @Nullable BadgeAttribute getAttribute(BadgeItem badge, Boost boost){
-        final var attributes = getAttributes(badge);
-        if(attributes == null) return null;
-        return attributes.getOrDefault(boost, null);
-    }
-
-    public static boolean containsAttribute(BadgeItem badge, Boost boost){
-        final var attributes = getAttributes(badge);
-        if(attributes == null) return false;
-        return attributes.containsKey(boost);
-    }
-
     public BadgeAttributesReloadListener() {
         super(GSON, "leagues");
     }
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> result, ResourceManager resourceManager, ProfilerFiller profiler) {
-        attributes = new HashMap<>();
+        BadgeAttributesManager.reset();
 
         int total = 0;
 
@@ -70,7 +53,7 @@ public class BadgeAttributesReloadListener extends SimpleJsonResourceReloadListe
                             BadgeAttribute attribute = new BadgeAttribute(badgeItem, setting);
                             badgeAttributes.put(setting.boost(), attribute);
                         }
-                        attributes.putIfAbsent(badgeItem, badgeAttributes);
+                        BadgeAttributesManager.register(badgeItem, badgeAttributes);
                         total++;
                     }
                 }
@@ -78,9 +61,10 @@ public class BadgeAttributesReloadListener extends SimpleJsonResourceReloadListe
 
             BetterBadges.LOGGER.info("Successfully registered {} badge attributes", total);
         } catch (Exception e){
-            BetterBadges.LOGGER.error("Can't register attributes {}", e.getMessage());
+            BetterBadges.LOGGER.error("Only got to register {} badge attributes: {}", total, e.getMessage());
+        } finally {
+            if (BetterBadges.SERVER != null) BadgeAttributesManager.updateClients();
         }
-
     }
 
 }

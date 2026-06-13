@@ -1,9 +1,12 @@
 package com.lay.betterbadges.common.render.screen.badgecase;
 
 import com.lay.betterbadges.common.BetterBadges;
+import com.lay.betterbadges.common.emblem.Boost;
 import com.lay.betterbadges.common.emblem.Emblem;
 import com.lay.betterbadges.common.emblem.EmblemSlot;
+import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.network.ChangeEmblemPacket;
 import com.lay.betterbadges.common.network.ChangeLeaguePacket;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
@@ -25,8 +28,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -49,11 +54,6 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
         super(handler, inventory, title, FlowLayout.class, BaseUIModelScreen.DataSource.asset(BetterBadges.of(ASSET_PATH)));
         ORDERED_LEAGUES.addAll(handler.getLeagueBadgesManager().getLeagues());
         ORDERED_EMBLEM.addAll(handler.getEmblemBadgesManager().getEmblems());
-    }
-
-    @Override
-    protected boolean isHovering(int x, int y, int width, int height, double mouseX, double mouseY) {
-        return super.isHovering(x, y, width, height, mouseX, mouseY);
     }
 
     @Override
@@ -163,18 +163,42 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
         super.render(context, mouseX, mouseY, delta);
 
         League league = this.menu.getLeague();
+        Emblem emblem = this.menu.getEmblem();
+        BadgeCaseScreenHandler.ScreenEmblemSlot highlightedSlot = this.menu.getHighlightedSlot();
+
+        Boost boost = null;
+        SimpleContainer container = this.menu.getLeagueBadgesManager().getBadgeContainer(league);
+
+        if (highlightedSlot != null) {
+            context.blit(
+                    HIGHLIGHT_TEXTURE,
+                    highlightedSlot.x + this.leftPos - 1, highlightedSlot.y + this.topPos - 1, 4,
+                    0, 0,
+                    18, 18, 18, 18
+            );
+            boost = highlightedSlot.getEmblem().getSlot(highlightedSlot.index - this.menu.getEmblemIndex()).category();
+        } else if (this.hoveredSlot instanceof BadgeCaseScreenHandler.ScreenEmblemSlot screenEmblemSlot) {
+            boost = screenEmblemSlot.getEmblem().getSlot(screenEmblemSlot.index - this.menu.getEmblemIndex()).category();
+        }
 
         for (int i = 0; i < 8; i++) {
             Slot slot = this.menu.slots.get(i);
+            if (boost != null) {
+                ItemStack item = container.getItem(i);
+                if (!item.isEmpty() && league.getBadge(i).containsBoost(boost)) {
+                    if (BadgeAttributesManager.getAttributes((BadgeItem) item.getItem()).get(boost) != null) {
+                        context.setColor(boost.r, boost.g, boost.b, 1.0f);
+                    }
+                }
+            }
             context.blit(
                     LeagueTexture.of(league).badge(i),
-                    slot.x + this.leftPos, slot.y + this.topPos, 3,
+                    slot.x + this.leftPos - 1, slot.y + this.topPos - 1, 3,
                     0, 0,
-                    16, 16, 16, 16
+                    18, 18, 18, 18
             );
+            context.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
-
-        Emblem emblem = this.menu.getEmblem();
 
         if (emblem != null && emblem != Emblem.EMPTY) for (int i = 0; i < emblem.getTotalSlots(); i++) {
             int emblemIndex = this.menu.getEmblemIndex();
@@ -182,21 +206,12 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
             if (slot instanceof BadgeCaseScreenHandler.ScreenEmblemSlot) {
                 context.blit(
                         EmblemTexture.boostTexture(emblem.getSlot(i).category()),
-                        slot.x + this.leftPos, slot.y + this.topPos, 3,
+                        slot.x + this.leftPos, slot.y + this.topPos, 4,
                         0, 0,
                         16, 16, 16, 16
                 );
             }
         }
-
-        if(this.menu.getHighlightedSlot() == null) return;
-        Slot slot = this.menu.getHighlightedSlot();
-        context.blit(
-                HIGHLIGHT_TEXTURE,
-                slot.x + this.leftPos - 1, slot.y + this.topPos - 1, 4,
-                0, 0,
-                18, 18, 18, 18
-        );
     }
 
     @Override
@@ -240,5 +255,4 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
     private Emblem getNextEmblem(){
         return Utils.getNextOfList(this.ORDERED_EMBLEM, this.menu.getEmblem(), false);
     }
-
 }

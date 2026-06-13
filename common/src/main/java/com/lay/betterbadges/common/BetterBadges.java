@@ -8,11 +8,13 @@ import com.lay.betterbadges.common.event.ModEvents;
 import com.lay.betterbadges.common.item.ModCreativeTab;
 import com.lay.betterbadges.common.item.ModItems;
 import com.lay.betterbadges.common.league.ModLeagues;
+import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.lay.betterbadges.common.render.screen.ModScreens;
 
 import dev.architectury.event.events.common.LifecycleEvent;
+import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.platform.Platform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -57,7 +59,9 @@ public final class BetterBadges {
 		ModEvents.initialize();
 		ModCommands.registerCommands();
 
-		LifecycleEvent.SERVER_STARTED.register(a -> SERVER = a);
+		LifecycleEvent.SERVER_STARTED.register(minecraftServer -> SERVER = minecraftServer);
+
+		PlayerEvent.PLAYER_JOIN.register(player -> BadgeAttributesManager.updateClients());
 	}
 
 }

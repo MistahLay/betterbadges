@@ -8,7 +8,7 @@ import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.league.League;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -40,7 +40,7 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
             if (!badgeSlot.containsBoost(boost)) continue;
             BadgeAttribute badgeAttribute = badgeSlot.getAttribute(boost);
             if (badgeAttribute == null) continue;
-            Holder<Attribute> attribute = badgeAttribute.setiing().attribute();
+            Holder<Attribute> attribute = badgeAttribute.setting().attribute();
             modifiers = modifiers.withModifierAdded(
                 attribute,
                 badgeAttribute.createModifier(),
@@ -55,14 +55,22 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
         return this.item.get(ModDataComponents.CURRENT_EMBLEM);
     }
 
-    public void setCurrentEmblem(Emblem emblem) {
+    public void setCurrentEmblem(Emblem emblem, boolean updateBoost) {
         this.item.set(ModDataComponents.CURRENT_EMBLEM, emblem);
-        this.updateBoosts(this.getEmblemInventoryManager(), emblem);
+        if (updateBoost) this.updateBoosts(this.getEmblemInventoryManager(), emblem);
+    }
+
+    public void setCurrentEmblem(Emblem emblem) {
+        this.setCurrentEmblem(emblem, true);
+    }
+
+    public void setEmblemInventoryManager(EmblemBadgesManager manager, boolean updateBoost){
+        this.item.set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS, manager.serialize());
+        if(updateBoost) this.updateBoosts(manager, this.getCurrentEmblem());
     }
 
     public void setEmblemInventoryManager(EmblemBadgesManager manager){
-        this.item.set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS, manager.serialize());
-        this.updateBoosts(manager, this.getCurrentEmblem());
+        this.setEmblemInventoryManager(manager, true);
     }
 
     public EmblemBadgesManager getEmblemInventoryManager(){

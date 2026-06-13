@@ -3,7 +3,7 @@ package com.lay.betterbadges.common.inventory;
 import com.lay.betterbadges.common.emblem.Emblem;
 import com.lay.betterbadges.common.emblem.EmblemTargetItem;
 import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.datapack.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.league.League;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;
@@ -108,8 +108,8 @@ public class EmblemBadgesManager {
         return targetItems;
     }
 
-    public Set<Emblem> getEmblems(){
-        return this.targetItems.keySet();
+    public List<Emblem> getEmblems(){
+        return new ArrayList<>(this.targetItems.keySet());
     }
 
 }

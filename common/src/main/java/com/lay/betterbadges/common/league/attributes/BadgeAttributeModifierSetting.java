@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.datapack.attributes;
+package com.lay.betterbadges.common.league.attributes;
 
 import com.lay.betterbadges.common.emblem.Boost;
 import com.mojang.serialization.Codec;

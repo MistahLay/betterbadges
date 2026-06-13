@@ -6,9 +6,9 @@ import net.minecraft.ChatFormatting;
 
 public enum Boost {
 
-    ADVENTURE(ChatFormatting.RED), // Anything related to mostly vanilla attributes, like mining and speed
-    CATCHING(ChatFormatting.BLUE), // Related to catching Pokemon in general
-    SPAWNING(ChatFormatting.GREEN); // Modification of Pokemon spawning around the player
+    ADVENTURE(ChatFormatting.RED, 255.0f, 0.0f, 0.0f), // Anything related to mostly vanilla attributes, like mining and speed
+    SPAWNING(ChatFormatting.GREEN, 0.0f, 255.0f, 0.0f), // Modification of Pokemon spawning around the player
+    CATCHING(ChatFormatting.BLUE, 0.0f, 0.0f, 255.0f); // Related to catching Pokemon in general
 
     public static Codec<Boost> CODEC = Codec.STRING.comapFlatMap(
             str -> {
@@ -20,10 +20,15 @@ public enum Boost {
             }, boost -> boost.name().toLowerCase()
     );
 
-
     public final ChatFormatting displayColor;
+    public final float r;
+    public final float g;
+    public final float b;
 
-    Boost(ChatFormatting displayColor) {
+    Boost(ChatFormatting displayColor, float r, float g, float b) {
         this.displayColor = displayColor;
+        this.r = r;
+        this.g = g;
+        this.b = b;
     }
 }

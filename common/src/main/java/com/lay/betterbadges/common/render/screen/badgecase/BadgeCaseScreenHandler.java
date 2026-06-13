@@ -35,7 +35,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     private Emblem currentEmblem;
 
     @Nullable
-    private Slot highlightedSlot = null;
+    private ScreenEmblemSlot highlightedSlot = null;
 
     private final BadgeCaseWrapper badgeCase;
     private final LeagueBadgesManager leagueBadgesManager;
@@ -57,8 +57,8 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         this.currentLeague = this.badgeCase.getCurrentLeague();
 
         this.currentEmblem = this.badgeCase.getCurrentEmblem();
-
-        if(!this.emblemBadgesManager.containsEmblem(currentEmblem)) this.currentEmblem = null;
+        if (!this.emblemBadgesManager.containsEmblem(currentEmblem)) this.currentEmblem = null;
+        if (this.currentEmblem == null) this.currentEmblem = this.emblemBadgesManager.getEmblems().getFirst();
 
         this.createLeagueBadgesSlots();
 
@@ -88,13 +88,14 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
                 return;
             }
             Slot slot = this.slots.get(i);
-            if (!(slot instanceof ScreenEmblemSlot emblemSlot)) return;
-            if (emblemSlot.emblem == Emblem.EMPTY) return;
+            if (!(slot instanceof ScreenEmblemSlot screenEmblem)) return;
+            if (screenEmblem.emblem == Emblem.EMPTY) return;
             if (this.highlightedSlot != null && this.highlightedSlot.index == slot.index) {
                 this.highlightedSlot = null;
                 return;
             }
-            this.highlightedSlot = slot;
+
+            this.highlightedSlot = screenEmblem;
         }
     }
 
@@ -259,7 +260,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     }
 
     private void createLeagueBadgesSlots() {
-        for (BadgeSlot badgeSlot : this.badgeCase.getCurrentLeague().getBadges()){
+        for (BadgeSlot badgeSlot : this.currentLeague.getBadges()){
             this.addSlot(new ScreenBadgeSlot(
                     this.getCurrentLeagueContainer(),
                     badgeSlot.slot() ,
@@ -274,7 +275,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         Emblem currentEmblem = this.badgeCase.getCurrentEmblem();
         if(currentEmblem == null || currentEmblem == Emblem.EMPTY) return;
         NonNullList<EmblemTargetItem> targets = this.emblemBadgesManager.getTargets(currentEmblem);
-        this.currentEmblem = currentEmblem;
+        this.setEmblem(currentEmblem);
         if(targets == null) return;
         int totalSlots = currentEmblem.getTotalSlots();
         for (int i = 0; i < Emblem.MAX_SLOTS; i++) {
@@ -296,7 +297,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         }
     }
 
-    public @Nullable Slot getHighlightedSlot(){
+    public @Nullable ScreenEmblemSlot getHighlightedSlot(){
         return this.highlightedSlot;
     }
 
