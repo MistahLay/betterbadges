@@ -14,7 +14,9 @@ import com.lay.betterbadges.common.mixin.SlotMixin;
 import com.lay.betterbadges.common.render.screen.AbstractItemContainerMenu;
 import com.lay.betterbadges.common.render.screen.ModScreens;
 import com.lay.betterbadges.common.render.screen.Vector2d;
+import com.lay.betterbadges.common.render.screen.badgecase.listeners.QuickMoveSuccess;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.SlotAccess;
@@ -32,7 +34,7 @@ import java.util.Objects;
 public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
     private League currentLeague;
-    private Emblem currentEmblem;
+    private Emblem currentEmblem = Emblem.EMPTY.get();
 
     @Nullable
     private ScreenEmblemSlot highlightedSlot = null;
@@ -56,9 +58,13 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
         this.currentLeague = this.badgeCase.getCurrentLeague();
 
-        this.currentEmblem = this.badgeCase.getCurrentEmblem();
-        if (!this.emblemBadgesManager.containsEmblem(currentEmblem)) this.currentEmblem = null;
-        if (this.currentEmblem == null) this.currentEmblem = this.emblemBadgesManager.getEmblems().getFirst();
+        if (this.emblemBadgesManager != null){
+            if (!this.emblemBadgesManager.getEmblems().isEmpty()){
+                this.currentEmblem = this.badgeCase.getCurrentEmblem();
+                if (!this.emblemBadgesManager.containsEmblem(currentEmblem)) this.currentEmblem = Emblem.EMPTY.get();
+                if (this.currentEmblem == null) this.currentEmblem = this.emblemBadgesManager.getEmblems().getFirst();
+            }
+        }
 
         this.createLeagueBadgesSlots();
 
@@ -75,7 +81,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
             if (i < 0 || i > this.getInventoryIndex() - 1) { // Slots from 0-7
                 return;
             }
-            Slot slot = this.slots.get(i);
+            Slot slot = this.getSlot(i);
             if(!(slot instanceof ScreenBadgeSlot) || this.highlightedSlot == null) return;
 
             ItemStack stack = slot.getItem();
@@ -87,7 +93,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
             if (i < 0) {
                 return;
             }
-            Slot slot = this.slots.get(i);
+            Slot slot = this.getSlot(i);
             if (!(slot instanceof ScreenEmblemSlot screenEmblem)) return;
             if (screenEmblem.emblem == Emblem.EMPTY) return;
             if (this.highlightedSlot != null && this.highlightedSlot.index == slot.index) {
@@ -121,7 +127,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
         if(this.slots.size() >= this.getEmblemIndex() + 7) {
             for (int i = 0; i < Emblem.MAX_SLOTS; i++) {
-                Slot slot = this.slots.get(i + this.getEmblemIndex());
+                Slot slot = this.getSlot(i + this.getEmblemIndex());
                 EmblemSlot emblemSlot = emblem.getSlot(i);
 
                 if (!(slot instanceof ScreenEmblemSlot screenEmblemSlot)) continue;
@@ -175,7 +181,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         this.setLeague(league);
 
         for (int i = 0; i < 8; i++){
-            Slot slot = this.slots.get(i);
+            Slot slot = this.getSlot(i);
             if(slot.container == currentContainer) {
                 BadgeSlot badgeSlot = badgeSlots.removeFirst();
                 ((SlotMixin) slot).betterbadges$setX(BADGE_CONTAINER_POS.x() + badgeSlot.x());
@@ -198,8 +204,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
     @Override
     public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
-
-        Slot slot = this.slots.get(index);
+        Slot slot = this.getSlot(index);
 
         if(!slot.hasItem()) return ItemStack.EMPTY;
 
@@ -246,7 +251,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         EmblemTargetItem targetItem = this.emblemBadgesManager.findTarget(this.currentLeague, index, this.currentEmblem, actualSlotIndex);
 
         if(targetItem != null) {
-            Slot previousSlot = this.slots.get(this.getEmblemIndex() + targetItem.currentSlot());
+            Slot previousSlot = this.getSlot(this.getEmblemIndex() + targetItem.currentSlot());
             this.emblemBadgesManager.removeTarget(this.currentEmblem, targetItem.currentSlot());
             ((SlotMixin) previousSlot).betterbadges$setContainer(dummyContainer);
         }

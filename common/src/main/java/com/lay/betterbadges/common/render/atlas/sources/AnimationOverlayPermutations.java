@@ -31,6 +31,10 @@ public class AnimationOverlayPermutations implements SpriteSource {
             ).apply(instance, AnimationOverlayPermutations::new)
     );
 
+    public static ResourceLocation createPath(ResourceLocation itemTexture, String animationSuffix, int index){
+        return itemTexture.withSuffix("." + animationSuffix + "_frame" + index);
+    }
+
     private final List<ResourceLocation> textures;
     private final ResourceLocation animationSprite;
     private final int frames;
@@ -47,18 +51,26 @@ public class AnimationOverlayPermutations implements SpriteSource {
         Optional<Resource> animationSpriteOptional = resourceManager.getResource(TextureHelper.png(animationSprite));
         LazyLoadedImage lazyAnimationSprite = new LazyLoadedImage(animationSprite, (Resource)animationSpriteOptional.get(), textures.size());
         String animSpriteId = this.animationSprite.getPath();
-        animSpriteId = "_" + animSpriteId.substring(animSpriteId.lastIndexOf('/') + 1);
-        for (ResourceLocation itemTexture : textures){
+        animSpriteId = animSpriteId.substring(animSpriteId.lastIndexOf('/') + 1);
+        for (ResourceLocation itemTexture : textures) {
             ResourceLocation path = TextureHelper.png(itemTexture);
             Optional<Resource> optional = resourceManager.getResource(path);
+
             if (optional.isEmpty()) {
                 BetterBadges.LOGGER.warn("Unable to find texture {}", path);
             } else {
-                LazyLoadedImage lazyLoadedItemImage = new LazyLoadedImage(path, (Resource)optional.get(), 1);
-                ResourceLocation resourceLocation3 = itemTexture.withSuffix(animSpriteId);
-                output.add(
-                        resourceLocation3, new ItemInstance(lazyLoadedItemImage, lazyAnimationSprite, resourceLocation3, frames)
-                );
+                for (int frame = 0; frame < this.frames; frame++) {
+                    LazyLoadedImage lazyLoadedItemImage = new LazyLoadedImage(path, optional.get(), 1);
+
+                    ResourceLocation frameLocation = createPath(itemTexture, animSpriteId, frame);
+
+                    BetterBadges.LOGGER.info("{}", frameLocation);
+
+                    output.add(
+                            frameLocation,
+                            new ItemInstance(lazyLoadedItemImage, lazyAnimationSprite, frameLocation, frame)
+                    );
+                }
             }
         }
     }
@@ -72,13 +84,14 @@ public class AnimationOverlayPermutations implements SpriteSource {
 
         private final LazyLoadedImage image;
         private final LazyLoadedImage animation;
-        private final int frames;
+        private final int frameIndex;
         private final ResourceLocation resourceLocation;
 
-        public ItemInstance(LazyLoadedImage image, LazyLoadedImage animation, ResourceLocation resourceLocation, int frames) {
+        public ItemInstance(LazyLoadedImage image, LazyLoadedImage animation,
+                            ResourceLocation resourceLocation, int frameIndex) {
             this.image = image;
             this.animation = animation;
-            this.frames = frames;
+            this.frameIndex = frameIndex;
             this.resourceLocation = resourceLocation;
         }
 
@@ -87,38 +100,34 @@ public class AnimationOverlayPermutations implements SpriteSource {
             try {
                 NativeImage image = this.image.get();
                 NativeImage animation = this.animation.get();
-                NativeImage output = new NativeImage(
-                        16,
-                        16 * this.frames,
-                        true
-                );
-                for (int frame = 0; frame < this.frames; frame++) {
 
-                    int frameYOffset = frame * 16;
+                NativeImage output = new NativeImage(16, 16, true);
 
-                    for (int y = 0; y < 16; y++) {
-                        for (int x = 0; x < 16; x++) {
+                int frameYOffset = this.frameIndex * 16;
 
-                            int itemPixel = image.getPixelRGBA(x, y);
+                for (int y = 0; y < 16; y++) {
+                    for (int x = 0; x < 16; x++) {
+                        int itemPixel = image.getPixelRGBA(x, y);
 
-                            int shinePixel = animation.getPixelRGBA(
-                                    x,
-                                    y + frameYOffset
-                            );
+                        int shinePixel = animation.getPixelRGBA(
+                                x,
+                                y + frameYOffset
+                        );
 
-                            int result = blend(itemPixel, shinePixel);
-
-                            output.setPixelRGBA(
-                                    x,
-                                    y + frameYOffset,
-                                    result
-                            );
-                        }
+                        int result = blend(itemPixel, shinePixel);
+                        output.setPixelRGBA(x, y, result);
                     }
                 }
 
-                return new SpriteContents(this.resourceLocation, new FrameSize(16, 16*this.frames), output, ResourceMetadata.EMPTY);
-            } catch (Exception var16) {
+                return new SpriteContents(
+                        this.resourceLocation,
+                        new FrameSize(16, 16),
+                        output,
+                        ResourceMetadata.EMPTY
+                );
+
+            } catch (Exception e) {
+                BetterBadges.LOGGER.error("Failed to generate frame {} for {}", frameIndex, resourceLocation, e);
             } finally {
                 this.image.release();
             }
@@ -133,33 +142,25 @@ public class AnimationOverlayPermutations implements SpriteSource {
 
         private static int blend(int itemPixel, int shinePixel) {
             int itemAlpha = (itemPixel >>> 24) & 0xFF;
-
-            if (itemAlpha == 0) {
-                return itemPixel;
-            }
+            if (itemAlpha == 0) return itemPixel;
 
             int shineAlpha = (shinePixel >>> 24) & 0xFF;
+            if (shineAlpha == 0) return itemPixel;
 
-            if (shineAlpha == 0) {
-                return itemPixel;
-            }
-
-            // Extract item channels
             int iR = (itemPixel >> 16) & 0xFF;
-            int iG = (itemPixel >> 8) & 0xFF;
-            int iB = itemPixel & 0xFF;
+            int iG = (itemPixel >> 8)  & 0xFF;
+            int iB =  itemPixel        & 0xFF;
 
-            // Extract shine channels
             int sR = (shinePixel >> 16) & 0xFF;
-            int sG = (shinePixel >> 8) & 0xFF;
-            int sB = shinePixel & 0xFF;
+            int sG = (shinePixel >> 8)  & 0xFF;
+            int sB =  shinePixel        & 0xFF;
 
-            // Alpha composite: Cover over item
             float a = shineAlpha / 255f;
             int r = (int)(sR * a + iR * (1 - a));
             int g = (int)(sG * a + iG * (1 - a));
             int b = (int)(sB * a + iB * (1 - a));
 
-            return (itemAlpha << 24) | (r << 16) | (g << 8) | b;        }
+            return (itemAlpha << 24) | (r << 16) | (g << 8) | b;
+        }
     }
 }

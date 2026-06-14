@@ -69,7 +69,7 @@ public class BasicCase extends BoundItem {
             }
         }
         EmblemBadgesManager emblemBadgesManager = badgeCase.getEmblemInventoryManager();
-        if (badgeCase.getCurrentEmblem() == null && emblemBadgesManager != null && emblemBadgesManager.getEmblems() != null) {
+        if (badgeCase.getCurrentEmblem() == null && emblemBadgesManager != null && !emblemBadgesManager.getEmblems().isEmpty()) {
             badgeCase.setCurrentEmblem(emblemBadgesManager.getEmblems().getFirst(), false);
             modified = true;
         }
