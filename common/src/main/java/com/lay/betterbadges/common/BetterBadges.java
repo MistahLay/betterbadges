@@ -1,10 +1,11 @@
 package com.lay.betterbadges.common;
 
+import com.lay.betterbadges.common.attribute.ModAttributes;
 import com.lay.betterbadges.common.command.ModCommands;
 import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.config.ModConfigs;
 import com.lay.betterbadges.common.datapack.ModDatapacks;
 import com.lay.betterbadges.common.emblem.ModEmblems;
-import com.lay.betterbadges.common.event.ModEvents;
 import com.lay.betterbadges.common.item.ModCreativeTab;
 import com.lay.betterbadges.common.item.ModItems;
 import com.lay.betterbadges.common.league.ModLeagues;
@@ -43,9 +44,12 @@ public final class BetterBadges {
 		ModCreativeTab.registerItemGroups();
 		ModItems.registerModItems();
 
-		// Registries
+		// Custom Registries
 		ModLeagues.registerLeagues();
 		ModEmblems.registerEmblems();
+
+		// Attributes
+		ModAttributes.registerAttributes();
 
 		// Screens, duh
 		ModScreens.registerScreenHandlers();
@@ -56,8 +60,9 @@ public final class BetterBadges {
 		// Datapacks
 		ModDatapacks.registerReloadListeners();
 
-		ModEvents.initialize();
 		ModCommands.registerCommands();
+
+		ModConfigs.initializeConfigs();
 
 		LifecycleEvent.SERVER_STARTED.register(minecraftServer -> SERVER = minecraftServer);
 

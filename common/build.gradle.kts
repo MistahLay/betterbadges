@@ -27,6 +27,7 @@ dependencies {
     mappings(loom.officialMojangMappings())
 
     modCompileOnly("net.fabricmc:fabric-loader:${property("fabric_loader_version")}")
+    modCompileOnly("io.github.llamalad7:mixinextras-fabric:0.5.0")
 
     modImplementation("com.cobblemon:mod:${property("cobblemon_version")}") { isTransitive = false }
     modImplementation("dev.architectury:architectury:${property("architectury_api_version")}")

@@ -1,15 +1,15 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Minecraft Client (:fabric)" type="Application" factoryName="Application">
-    <option name="ALTERNATIVE_JRE_PATH" value="21" />
-    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-    <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime" />
-    <module name="betterbadges.fabric.main" />
-    <option name="PROGRAM_PARAMETERS" value="--username MistahLay --uuid 74b8e9e1-71e4-3eb0-a60f-c45b79d0cacb" />
-    <shortenClasspath name="ARGS_FILE" />
-    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Darchitectury.main.class=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\architectury\.main_class -Darchitectury.runtime.transformer=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\architectury\.transforms -Darchitectury.properties=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\architectury\.properties -Djdk.attach.allowAttachSelf=true -javaagent:C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\.gradle\architectury\architectury-transformer-agent.jar" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/fabric/run/" />
+  <configuration default="false" factoryName="Application" name="Minecraft Client (:fabric)" type="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="21"/>
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true"/>
+    <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime"/>
+    <module name="betterbadges.fabric.main"/>
+    <option name="PROGRAM_PARAMETERS" value="--username MistahLay --uuid 74b8e9e1-71e4-3eb0-a60f-c45b79d0cacb"/>
+    <shortenClasspath name="ARGS_FILE"/>
+    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Darchitectury.main.class=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\architectury\.main_class -Darchitectury.runtime.transformer=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\architectury\.transforms -Darchitectury.properties=C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\fabric\.gradle\architectury\.properties -Djdk.attach.allowAttachSelf=true -javaagent:C:\Users\Clarence\Desktop\projects\betterbadges-0.0.1\.gradle\architectury\architectury-transformer-agent.jar"/>
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/fabric/run/"/>
     <method v="2">
-      <option name="Make" enabled="true" />
+      <option enabled="true" name="Make"/>
     </method>
-  </configuration>
+  <classpathModifications/></configuration>
 </component>

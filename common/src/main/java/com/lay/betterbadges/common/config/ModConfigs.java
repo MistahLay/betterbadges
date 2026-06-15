@@ -1,25 +1,36 @@
 package com.lay.betterbadges.common.config;
 
 
-import javax.naming.ConfigurationException;
+import com.cobblemon.mod.common.item.PokeBallItem;
+import com.lay.betterbadges.common.BetterBadges;
+import com.lay.betterbadges.common.config.BetterBadgesConfig;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModConfigs {
 
-    public static final com.lay.betterbadges.common.config.LeagueConfig LEAGUE_CONFIG = com.lay.betterbadges.common.config.LeagueConfig.createAndLoad();
-    public static final com.lay.betterbadges.common.config.EmblemConfig EMBLEM_CONFIG = com.lay.betterbadges.common.config.EmblemConfig.createAndLoad();
+    private static List<PokeBallItem> blacklistedPokeballs = new ArrayList<>();
 
-    public static final com.lay.betterbadges.common.config.BadgeCaseDesignConfig DESIGN_CONFIG = com.lay.betterbadges.common.config.BadgeCaseDesignConfig.createAndLoad();
-
-    public static void initializeConfigs(){
-
+    public static List<PokeBallItem> getBlacklistedPokeballs(){
+        return new ArrayList<>(blacklistedPokeballs);
     }
 
-    // Idk if this is the right to do it, but it works :P
-    public static void throwException(String message){
-        try {
-            throw new ConfigurationException(message);
-        } catch (ConfigurationException e) {
-            throw new RuntimeException(e);
+    public static BetterBadgesConfig config = BetterBadgesConfig.createAndLoad();
+
+    public static void initializeConfigs(){
+        for (String itemId : config.blacklistedPokaballs()){
+            try {
+                Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemId));
+                if (!(item instanceof PokeBallItem pokeball)) throw new RuntimeException("Blacklisted Pokeball is not a pokeball");
+                if (blacklistedPokeballs.contains(pokeball)) continue;
+                blacklistedPokeballs.add(pokeball);
+            } catch (Exception e) {
+                BetterBadges.LOGGER.error("Cannot add {} to the Pokeball Blacklist: {}", itemId, e.getMessage());
+            }
         }
     }
 }

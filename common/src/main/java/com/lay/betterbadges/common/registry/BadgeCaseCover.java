@@ -10,12 +10,6 @@ public class BadgeCaseCover {
 
     public static final String translatablePrefix = "betterBadges.design.cover";
 
-    public static void registerFromConfig(){
-        for (String cover : ModConfigs.DESIGN_CONFIG.cover()){
-            ModRegistries.BADGE_CASE_COVER.register(ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "cover/" + cover), () -> new BadgeCaseCover(cover, createTranslation(cover), createTexturePath(cover)));
-        }
-    }
-
     private static ResourceLocation createTexturePath(String texture){
         return ModScreens.getGuiTexture("cover/" + texture);
     }
