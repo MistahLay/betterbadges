@@ -47,7 +47,6 @@ public class AnimationOverlayPermutations implements SpriteSource {
 
     @Override
     public void run(ResourceManager resourceManager, Output output) {
-        BetterBadges.LOGGER.info("Running shiny overlay source");
         Optional<Resource> animationSpriteOptional = resourceManager.getResource(TextureHelper.png(animationSprite));
         LazyLoadedImage lazyAnimationSprite = new LazyLoadedImage(animationSprite, (Resource)animationSpriteOptional.get(), textures.size());
         String animSpriteId = this.animationSprite.getPath();
@@ -63,8 +62,6 @@ public class AnimationOverlayPermutations implements SpriteSource {
                     LazyLoadedImage lazyLoadedItemImage = new LazyLoadedImage(path, optional.get(), 1);
 
                     ResourceLocation frameLocation = createPath(itemTexture, animSpriteId, frame);
-
-                    BetterBadges.LOGGER.info("{}", frameLocation);
 
                     output.add(
                             frameLocation,
