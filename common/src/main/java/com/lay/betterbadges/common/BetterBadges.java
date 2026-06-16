@@ -6,6 +6,7 @@ import com.lay.betterbadges.common.component.ModDataComponents;
 import com.lay.betterbadges.common.config.ModConfigs;
 import com.lay.betterbadges.common.datapack.ModDatapacks;
 import com.lay.betterbadges.common.emblem.ModEmblems;
+import com.lay.betterbadges.common.event.CobblemonEventsListener;
 import com.lay.betterbadges.common.item.ModCreativeTab;
 import com.lay.betterbadges.common.item.ModItems;
 import com.lay.betterbadges.common.league.ModLeagues;
@@ -40,6 +41,9 @@ public final class BetterBadges {
 		ModRegistries.createRegistries();
 		ModDataComponents.registerDataComponents();
 
+		// Attributes
+		ModAttributes.registerAttributes();
+
 		// Items
 		ModCreativeTab.registerItemGroups();
 		ModItems.registerModItems();
@@ -47,9 +51,6 @@ public final class BetterBadges {
 		// Custom Registries
 		ModLeagues.registerLeagues();
 		ModEmblems.registerEmblems();
-
-		// Attributes
-		ModAttributes.registerAttributes();
 
 		// Screens, duh
 		ModScreens.registerScreenHandlers();
@@ -59,6 +60,8 @@ public final class BetterBadges {
 
 		// Datapacks
 		ModDatapacks.registerReloadListeners();
+
+		CobblemonEventsListener.listen();
 
 		ModCommands.registerCommands();
 

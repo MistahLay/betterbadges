@@ -10,33 +10,43 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModAttributes {
 
+    private static List<Holder<Attribute>> toAddToPlayers = new ArrayList<>();
+
     // Vanilla
     public static Holder<Attribute> ELYTRA_FLIGHT = registerBoolean("generic.vanilla.elytra.natural", false);
-
-    public static boolean hasNaturalElytra(LivingEntity entity){
-        AttributeInstance instance = entity.getAttribute(ModAttributes.ELYTRA_FLIGHT);
-        if (instance == null) return false;
-        return BooleanAttribute.toBoolean(instance.getValue());
-    }
-
     public static Holder<Attribute> ELYTRA_SPEED = registerRanged("generic.vanilla.elytra.speed", 1.0d); // Might Be too Op
 
     // Cobblemon
     // Probability For the chance of using a pokeball TODO: Add a blacklist
     public static Holder<Attribute> POKEBALL_USE = registerRanged("player.cobblemon.pokeball.use", 1.0, 0.0, 1.0);
 
-    public static void registerAttributes() {
+    static {
         BattlingAttributes.registerBattlingAttributes();
         SpawningAttributes.registerSpawningAttributes();
         CatchingAttributes.registerCatchingAttributes();
     }
 
+    public static void registerAttributes() {}
+
+    public static AttributeSupplier.Builder registerAllToPlayer(AttributeSupplier.Builder builder){
+        for (Holder<Attribute> attribute : toAddToPlayers){
+            builder.add(attribute);
+        }
+        return builder;
+    }
+
     private static Holder<Attribute> register(String string, Attribute attribute, boolean isSyncable) {
-        return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, BetterBadges.of(string), attribute.setSyncable(isSyncable));
+        Holder<Attribute> holder = Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, BetterBadges.of(string), attribute.setSyncable(isSyncable));
+        toAddToPlayers.add(holder);
+        return holder;
     }
 
     private static Holder<Attribute> register(String string, Attribute attribute) {
@@ -63,4 +73,9 @@ public class ModAttributes {
         return "attribute.name." + name;
     }
 
+    public static boolean hasNaturalElytra(LivingEntity entity){
+        AttributeInstance instance = entity.getAttribute(ModAttributes.ELYTRA_FLIGHT);
+        if (instance == null) return false;
+        return BooleanAttribute.toBoolean(instance.getValue());
+    }
 }

@@ -31,7 +31,7 @@ public class CatchingAttributes {
     }
 
     private static Holder<Attribute> registerByElementalType(ElementalType type){
-        return ModAttributes.registerRanged(pathByElementalType(type));
+        return ModAttributes.registerRanged(pathByElementalType(type), 1.0, 0.0, 1024.0);
     }
 
     private static String pathByElementalType(ElementalType type){

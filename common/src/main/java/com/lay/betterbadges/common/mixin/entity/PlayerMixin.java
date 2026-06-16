@@ -43,7 +43,6 @@ public class PlayerMixin {
             at = @At("RETURN")
     )
     private static AttributeSupplier.Builder betterbadges$createAttributes(AttributeSupplier.Builder original){
-        return original
-                .add(ModAttributes.ELYTRA_FLIGHT);
+        return ModAttributes.registerAllToPlayer(original);
     }
 }

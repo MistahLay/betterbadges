@@ -17,5 +17,5 @@ public class BattlingAttributes {
         return "player.cobbleattribbutes.battle." + string;
     }
 
-    public static void registerBattlingAttributes(){ }
+    public static void registerBattlingAttributes(){}
 }

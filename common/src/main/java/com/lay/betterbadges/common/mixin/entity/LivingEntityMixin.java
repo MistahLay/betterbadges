@@ -46,7 +46,6 @@ public class LivingEntityMixin {
     )
     private boolean betterbadges$updateFallFlyingElytraDamage(boolean original){
         LivingEntity entity = (LivingEntity) (Object) this;
-        BetterBadges.LOGGER.info("Living Entity: {} {}", original || ModAttributes.hasNaturalElytra(entity), ModAttributes.hasNaturalElytra(entity));
         return original && !ModAttributes.hasNaturalElytra(entity);
     }
 

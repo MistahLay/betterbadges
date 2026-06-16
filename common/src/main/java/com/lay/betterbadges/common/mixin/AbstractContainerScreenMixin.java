@@ -48,13 +48,4 @@ public abstract class AbstractContainerScreenMixin {
         }
     }
 
-//    @Inject(method = "renderSlot(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/inventory/Slot;)V",
-//            at = @At(value = "INVOKE", target = "net/minecraft/client/gui/GuiGraphics.renderItemDecorations (Lnet/minecraft/client/gui/Font;Lnet/minecraft/world/item/ItemStack;IILjava/lang/String;)V"))
-//    public void betterbadges$renderSlotHighlight(GuiGraphics guiGraphics, Slot slot, CallbackInfo ci){
-//        if (this.hoveredSlot == slot && this.hoveredSlot instanceof BadgeCaseScreenHandler.ScreenBadgeSlot){
-//            BadgeCaseScreen screen = (BadgeCaseScreen) (Object) this;
-//            screen.renderShineAnimation(guiGraphics, this.hoveredSlot);
-//        }
-//    }
-
 }
