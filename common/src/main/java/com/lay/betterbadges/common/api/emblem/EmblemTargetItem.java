@@ -1,6 +1,6 @@
-package com.lay.betterbadges.common.emblem;
+package com.lay.betterbadges.common.api.emblem;
 
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.League;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 

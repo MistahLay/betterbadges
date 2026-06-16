@@ -1,15 +1,15 @@
 package com.lay.betterbadges.common.render.screen.badgecase;
 
 import com.lay.betterbadges.common.component.ModDataComponents;
-import com.lay.betterbadges.common.emblem.Emblem;
-import com.lay.betterbadges.common.emblem.EmblemSlot;
-import com.lay.betterbadges.common.emblem.EmblemTargetItem;
+import com.lay.betterbadges.common.api.emblem.Emblem;
+import com.lay.betterbadges.common.api.emblem.EmblemSlot;
+import com.lay.betterbadges.common.api.emblem.EmblemTargetItem;
 import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.item.cases.BadgeCaseWrapper;
-import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.BadgeSlot;
+import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.mixin.SlotMixin;
 import com.lay.betterbadges.common.render.screen.AbstractItemContainerMenu;
 import com.lay.betterbadges.common.render.screen.ModScreens;
@@ -331,7 +331,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         @Override
         public void setChanged() {
             super.setChanged();
-            itemSlot.get().set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS, leagueBadgesManager.serialize(player().registryAccess()));
+            BadgeCaseScreenHandler.this.itemSlot.get().set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS.get(), BadgeCaseScreenHandler.this.leagueBadgesManager.serialize(player().registryAccess()));
         }
     }
 
@@ -346,7 +346,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
         @Override
         public boolean mayPlace(@NotNull ItemStack itemStack) {
-            return !(this.hasItem() && this.getItem().is(badge)) && itemStack.is(badge);
+            return !(this.hasItem() && this.getItem().is(this.badge)) && itemStack.is(this.badge);
         }
 
         @Override

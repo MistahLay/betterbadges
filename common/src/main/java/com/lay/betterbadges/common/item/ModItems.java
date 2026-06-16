@@ -1,13 +1,9 @@
 package com.lay.betterbadges.common.item;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.component.ModDataComponents;
-import com.lay.betterbadges.common.emblem.ModEmblems;
-import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.item.cases.BasicCase;
-import com.lay.betterbadges.common.league.LeagueKeys;
-import com.lay.betterbadges.common.league.ModLeagues;
+import com.lay.betterbadges.common.api.league.LeagueKeys;
 import dev.architectury.registry.registries.RegistrySupplier;
 import dev.architectury.registry.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;

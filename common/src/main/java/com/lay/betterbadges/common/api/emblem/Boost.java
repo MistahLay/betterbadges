@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.emblem;
+package com.lay.betterbadges.common.api.emblem;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

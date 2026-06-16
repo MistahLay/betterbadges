@@ -37,12 +37,13 @@ dependencies {
     modImplementation("dev.architectury:architectury-neoforge:${property("architectury_api_version")}")
     modImplementation("com.cobblemon:neoforge:${property("cobblemon_version")}") { isTransitive = false }
 
-    modApi("org.sinytra.forgified-fabric-api:fabric-api-base:0.4.42+d1308dedd1") { exclude(group = "fabric-api") }
+    modImplementation("io.wispforest:accessories-neoforge:${property("accessories_version")}")
 
-    modImplementation("io.wispforest:endec:${property("endec_version")}")
-    modImplementation("io.wispforest.endec:gson:${property("endec_gson_version")}")
-    modImplementation("io.wispforest.endec:jankson:${property("endec_jankson_version")}")
-    modImplementation("io.wispforest.endec:netty:${property("endec_netty_version")}")
+    forgeRuntimeLibrary("io.wispforest:endec:0.1.8")
+    forgeRuntimeLibrary("io.wispforest.endec:gson:0.1.5")
+    forgeRuntimeLibrary("io.wispforest.endec:netty:0.1.4")
+    forgeRuntimeLibrary("io.wispforest.endec:jankson:0.1.5")
+    forgeRuntimeLibrary("blue.endless:jankson:1.2.2")
 
     modImplementation("io.wispforest:owo-lib-neoforge:${property("owo_neoforge_version")}")
     annotationProcessor("io.wispforest:owo-lib-neoforge:${property("owo_neoforge_version")}")

@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.emblem;
+package com.lay.betterbadges.common.api.emblem;
 
 import com.lay.betterbadges.common.BetterBadges;
 import dev.architectury.registry.registries.RegistrySupplier;

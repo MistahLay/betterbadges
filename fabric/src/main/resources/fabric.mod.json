@@ -26,10 +26,8 @@
     ]
   },
   "mixins": [
-    "betterbadges.mixins.json",
-    "betterbadges.widener.mixins.json",
-    "betterbadges.entity.mixins.json",
-    "betterbadges.cobblemon.mixins.json"
+    "betterbadges.common.mixins.json",
+    "betterbadges.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.17.3",

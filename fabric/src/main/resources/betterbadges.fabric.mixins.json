@@ -1,12 +1,14 @@
 {
   "required": true,
-  "package": "com.lay.betterbadges.common.mixin.entity",
+  "package": "com.lay.betterbadges.fabric.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixinextras": {"minVersion": "0.5.0"},
   "mixins": [
-    "LivingEntityMixin",
-    "PlayerMixin",
-    "LocalPlayerMixin"
+    "ItemModelGeneratorsWidener",
+    "AbstractContainerScreenMixin",
+    "entity.LivingEntityMixin",
+    "entity.LocalPlayerMixin",
+    "entity.PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common.network;
 
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import net.minecraft.resources.ResourceLocation;
 

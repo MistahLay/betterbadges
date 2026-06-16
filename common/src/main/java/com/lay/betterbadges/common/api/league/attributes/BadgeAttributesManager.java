@@ -1,7 +1,7 @@
-package com.lay.betterbadges.common.league.attributes;
+package com.lay.betterbadges.common.api.league.attributes;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.emblem.Boost;
+import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
 import com.lay.betterbadges.common.network.UpdateBadgeAttributesPacket;

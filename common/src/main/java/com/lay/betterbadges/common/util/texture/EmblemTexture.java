@@ -1,7 +1,7 @@
 package com.lay.betterbadges.common.util.texture;
 
-import com.lay.betterbadges.common.emblem.Boost;
-import com.lay.betterbadges.common.emblem.Emblem;
+import com.lay.betterbadges.common.api.emblem.Boost;
+import com.lay.betterbadges.common.api.emblem.Emblem;
 import net.minecraft.resources.ResourceLocation;
 
 public record EmblemTexture(Emblem emblem) {

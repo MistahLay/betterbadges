@@ -2,8 +2,8 @@ package com.lay.betterbadges.common.registry;
 
 import com.google.common.base.Suppliers;
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.emblem.Emblem;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.emblem.Emblem;
+import com.lay.betterbadges.common.api.league.League;
 import dev.architectury.registry.registries.Registrar;
 import dev.architectury.registry.registries.RegistrarManager;
 import net.minecraft.core.Registry;

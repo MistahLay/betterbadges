@@ -1,11 +1,11 @@
 package com.lay.betterbadges.common.item.badges;
 
-import com.lay.betterbadges.common.emblem.Boost;
+import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.item.bounded.BoundItem;
-import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.League;
-import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
-import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
+import com.lay.betterbadges.common.api.league.BadgeSlot;
+import com.lay.betterbadges.common.api.league.League;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;

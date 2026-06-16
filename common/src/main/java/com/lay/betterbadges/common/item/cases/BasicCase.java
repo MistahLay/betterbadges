@@ -1,12 +1,11 @@
 package com.lay.betterbadges.common.item.cases;
 
-import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.emblem.Emblem;
+import com.lay.betterbadges.common.api.emblem.Emblem;
 import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItem;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
-import com.lay.betterbadges.common.league.ModLeagues;
+import com.lay.betterbadges.common.api.league.ModLeagues;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
 import dev.architectury.registry.menu.ExtendedMenuProvider;

@@ -1,12 +1,12 @@
 package com.lay.betterbadges.common.render.screen.badgecase;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.emblem.Boost;
-import com.lay.betterbadges.common.emblem.Emblem;
-import com.lay.betterbadges.common.emblem.EmblemSlot;
+import com.lay.betterbadges.common.api.emblem.Boost;
+import com.lay.betterbadges.common.api.emblem.Emblem;
+import com.lay.betterbadges.common.api.emblem.EmblemSlot;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.league.League;
-import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
+import com.lay.betterbadges.common.api.league.League;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.network.ChangeEmblemPacket;
 import com.lay.betterbadges.common.network.ChangeLeaguePacket;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
@@ -16,6 +16,7 @@ import com.lay.betterbadges.common.render.screen.widget.DynamicTextureWidget;
 import com.lay.betterbadges.common.util.Utils;
 import com.lay.betterbadges.common.util.texture.EmblemTexture;
 import com.lay.betterbadges.common.util.texture.LeagueTexture;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
 import io.wispforest.owo.ui.base.BaseUIModelScreen;
 import io.wispforest.owo.ui.component.ButtonComponent;
@@ -25,6 +26,7 @@ import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.Positioning;
 import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -287,5 +289,28 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
 
     private Emblem getNextEmblem(){
         return Utils.getNextOfList(this.orderedEmblems, this.menu.getEmblem(), false);
+    }
+
+    /**
+     * Returns if it did not override
+     */
+    public boolean renderHighlightedSlotOverride(GuiGraphics arg, int i, int j, int k){
+        if (this.hoveredSlot == null) return false;
+        ResourceLocation texture = this.highlightSlotTexture(this.hoveredSlot);
+        if (texture != null) {
+            arg.blit(
+                    texture,
+                    i - 1, j - 1, 4,
+                    191, 0,
+                    18, 18,
+                    256, 256
+            );
+            return true;
+        }
+        if (this.hoveredSlot instanceof BadgeCaseScreenHandler.ScreenBadgeSlot || this.hoveredSlot instanceof BadgeCaseScreenHandler.ScreenEmblemSlot) {
+            this.shineHoveredSlot();
+            return true;
+        }
+        return false;
     }
 }

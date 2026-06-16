@@ -1,9 +1,8 @@
 package com.lay.betterbadges.common.command;
 
-import com.lay.betterbadges.common.component.ModDataComponents;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
-import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.BadgeSlot;
+import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.lay.betterbadges.common.registry.ModRegistryKeys;
 import com.mojang.brigadier.context.CommandContext;

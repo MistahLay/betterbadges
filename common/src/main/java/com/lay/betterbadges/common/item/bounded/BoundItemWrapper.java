@@ -20,7 +20,7 @@ public class BoundItemWrapper extends ItemStackWrapper {
     }
 
     public UUID getItemOwner(){
-        return this.item.get(ModDataComponents.ITEM_OWNER);
+        return this.item.get(ModDataComponents.ITEM_OWNER.get());
     }
 
     public String getItemOwnerName(MinecraftServer server){
@@ -37,11 +37,11 @@ public class BoundItemWrapper extends ItemStackWrapper {
     }
 
     public void setItemOwner(UUID uuid){
-        this.item.set(ModDataComponents.ITEM_OWNER, uuid);
+        this.item.set(ModDataComponents.ITEM_OWNER.get(), uuid);
     }
 
     public boolean hasOwner() {
-        return this.item.get(ModDataComponents.ITEM_OWNER) != null;
+        return this.item.get(ModDataComponents.ITEM_OWNER.get()) != null;
     }
 
     public boolean canUse(Player player){

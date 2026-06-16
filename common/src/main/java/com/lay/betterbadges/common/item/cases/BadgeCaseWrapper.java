@@ -1,15 +1,15 @@
 package com.lay.betterbadges.common.item.cases;
 
 import com.lay.betterbadges.common.component.ModDataComponents;
-import com.lay.betterbadges.common.emblem.Boost;
-import com.lay.betterbadges.common.emblem.Emblem;
-import com.lay.betterbadges.common.emblem.EmblemTargetItem;
+import com.lay.betterbadges.common.api.emblem.Boost;
+import com.lay.betterbadges.common.api.emblem.Emblem;
+import com.lay.betterbadges.common.api.emblem.EmblemTargetItem;
 import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
-import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.BadgeSlot;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.api.league.League;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
@@ -52,11 +52,11 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
 
     // Emblems
     public Emblem getCurrentEmblem() {
-        return this.item.get(ModDataComponents.CURRENT_EMBLEM);
+        return this.item.get(ModDataComponents.CURRENT_EMBLEM.get());
     }
 
     public void setCurrentEmblem(Emblem emblem, boolean updateBoost) {
-        this.item.set(ModDataComponents.CURRENT_EMBLEM, emblem);
+        this.item.set(ModDataComponents.CURRENT_EMBLEM.get(), emblem);
         if (updateBoost) this.updateBoosts(this.getEmblemInventoryManager(), emblem);
     }
 
@@ -65,7 +65,7 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     }
 
     public void setEmblemInventoryManager(EmblemBadgesManager manager, boolean updateBoost){
-        this.item.set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS, manager.serialize());
+        this.item.set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS.get(), manager.serialize());
         if(updateBoost) this.updateBoosts(manager, this.getCurrentEmblem());
     }
 
@@ -74,22 +74,22 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     }
 
     public EmblemBadgesManager getEmblemInventoryManager(){
-        Map<Emblem, List<EmblemTargetItem>> data = this.item.get(ModDataComponents.EMBLEM_INVENTORY_CONTENTS);
+        Map<Emblem, List<EmblemTargetItem>> data = this.item.get(ModDataComponents.EMBLEM_INVENTORY_CONTENTS.get());
         if(data == null) return new EmblemBadgesManager(new HashMap<>());
         return EmblemBadgesManager.deserialize(data);
     }
 
     // Leagues
     public League getCurrentLeague() {
-        return this.item.get(ModDataComponents.CURRENT_LEAGUE);
+        return this.item.get(ModDataComponents.CURRENT_LEAGUE.get());
     }
 
     public void setCurrentLeague(League league){
-        this.item.set(ModDataComponents.CURRENT_LEAGUE, league);
+        this.item.set(ModDataComponents.CURRENT_LEAGUE.get(), league);
     }
 
     public void setInventoryManager(LeagueBadgesManager manager, RegistryAccess access){
-        this.item.set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS, manager.serialize(access));
+        this.item.set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS.get(), manager.serialize(access));
     }
 
     public LeagueBadgesManager getLeagueInventoryManager(RegistryAccess registryAccess){

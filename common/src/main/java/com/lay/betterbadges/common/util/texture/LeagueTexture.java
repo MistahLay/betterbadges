@@ -1,7 +1,7 @@
 package com.lay.betterbadges.common.util.texture;
 
-import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.BadgeSlot;
+import com.lay.betterbadges.common.api.league.League;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

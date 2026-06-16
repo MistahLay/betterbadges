@@ -1,8 +1,7 @@
 package com.lay.betterbadges.common.inventory;
 
-import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.component.ModDataComponents;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -39,7 +38,7 @@ public class LeagueBadgesManager {
 
     public static LeagueBadgesManager deserialize(ItemStack itemStack, RegistryAccess registryAccess){
 
-        Map<League, CompoundTag> inventoryContents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS);
+        Map<League, CompoundTag> inventoryContents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS.get());
 
         if(inventoryContents == null) return createEmpty();
 

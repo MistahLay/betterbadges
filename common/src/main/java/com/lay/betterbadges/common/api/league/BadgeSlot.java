@@ -1,9 +1,9 @@
-package com.lay.betterbadges.common.league;
+package com.lay.betterbadges.common.api.league;
 
-import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
-import com.lay.betterbadges.common.emblem.Boost;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
 import org.jetbrains.annotations.Nullable;
 
 // Slot Information

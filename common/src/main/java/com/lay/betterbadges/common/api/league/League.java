@@ -1,13 +1,11 @@
-package com.lay.betterbadges.common.league;
+package com.lay.betterbadges.common.api.league;
 
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.mojang.serialization.Codec;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;

@@ -34,4 +34,7 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[mixins]]
-config="betterbadges.mixins.json"
+config="betterbadges.common.mixins.json"
+
+[[mixins]]
+config="betterbadges.neoforge.mixins.json"

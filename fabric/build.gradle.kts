@@ -38,6 +38,8 @@ dependencies {
     modImplementation("com.cobblemon:fabric:${property("cobblemon_version")}") { isTransitive = false }
     modImplementation("dev.architectury:architectury-fabric:${property("architectury_api_version")}")
 
+    modImplementation("io.wispforest:accessories-fabric:${property("accessories_version")}")
+
     modImplementation("io.wispforest:owo-lib:${property("owo_fabric_version")}")
     annotationProcessor("io.wispforest:owo-lib:${property("owo_fabric_version")}")
     include("io.wispforest:owo-sentinel:${property("owo_fabric_version")}")

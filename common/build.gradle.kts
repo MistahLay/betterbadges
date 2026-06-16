@@ -32,6 +32,8 @@ dependencies {
     modImplementation("com.cobblemon:mod:${property("cobblemon_version")}") { isTransitive = false }
     modImplementation("dev.architectury:architectury:${property("architectury_api_version")}")
 
+    compileOnly("io.wispforest:accessories-common:${property("accessories_version")}-mojmap")
+
     modImplementation("io.wispforest:owo-lib:${property("owo_fabric_version")}")
     annotationProcessor("io.wispforest:owo-lib:${property("owo_fabric_version")}")
     include("io.wispforest:owo-sentinel:${property("owo_fabric_version")}")

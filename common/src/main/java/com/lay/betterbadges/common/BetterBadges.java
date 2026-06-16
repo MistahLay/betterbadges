@@ -5,12 +5,12 @@ import com.lay.betterbadges.common.command.ModCommands;
 import com.lay.betterbadges.common.component.ModDataComponents;
 import com.lay.betterbadges.common.config.ModConfigs;
 import com.lay.betterbadges.common.datapack.ModDatapacks;
-import com.lay.betterbadges.common.emblem.ModEmblems;
+import com.lay.betterbadges.common.api.emblem.ModEmblems;
 import com.lay.betterbadges.common.event.CobblemonEventsListener;
 import com.lay.betterbadges.common.item.ModCreativeTab;
 import com.lay.betterbadges.common.item.ModItems;
-import com.lay.betterbadges.common.league.ModLeagues;
-import com.lay.betterbadges.common.league.attributes.BadgeAttributesManager;
+import com.lay.betterbadges.common.api.league.ModLeagues;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.lay.betterbadges.common.render.screen.ModScreens;
@@ -35,8 +35,6 @@ public final class BetterBadges {
 
 	public static void init() {
 		LOGGER.info("Initializing Better Badges");
-
-		LOGGER.info("{}", Platform.isModLoaded("architectury"));
 
 		ModRegistries.createRegistries();
 		ModDataComponents.registerDataComponents();

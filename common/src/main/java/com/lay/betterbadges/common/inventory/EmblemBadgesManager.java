@@ -1,10 +1,10 @@
 package com.lay.betterbadges.common.inventory;
 
-import com.lay.betterbadges.common.emblem.Emblem;
-import com.lay.betterbadges.common.emblem.EmblemTargetItem;
-import com.lay.betterbadges.common.league.BadgeSlot;
-import com.lay.betterbadges.common.league.attributes.BadgeAttribute;
-import com.lay.betterbadges.common.league.League;
+import com.lay.betterbadges.common.api.emblem.Emblem;
+import com.lay.betterbadges.common.api.emblem.EmblemTargetItem;
+import com.lay.betterbadges.common.api.league.BadgeSlot;
+import com.lay.betterbadges.common.api.league.attributes.BadgeAttribute;
+import com.lay.betterbadges.common.api.league.League;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.SimpleContainer;
 import org.jetbrains.annotations.Nullable;

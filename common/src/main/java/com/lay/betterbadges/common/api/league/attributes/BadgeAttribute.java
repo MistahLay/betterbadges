@@ -1,14 +1,11 @@
-package com.lay.betterbadges.common.league.attributes;
+package com.lay.betterbadges.common.api.league.attributes;
 
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.wispforest.endec.StructEndec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.Item;
 
 public record BadgeAttribute(BadgeItem badgeItem, BadgeAttributeModifierSetting setting) {
 

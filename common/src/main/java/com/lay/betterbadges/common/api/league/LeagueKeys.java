@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.league;
+package com.lay.betterbadges.common.api.league;
 
 import com.lay.betterbadges.common.BetterBadges;
 import net.minecraft.resources.ResourceLocation;
