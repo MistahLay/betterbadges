@@ -5,8 +5,8 @@ import io.wispforest.owo.config.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-@Config(name = "betterbadges", wrapperName = "BetterBadgesConfig")
-public class BetterBadgesConfigModel {
+@Config(name = "betterbadges", wrapperName = "BetterBadgesMainConfig")
+public class BetterBadgesMainConfigModel {
 
     public List<String> blacklistedPokaballs = new ArrayList<>();
 

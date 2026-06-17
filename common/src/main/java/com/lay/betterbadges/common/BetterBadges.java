@@ -3,7 +3,7 @@ package com.lay.betterbadges.common;
 import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.lay.betterbadges.common.command.BetterBadgesCommands;
 import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
-import com.lay.betterbadges.common.config.BetetrBadgesConfigs;
+import com.lay.betterbadges.common.config.BetterBadgesConfigs;
 import com.lay.betterbadges.common.datapack.BetterBadgesDatapacks;
 import com.lay.betterbadges.common.api.emblem.ModEmblems;
 import com.lay.betterbadges.common.event.CobblemonEventsListener;
@@ -62,7 +62,7 @@ public final class BetterBadges {
 
 		BetterBadgesCommands.registerCommands();
 
-		BetetrBadgesConfigs.initializeConfigs();
+		BetterBadgesConfigs.initializeConfigs();
 
 		LifecycleEvent.SERVER_STARTED.register(minecraftServer -> SERVER = minecraftServer);
 
