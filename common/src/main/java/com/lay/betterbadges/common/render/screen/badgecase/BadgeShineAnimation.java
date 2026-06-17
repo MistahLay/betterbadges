@@ -1,10 +1,9 @@
 package com.lay.betterbadges.common.render.screen.badgecase;
 
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.render.atlas.managers.ModAtlasManagers;
+import com.lay.betterbadges.common.render.atlas.managers.ShineSpritesManager;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +48,7 @@ public class BadgeShineAnimation {
             guiGraphics.blit(
                     slot.x, slot.y, 5,
                     16, 16,
-                    ModAtlasManagers.SHINE_SPRITES.get(badgeItem, "badge/", frame)
+                    ShineSpritesManager.MANAGER.get(badgeItem, "badge/", frame)
             );
             guiGraphics.pose().popPose();
         }

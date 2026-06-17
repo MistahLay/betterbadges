@@ -30,7 +30,7 @@ public class LeagueBadgesManager {
     public static LeagueBadgesManager createEmpty(){
         Map<League, SimpleContainer> inventories = new HashMap<>();
         for (League league : ModRegistries.LEAGUE){
-            if(league == League.EMPTY.get()) continue;
+            if(league == League.EMPTY) continue;
             inventories.put(league, new SimpleContainer(league.getTotalBadges()));
         }
         return new LeagueBadgesManager(inventories);
@@ -45,7 +45,7 @@ public class LeagueBadgesManager {
         Map<League, SimpleContainer> inventories = new HashMap<>();
 
         ModRegistries.LEAGUE.forEach(league -> {
-            if(league == League.EMPTY.get()) return;
+            if(league == League.EMPTY) return;
 
             if(!inventoryContents.containsKey(league)){
                 inventories.put(league, new SimpleContainer(league.getTotalBadges()));
@@ -67,7 +67,7 @@ public class LeagueBadgesManager {
         Map<League, CompoundTag> serializedResult = new HashMap<>();
         for (League league : this.inventories.keySet()){
             CompoundTag tag = new CompoundTag();
-            ContainerHelper.saveAllItems(tag, this.inventories.get(league).items, registryAccess);
+            ContainerHelper.saveAllItems(tag, this.inventories.get(league).getItems(), registryAccess);
             serializedResult.put(league, tag);
         }
         return serializedResult;

@@ -300,7 +300,7 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
         if (texture != null) {
             arg.blit(
                     texture,
-                    i - 1, j - 1, 4,
+                    this.hoveredSlot.x - 1, this.hoveredSlot.y - 1, 4,
                     191, 0,
                     18, 18,
                     256, 256

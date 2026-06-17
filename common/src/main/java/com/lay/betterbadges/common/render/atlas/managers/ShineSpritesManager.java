@@ -12,6 +12,12 @@ import net.minecraft.world.item.Item;
 
 public class ShineSpritesManager extends TextureAtlasHolder {
 
+    public static ShineSpritesManager MANAGER;
+
+    public static void register(TextureManager textureManager){ // :{
+        MANAGER = new ShineSpritesManager(textureManager);
+    }
+
     public static ResourceLocation ID = BetterBadges.of("shine_sprites");
 
     public ShineSpritesManager(TextureManager textureManager) {

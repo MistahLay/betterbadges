@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public record EmblemTargetItem(League league, int targetSlot, int currentSlot) {
 
-    public static final EmblemTargetItem EMPTY = new EmblemTargetItem(League.EMPTY.get(), 0, 0);
+    public static final EmblemTargetItem EMPTY = new EmblemTargetItem(League.EMPTY, 0, 0);
 
     public static final Codec<EmblemTargetItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         League.CODEC.fieldOf("league").forGetter(EmblemTargetItem::league),

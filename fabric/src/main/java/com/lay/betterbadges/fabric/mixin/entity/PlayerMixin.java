@@ -6,6 +6,8 @@ import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -36,13 +38,5 @@ public class PlayerMixin {
     private boolean betterbadges$startFallingIsFlyEnabled(boolean original){
         Player entity = (Player) (Object) this;
         return original || ModAttributes.hasNaturalElytra(entity);
-    }
-
-    @ModifyReturnValue(
-            method = "createAttributes()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;",
-            at = @At("RETURN")
-    )
-    private static AttributeSupplier.Builder betterbadges$createAttributes(AttributeSupplier.Builder original){
-        return ModAttributes.registerAllToPlayer(original);
     }
 }

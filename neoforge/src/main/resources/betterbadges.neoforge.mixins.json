@@ -5,6 +5,7 @@
   "mixinextras": {"minVersion": "0.5.0"},
   "mixins": [
     "item.ElytraItemMixin",
+    "item.IItemStackExtensionMixin",
     "AbstractContainerScreenMixin"
   ],
   "injectors": {

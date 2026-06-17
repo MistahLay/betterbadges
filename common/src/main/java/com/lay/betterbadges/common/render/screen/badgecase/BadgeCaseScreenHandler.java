@@ -32,7 +32,7 @@ import java.util.Objects;
 public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
     private League currentLeague;
-    private Emblem currentEmblem = Emblem.EMPTY.get();
+    private Emblem currentEmblem = Emblem.EMPTY;
 
     @Nullable
     private ScreenEmblemSlot highlightedSlot = null;
@@ -59,7 +59,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         if (this.emblemBadgesManager != null){
             if (!this.emblemBadgesManager.getEmblems().isEmpty()){
                 this.currentEmblem = this.badgeCase.getCurrentEmblem();
-                if (!this.emblemBadgesManager.containsEmblem(currentEmblem)) this.currentEmblem = Emblem.EMPTY.get();
+                if (!this.emblemBadgesManager.containsEmblem(this.currentEmblem)) this.currentEmblem = Emblem.EMPTY;
                 if (this.currentEmblem == null) this.currentEmblem = this.emblemBadgesManager.getEmblems().getFirst();
             }
         }
@@ -283,20 +283,20 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         int totalSlots = currentEmblem.getTotalSlots();
         for (int i = 0; i < Emblem.MAX_SLOTS; i++) {
             if (i >= totalSlots) {
-                this.addSlot(new ScreenEmblemSlot(this.dummyContainer, Emblem.EMPTY.get(), i, 1000000, 1000000));
+                this.addSlot(new ScreenEmblemSlot(this.dummyContainer, Emblem.EMPTY, i, 1000000, 1000000));
                 continue;
             }
             EmblemSlot emblemSlot = currentEmblem.getSlot(i);
             EmblemTargetItem target = targets.get(i);
 
             if(target == EmblemTargetItem.EMPTY) {
-                this.addSlot(createEmblemBadgeSlot(emblemSlot, currentEmblem, i, this.dummyContainer));
+                this.addSlot(this.createEmblemBadgeSlot(emblemSlot, currentEmblem, i, this.dummyContainer));
                 continue;
             }
 
             SimpleContainer associatedContainer = this.leagueBadgesManager.getBadgeContainer(target.league());
 
-            this.addSlot(createEmblemBadgeSlot(emblemSlot, currentEmblem, target.targetSlot(), associatedContainer));
+            this.addSlot(this.createEmblemBadgeSlot(emblemSlot, currentEmblem, target.targetSlot(), associatedContainer));
         }
     }
 

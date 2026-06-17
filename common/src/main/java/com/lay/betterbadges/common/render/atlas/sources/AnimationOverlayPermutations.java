@@ -1,11 +1,13 @@
 package com.lay.betterbadges.common.render.atlas.sources;
 
 import com.lay.betterbadges.common.BetterBadges;
+import com.lay.betterbadges.common.mixin.SpriteSourcesMixin;
 import com.lay.betterbadges.common.util.texture.TextureHelper;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.architectury.platform.Platform;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.atlas.SpriteResourceLoader;
@@ -30,6 +32,14 @@ public class AnimationOverlayPermutations implements SpriteSource {
                     Codec.INT.fieldOf("frames").forGetter(animationOverlay -> animationOverlay.frames)
             ).apply(instance, AnimationOverlayPermutations::new)
     );
+
+    public static String ID = "animation_overlay";
+
+    public static SpriteSourceType SOURCE_TYPE;
+
+    public static void register(){
+        SOURCE_TYPE = SpriteSourcesMixin.betterbadges$register(AnimationOverlayPermutations.ID, AnimationOverlayPermutations.CODEC);
+    }
 
     public static ResourceLocation createPath(ResourceLocation itemTexture, String animationSuffix, int index){
         return itemTexture.withSuffix("." + animationSuffix + "_frame" + index);
@@ -74,7 +84,7 @@ public class AnimationOverlayPermutations implements SpriteSource {
 
     @Override
     public SpriteSourceType type() {
-        return ModAtlasSources.ANIMATION_OVERLAY;
+        return SOURCE_TYPE;
     }
 
     public static class ItemInstance implements SpriteSupplier {

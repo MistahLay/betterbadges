@@ -1,10 +1,14 @@
 package com.lay.betterbadges.common.render.screen;
 
 import com.lay.betterbadges.common.BetterBadges;
+import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreen;
 import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
+import dev.architectury.event.events.client.ClientLifecycleEvent;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,6 +32,12 @@ public class ModScreens {
 
     public static void registerScreenHandlers(){
         MENU_TYPES.register();
+
+        if(Platform.isFabric()) {
+            ClientLifecycleEvent.CLIENT_STARTED.register(client -> {
+                MenuScreens.register(ModScreens.BADGE_CASE_SCREEN_HANDLER.get(), BadgeCaseScreen::new);
+            });
+        }
     }
 
 }

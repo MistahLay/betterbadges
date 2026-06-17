@@ -28,13 +28,13 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
 
     public boolean hasActiveLeague(){
         League currentLeague = getCurrentLeague();
-        return currentLeague != League.EMPTY.get() && currentLeague != null;
+        return currentLeague != League.EMPTY && currentLeague != null;
     }
 
     private void updateBoosts(EmblemBadgesManager manager, Emblem currentEmblem){
         ItemAttributeModifiers modifiers = ItemAttributeModifiers.EMPTY;
         for (EmblemTargetItem target : manager.getTargets(currentEmblem)) {
-            if (target.league() == League.EMPTY.get()) continue;
+            if (target.league() == League.EMPTY) continue;
             Boost boost = currentEmblem.getSlot(target.currentSlot()).category();
             BadgeSlot badgeSlot = target.league().getRequiredBadgeAt(target.targetSlot());
             if (!badgeSlot.containsBoost(boost)) continue;

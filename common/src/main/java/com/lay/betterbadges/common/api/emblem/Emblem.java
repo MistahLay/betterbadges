@@ -3,6 +3,7 @@ package com.lay.betterbadges.common.api.emblem;
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -12,29 +13,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Emblem {
+    public static final Emblem EMPTY = new Emblem(BetterBadges.of("empty"), null, new ArrayList<>());
 
-    public static final Codec<Emblem> CODEC = Codec.STRING.xmap(
+    public static final Codec<Emblem> CODEC = Codec.STRING.comapFlatMap(
             to -> {
-                Emblem emblem = ModRegistries.EMBLEM.get(ResourceLocation.parse(to));
-                return emblem == null ? Emblem.EMPTY.get() : emblem;
+                try {
+                    Emblem emblem = ModRegistries.EMBLEM.get(ResourceLocation.parse(to));
+                    return DataResult.success(emblem);
+                } catch (Exception e){
+                    return DataResult.success(EMPTY);
+                }
             },
             from -> from.id.toString()
     );
 
     public static final int MAX_SLOTS = 16;
 
-    public static final RegistrySupplier<Emblem> EMPTY = Emblem.registerEmptyEmblem();
-
-    private static RegistrySupplier<Emblem> registerEmptyEmblem(){
-        ResourceLocation path = ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "empty_emblem");
-        return ModRegistries.EMBLEM.register(path, () -> new Emblem(path, null, new ArrayList<>()));
-    }
-
     public static Emblem getEmblemFromItem(Item item) {
         for (Emblem emblem : ModRegistries.EMBLEM) {
             if(emblem.getEmblemItem() == item) return emblem;
         }
-        return Emblem.EMPTY.get();
+        return Emblem.EMPTY;
     }
 
     private final List<EmblemSlot> slots;

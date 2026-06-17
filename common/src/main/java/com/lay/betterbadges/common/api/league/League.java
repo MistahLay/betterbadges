@@ -1,9 +1,12 @@
 package com.lay.betterbadges.common.api.league;
 
 import com.lay.betterbadges.common.BetterBadges;
+import com.lay.betterbadges.common.api.emblem.Emblem;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.registry.ModRegistries;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import dev.architectury.registry.registries.DeferredSupplier;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -14,15 +17,20 @@ import java.util.*;
 
 public class League {
 
-    public static final Codec<League> CODEC = Codec.STRING.xmap(
+    public static final League EMPTY = new League(BetterBadges.of("none"), new ArrayList<>());
+
+    public static final Codec<League> CODEC = Codec.STRING.comapFlatMap(
             to -> {
-                League league = ModRegistries.LEAGUE.get(ResourceLocation.parse(to));
-                return league == null ? League.EMPTY.get() : league;
+                try {
+                    League league = ModRegistries.LEAGUE.get(ResourceLocation.parse(to));
+                    return DataResult.success(league);
+                } catch (Exception e){
+                    return DataResult.success(EMPTY);
+                }
             },
             from -> from.id.toString()
     );
 
-    public static final RegistrySupplier<League> EMPTY = Builder.create(BetterBadges.of("none")).build();
 
     private final ResourceLocation id;
     private final List<BadgeSlot> badgeSlots;
@@ -33,7 +41,7 @@ public class League {
     }
 
     public BadgeSlot getRequiredBadgeAt(int index){
-        return badgeSlots.get(index);
+        return this.badgeSlots.get(index);
     }
 
     public String toString(){
@@ -45,7 +53,7 @@ public class League {
     }
 
     public boolean canInsertBadgeAtSlot(Item item, int slot){
-        return item == getRequiredBadgeAt(slot).item();
+        return item == this.getRequiredBadgeAt(slot).item();
     }
 
     public int getSlotForBadge(Item item){
@@ -94,7 +102,7 @@ public class League {
             return builder;
         }
 
-        public Builder add(BadgeItem item, int x, int y){
+        public Builder add(DeferredSupplier<BadgeItem> item, int x, int y){
             this.add(new BadgeSlot(item, x, y, this.badges.size()));
             return this;
         }
@@ -110,7 +118,7 @@ public class League {
             if(count == 0){
                 BetterBadges.LOGGER.error("League: {} has no badges added", this.id);
             }
-            return ModRegistries.LEAGUE.register(id, () -> new League(id, this.badges));
+            return ModRegistries.LEAGUE.register(this.id, () -> new League(this.id, this.badges));
         }
     }
 
