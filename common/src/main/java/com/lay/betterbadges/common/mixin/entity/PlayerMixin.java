@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common.mixin.entity;
 
-import com.lay.betterbadges.common.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.ModAttributes;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;

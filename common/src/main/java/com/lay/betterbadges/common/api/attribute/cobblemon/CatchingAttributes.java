@@ -1,11 +1,11 @@
-package com.lay.betterbadges.common.attribute.cobblemon;
+package com.lay.betterbadges.common.api.attribute.cobblemon;
 
 import com.cobblemon.mod.common.api.pokemon.status.Status;
 import com.cobblemon.mod.common.api.pokemon.status.Statuses;
 import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.ModAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

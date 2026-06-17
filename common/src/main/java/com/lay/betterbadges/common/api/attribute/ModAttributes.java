@@ -1,23 +1,18 @@
-package com.lay.betterbadges.common.attribute;
+package com.lay.betterbadges.common.api.attribute;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.attribute.cobblemon.BattlingAttributes;
-import com.lay.betterbadges.common.attribute.cobblemon.CatchingAttributes;
-import com.lay.betterbadges.common.attribute.cobblemon.SpawningAttributes;
+import com.lay.betterbadges.common.api.attribute.cobblemon.BattlingAttributes;
+import com.lay.betterbadges.common.api.attribute.cobblemon.CatchingAttributes;
+import com.lay.betterbadges.common.api.attribute.cobblemon.SpawningAttributes;
 import dev.architectury.registry.registries.DeferredRegister;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.entity.player.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
 public class ModAttributes {

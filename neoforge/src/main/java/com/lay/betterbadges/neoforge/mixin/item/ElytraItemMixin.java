@@ -1,6 +1,6 @@
 package com.lay.betterbadges.neoforge.mixin.item;
 
-import com.lay.betterbadges.common.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.ModAttributes;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

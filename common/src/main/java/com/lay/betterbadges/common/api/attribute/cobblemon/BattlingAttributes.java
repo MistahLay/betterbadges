@@ -1,6 +1,6 @@
-package com.lay.betterbadges.common.attribute.cobblemon;
+package com.lay.betterbadges.common.api.attribute.cobblemon;
 
-import com.lay.betterbadges.common.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.ModAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 

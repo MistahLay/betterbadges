@@ -3,7 +3,7 @@ package com.lay.betterbadges.common.util;
 import com.cobblemon.mod.common.api.pokeball.catching.CatchRateModifier;
 import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.lay.betterbadges.common.attribute.cobblemon.CatchingAttributes;
+import com.lay.betterbadges.common.api.attribute.cobblemon.CatchingAttributes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 

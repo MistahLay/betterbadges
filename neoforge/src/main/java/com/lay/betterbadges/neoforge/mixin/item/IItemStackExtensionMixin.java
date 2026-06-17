@@ -1,7 +1,6 @@
 package com.lay.betterbadges.neoforge.mixin.item;
 
-import com.lay.betterbadges.common.attribute.ModAttributes;
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.lay.betterbadges.common.api.attribute.ModAttributes;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.entity.LivingEntity;

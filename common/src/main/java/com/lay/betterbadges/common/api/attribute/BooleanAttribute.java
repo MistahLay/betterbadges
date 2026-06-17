@@ -1,6 +1,5 @@
-package com.lay.betterbadges.common.attribute;
+package com.lay.betterbadges.common.api.attribute;
 
-import com.lay.betterbadges.common.BetterBadges;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
 public class BooleanAttribute extends Attribute {

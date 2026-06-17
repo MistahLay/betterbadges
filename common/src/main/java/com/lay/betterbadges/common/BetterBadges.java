@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common;
 
-import com.lay.betterbadges.common.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.ModAttributes;
 import com.lay.betterbadges.common.command.ModCommands;
 import com.lay.betterbadges.common.component.ModDataComponents;
 import com.lay.betterbadges.common.config.ModConfigs;
@@ -13,14 +13,10 @@ import com.lay.betterbadges.common.api.league.ModLeagues;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.network.ModNetworkChannel;
 import com.lay.betterbadges.common.registry.ModRegistries;
-import com.lay.betterbadges.common.render.atlas.managers.ShineSpritesManager;
-import com.lay.betterbadges.common.render.atlas.sources.AnimationOverlayPermutations;
 import com.lay.betterbadges.common.render.screen.ModScreens;
 
-import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
-import dev.architectury.platform.Platform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
