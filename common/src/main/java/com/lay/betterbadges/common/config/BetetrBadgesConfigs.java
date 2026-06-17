@@ -3,7 +3,6 @@ package com.lay.betterbadges.common.config;
 
 import com.cobblemon.mod.common.item.PokeBallItem;
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.config.BetterBadgesConfig;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -11,7 +10,7 @@ import net.minecraft.world.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModConfigs {
+public class BetetrBadgesConfigs {
 
     private static List<PokeBallItem> blacklistedPokeballs = new ArrayList<>();
 

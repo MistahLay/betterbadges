@@ -7,7 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
-public class ModRegistryKeys {
+public class BetterBadgesRegistryKeys {
     public static final ResourceKey<Registry<Emblem>> EMBLEM = createRegistryKey("emblem");
     public static final ResourceKey<Registry<League>> LEAGUE = createRegistryKey("league");
 

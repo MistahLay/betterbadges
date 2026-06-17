@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common.render.screen.badgecase;
 
-import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
 import com.lay.betterbadges.common.api.emblem.Emblem;
 import com.lay.betterbadges.common.api.emblem.EmblemSlot;
 import com.lay.betterbadges.common.api.emblem.EmblemTargetItem;
@@ -12,7 +12,7 @@ import com.lay.betterbadges.common.api.league.BadgeSlot;
 import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.mixin.SlotMixin;
 import com.lay.betterbadges.common.render.screen.AbstractItemContainerMenu;
-import com.lay.betterbadges.common.render.screen.ModScreens;
+import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 import com.lay.betterbadges.common.render.screen.Vector2d;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
@@ -49,7 +49,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     public static final Vector2d INVENTORY_CONTAINER_POS = new Vector2d(9, 103);
 
     public BadgeCaseScreenHandler(int i, Inventory inventory, SlotAccess slot) {
-        super(ModScreens.BADGE_CASE_SCREEN_HANDLER.get(), i, inventory, slot);
+        super(BetterBadgesScreens.BADGE_CASE_SCREEN_HANDLER.get(), i, inventory, slot);
         this.badgeCase = new BadgeCaseWrapper(slot.get());
         this.leagueBadgesManager = this.badgeCase.getLeagueInventoryManager(inventory.player.registryAccess());
         this.emblemBadgesManager = this.badgeCase.getEmblemInventoryManager();
@@ -331,7 +331,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         @Override
         public void setChanged() {
             super.setChanged();
-            BadgeCaseScreenHandler.this.itemSlot.get().set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS.get(), BadgeCaseScreenHandler.this.leagueBadgesManager.serialize(player().registryAccess()));
+            BadgeCaseScreenHandler.this.itemSlot.get().set(BetterBadgesDataComponents.LEAGUE_INVENTORY_CONTENTS.get(), BadgeCaseScreenHandler.this.leagueBadgesManager.serialize(player().registryAccess()));
         }
     }
 

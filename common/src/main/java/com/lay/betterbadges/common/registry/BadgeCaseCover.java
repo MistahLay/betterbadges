@@ -1,8 +1,6 @@
 package com.lay.betterbadges.common.registry;
 
-import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.config.ModConfigs;
-import com.lay.betterbadges.common.render.screen.ModScreens;
+import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -11,7 +9,7 @@ public class BadgeCaseCover {
     public static final String translatablePrefix = "betterBadges.design.cover";
 
     private static ResourceLocation createTexturePath(String texture){
-        return ModScreens.getGuiTexture("cover/" + texture);
+        return BetterBadgesScreens.getGuiTexture("cover/" + texture);
     }
 
     private static Component createTranslation(String id){

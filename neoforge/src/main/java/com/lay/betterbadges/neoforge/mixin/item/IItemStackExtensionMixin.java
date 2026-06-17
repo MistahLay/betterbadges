@@ -1,6 +1,6 @@
 package com.lay.betterbadges.neoforge.mixin.item;
 
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ public interface IItemStackExtensionMixin {
             cancellable = true
     )
     default void betterbadges$canElytraFly(LivingEntity entity, CallbackInfoReturnable<Boolean> cir){
-        if (ModAttributes.hasNaturalElytra(entity)) cir.setReturnValue(true);
+        if (BetterBadgesAttributes.hasNaturalElytra(entity)) cir.setReturnValue(true);
     }
 
     @WrapOperation(
@@ -30,7 +30,7 @@ public interface IItemStackExtensionMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item;elytraFlightTick(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;I)Z")
     )
     private boolean betterbadges$elytraFlightTick(Item instance, ItemStack itemStack, LivingEntity entity, int i, Operation<Boolean> original){
-        if (ModAttributes.hasNaturalElytra(entity)) {
+        if (BetterBadgesAttributes.hasNaturalElytra(entity)) {
             return Items.ELYTRA.elytraFlightTick(itemStack, entity, i);
         }
         return original.call(instance, itemStack, entity, i);

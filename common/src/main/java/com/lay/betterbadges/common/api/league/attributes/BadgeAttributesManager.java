@@ -3,7 +3,7 @@ package com.lay.betterbadges.common.api.league.attributes;
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.network.ModNetworkChannel;
+import com.lay.betterbadges.common.network.BetterBadgesNetworkChannel;
 import com.lay.betterbadges.common.network.UpdateBadgeAttributesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
@@ -41,11 +41,11 @@ public class BadgeAttributesManager {
 
     public static void updateClients(){
         for (ServerPlayer player : BetterBadges.SERVER.getPlayerList().getPlayers()){
-            ModNetworkChannel.CHANNEL.serverHandle(player).send(new UpdateBadgeAttributesPacket(attributes));
+            BetterBadgesNetworkChannel.CHANNEL.serverHandle(player).send(new UpdateBadgeAttributesPacket(attributes));
         }
     }
 
     public static void updateClient(ServerPlayer player){
-        ModNetworkChannel.CHANNEL.serverHandle(player).send(new UpdateBadgeAttributesPacket(attributes));
+        BetterBadgesNetworkChannel.CHANNEL.serverHandle(player).send(new UpdateBadgeAttributesPacket(attributes));
     }
 }

@@ -6,7 +6,7 @@ import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
 import com.lay.betterbadges.common.item.bounded.BoundItem;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.api.league.ModLeagues;
-import com.lay.betterbadges.common.registry.ModRegistries;
+import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
 import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
@@ -42,7 +42,7 @@ public class BasicCase extends BoundItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, InteractionHand interactionHand) {
         if (!(player instanceof ServerPlayer serverPlayer)) return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
-        if(ModRegistries.LEAGUE.getIds().size() == 1) return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
+        if(BetterBadgesRegistries.LEAGUE.getIds().size() == 1) return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
 
         EquipmentSlot slot = switch (interactionHand) {
             case MAIN_HAND -> EquipmentSlot.MAINHAND;

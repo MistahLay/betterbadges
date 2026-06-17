@@ -1,6 +1,6 @@
 package com.lay.betterbadges.fabric.datagen;
 
-import com.lay.betterbadges.common.item.ModItems;
+import com.lay.betterbadges.common.item.BetterBadgesItems;
 import com.lay.betterbadges.fabric.mixin.ItemModelGeneratorsWidener;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -32,25 +32,25 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
-        registerBadgeModel(ModItems.BOULDER_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.CASCADE_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.THUNDER_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.RAINBOW_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.SOUL_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.MARSH_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.VOLCANO_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.EARTH_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.BOULDER_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.CASCADE_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.THUNDER_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.RAINBOW_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.SOUL_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.MARSH_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.VOLCANO_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.EARTH_BADGE.get(), itemModelGenerator);
 
-        registerBadgeModel(ModItems.ZEPHYR_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.HIVE_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.PLAIN_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.FOG_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.STORM_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.MINERAL_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.GLACIER_BADGE.get(), itemModelGenerator);
-        registerBadgeModel(ModItems.RISING_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.ZEPHYR_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.HIVE_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.PLAIN_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.FOG_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.STORM_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.MINERAL_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.GLACIER_BADGE.get(), itemModelGenerator);
+        registerBadgeModel(BetterBadgesItems.RISING_BADGE.get(), itemModelGenerator);
 
-        registerUniquePathFlatModel(ModItems.BADGE_CASE.get(), itemModelGenerator, BADGE_CASE_PREFIX_PATH);
+        registerUniquePathFlatModel(BetterBadgesItems.BADGE_CASE.get(), itemModelGenerator, BADGE_CASE_PREFIX_PATH);
     }
 
     private static void registerBadgeModel(Item item, ItemModelGenerators itemModelGenerator){

@@ -1,6 +1,6 @@
 package com.lay.betterbadges.fabric.mixin.entity;
 
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -22,7 +22,7 @@ public class PlayerMixin {
     )
     private boolean betterbadges$startFallingIsFlying(boolean original){
         Player entity = (Player) (Object) this;
-        return original || ModAttributes.hasNaturalElytra(entity);
+        return original || BetterBadgesAttributes.hasNaturalElytra(entity);
     }
 
     @Definition(id = "isFlyEnabled", method = "net/minecraft/world/item/ElytraItem.isFlyEnabled")
@@ -33,6 +33,6 @@ public class PlayerMixin {
     )
     private boolean betterbadges$startFallingIsFlyEnabled(boolean original){
         Player entity = (Player) (Object) this;
-        return original || ModAttributes.hasNaturalElytra(entity);
+        return original || BetterBadgesAttributes.hasNaturalElytra(entity);
     }
 }

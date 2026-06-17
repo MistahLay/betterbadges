@@ -1,7 +1,7 @@
 package com.lay.betterbadges.common.api.emblem;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.registry.ModRegistries;
+import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -18,7 +18,7 @@ public class Emblem {
     public static final Codec<Emblem> CODEC = Codec.STRING.comapFlatMap(
             to -> {
                 try {
-                    Emblem emblem = ModRegistries.EMBLEM.get(ResourceLocation.parse(to));
+                    Emblem emblem = BetterBadgesRegistries.EMBLEM.get(ResourceLocation.parse(to));
                     return DataResult.success(emblem);
                 } catch (Exception e){
                     return DataResult.success(EMPTY);
@@ -30,7 +30,7 @@ public class Emblem {
     public static final int MAX_SLOTS = 16;
 
     public static Emblem getEmblemFromItem(Item item) {
-        for (Emblem emblem : ModRegistries.EMBLEM) {
+        for (Emblem emblem : BetterBadgesRegistries.EMBLEM) {
             if(emblem.getEmblemItem() == item) return emblem;
         }
         return Emblem.EMPTY;
@@ -101,7 +101,7 @@ public class Emblem {
         }
 
         public RegistrySupplier<Emblem> build(){
-            return ModRegistries.EMBLEM.register(id, () -> new Emblem(id, item, slots));
+            return BetterBadgesRegistries.EMBLEM.register(id, () -> new Emblem(id, item, slots));
         }
     }
 

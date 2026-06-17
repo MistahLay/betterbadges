@@ -1,7 +1,7 @@
 package com.lay.betterbadges.fabric.datagen;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.item.ModItems;
+import com.lay.betterbadges.common.item.BetterBadgesItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
@@ -35,25 +35,25 @@ public class ModItemTagProvider extends FabricTagProvider<Item> {
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        addBadge(ModItems.BOULDER_BADGE.get());
-        addBadge(ModItems.CASCADE_BADGE.get());
-        addBadge(ModItems.THUNDER_BADGE.get());
-        addBadge(ModItems.RAINBOW_BADGE.get());
-        addBadge(ModItems.SOUL_BADGE.get());
-        addBadge(ModItems.MARSH_BADGE.get());
-        addBadge(ModItems.VOLCANO_BADGE.get());
-        addBadge(ModItems.EARTH_BADGE.get());
+        addBadge(BetterBadgesItems.BOULDER_BADGE.get());
+        addBadge(BetterBadgesItems.CASCADE_BADGE.get());
+        addBadge(BetterBadgesItems.THUNDER_BADGE.get());
+        addBadge(BetterBadgesItems.RAINBOW_BADGE.get());
+        addBadge(BetterBadgesItems.SOUL_BADGE.get());
+        addBadge(BetterBadgesItems.MARSH_BADGE.get());
+        addBadge(BetterBadgesItems.VOLCANO_BADGE.get());
+        addBadge(BetterBadgesItems.EARTH_BADGE.get());
 
-        addBadge(ModItems.ZEPHYR_BADGE.get());
-        addBadge(ModItems.HIVE_BADGE.get());
-        addBadge(ModItems.PLAIN_BADGE.get());
-        addBadge(ModItems.FOG_BADGE.get());
-        addBadge(ModItems.STORM_BADGE.get());
-        addBadge(ModItems.MINERAL_BADGE.get());
-        addBadge(ModItems.GLACIER_BADGE.get());
-        addBadge(ModItems.RISING_BADGE.get());
+        addBadge(BetterBadgesItems.ZEPHYR_BADGE.get());
+        addBadge(BetterBadgesItems.HIVE_BADGE.get());
+        addBadge(BetterBadgesItems.PLAIN_BADGE.get());
+        addBadge(BetterBadgesItems.FOG_BADGE.get());
+        addBadge(BetterBadgesItems.STORM_BADGE.get());
+        addBadge(BetterBadgesItems.MINERAL_BADGE.get());
+        addBadge(BetterBadgesItems.GLACIER_BADGE.get());
+        addBadge(BetterBadgesItems.RISING_BADGE.get());
 
         getOrCreateTagBuilder(BADGE_CASES)
-                .add(ModItems.BADGE_CASE.get());
+                .add(BetterBadgesItems.BADGE_CASE.get());
     }
 }

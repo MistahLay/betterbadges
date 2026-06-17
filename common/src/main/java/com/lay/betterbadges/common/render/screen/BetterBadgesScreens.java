@@ -15,7 +15,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.inventory.MenuType;
 
-public class ModScreens {
+public class BetterBadgesScreens {
 
     private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BetterBadges.MOD_ID, Registries.MENU);
 
@@ -35,7 +35,7 @@ public class ModScreens {
 
         if(Platform.isFabric()) {
             ClientLifecycleEvent.CLIENT_STARTED.register(client -> {
-                MenuScreens.register(ModScreens.BADGE_CASE_SCREEN_HANDLER.get(), BadgeCaseScreen::new);
+                MenuScreens.register(BetterBadgesScreens.BADGE_CASE_SCREEN_HANDLER.get(), BadgeCaseScreen::new);
             });
         }
     }

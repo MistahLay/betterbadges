@@ -1,6 +1,6 @@
 package com.lay.betterbadges.fabric.mixin.entity;
 
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -23,7 +23,7 @@ public class LivingEntityMixin {
     )
     private boolean betterbadges$updateFallFlyingIsFlying(boolean original){
         LivingEntity entity = (LivingEntity) (Object) this;
-        return original || ModAttributes.hasNaturalElytra(entity);
+        return original || BetterBadgesAttributes.hasNaturalElytra(entity);
     }
 
 
@@ -35,7 +35,7 @@ public class LivingEntityMixin {
     )
     private boolean betterbadges$updateFallFlyingIsFlyEnabled(boolean original){
         LivingEntity entity = (LivingEntity) (Object) this;
-        return original || ModAttributes.hasNaturalElytra(entity);
+        return original || BetterBadgesAttributes.hasNaturalElytra(entity);
     }
 
     @Expression("? % 2 == 0")
@@ -45,7 +45,7 @@ public class LivingEntityMixin {
     )
     private boolean betterbadges$updateFallFlyingElytraDamage(boolean original){
         LivingEntity entity = (LivingEntity) (Object) this;
-        return original && !ModAttributes.hasNaturalElytra(entity);
+        return original && !BetterBadgesAttributes.hasNaturalElytra(entity);
     }
 
 }

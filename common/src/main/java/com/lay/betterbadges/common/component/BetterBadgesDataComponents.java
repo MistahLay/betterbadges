@@ -7,20 +7,17 @@ import com.lay.betterbadges.common.api.league.League;
 import com.mojang.serialization.Codec;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Registry;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.UnaryOperator;
 
-public class ModDataComponents {
+public class BetterBadgesDataComponents {
 
     private static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.create(BetterBadges.MOD_ID, Registries.DATA_COMPONENT_TYPE);
 

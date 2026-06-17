@@ -11,7 +11,7 @@ import io.wispforest.owo.serialization.CodecUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
-public class ModNetworkChannel {
+public class BetterBadgesNetworkChannel {
 
     public static final OwoNetChannel CHANNEL = OwoNetChannel.create(ResourceLocation.fromNamespaceAndPath(BetterBadges.MOD_ID, "main"));
 

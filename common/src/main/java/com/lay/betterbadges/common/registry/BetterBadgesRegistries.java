@@ -11,17 +11,17 @@ import net.minecraft.resources.ResourceKey;
 
 import java.util.function.Supplier;
 
-public class ModRegistries {
+public class BetterBadgesRegistries {
 
     public static final Supplier<RegistrarManager> MANAGER = Suppliers.memoize(() -> RegistrarManager.get(BetterBadges.MOD_ID));
 
-    public static final Registrar<League> LEAGUE = createRegistrar(ModRegistryKeys.LEAGUE);
+    public static final Registrar<League> LEAGUE = createRegistrar(BetterBadgesRegistryKeys.LEAGUE);
 
-    public static final Registrar<Emblem> EMBLEM = createRegistrar(ModRegistryKeys.EMBLEM);
+    public static final Registrar<Emblem> EMBLEM = createRegistrar(BetterBadgesRegistryKeys.EMBLEM);
 
-    public static final Registrar<BadgeCaseBase> BADGE_CASE_BASE = createRegistrar(ModRegistryKeys.BADGE_CASE_BASE);
+    public static final Registrar<BadgeCaseBase> BADGE_CASE_BASE = createRegistrar(BetterBadgesRegistryKeys.BADGE_CASE_BASE);
 
-    public static final Registrar<BadgeCaseCover> BADGE_CASE_COVER = createRegistrar(ModRegistryKeys.BADGE_CASE_COVER);
+    public static final Registrar<BadgeCaseCover> BADGE_CASE_COVER = createRegistrar(BetterBadgesRegistryKeys.BADGE_CASE_COVER);
 
     public static void createRegistries(){
         BetterBadges.LOGGER.info("Creating custom registries");

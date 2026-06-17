@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 
 import java.util.function.Supplier;
 
-public class ModAttributes {
+public class BetterBadgesAttributes {
 
     public static final DeferredRegister<Attribute> ATTRIBUTES  = DeferredRegister.create(BetterBadges.MOD_ID, Registries.ATTRIBUTE);
 
@@ -62,7 +62,7 @@ public class ModAttributes {
     }
 
     public static boolean hasNaturalElytra(LivingEntity entity){
-        AttributeInstance instance = entity.getAttribute(BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(ModAttributes.ELYTRA_FLIGHT.unwrapKey().get()));
+        AttributeInstance instance = entity.getAttribute(BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(BetterBadgesAttributes.ELYTRA_FLIGHT.unwrapKey().get()));
         if (instance == null) return false;
         return BooleanAttribute.toBoolean(instance.getValue());
     }

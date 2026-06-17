@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -14,8 +14,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 
 public class SpawningAttributes {
 
-    public static Holder<Attribute> SHINY_SPAWNING = ModAttributes.registerRanged(rootPath("shiny"), 0.0, 0.0, 1.0);
-    public static Holder<Attribute> NATURAL_SPAWNING = ModAttributes.registerRanged(rootPath("shiny"));
+    public static Holder<Attribute> SHINY_SPAWNING = BetterBadgesAttributes.registerRanged(rootPath("shiny"), 0.0, 0.0, 1.0);
+    public static Holder<Attribute> NATURAL_SPAWNING = BetterBadgesAttributes.registerRanged(rootPath("shiny"));
 
     public static Holder<Attribute> COMMON_BUCKET = registerByRarityBucket("common");
     public static Holder<Attribute> UNCOMMON_BUCKET = registerByRarityBucket("uncommon");
@@ -34,7 +34,7 @@ public class SpawningAttributes {
     }
 
     private static Holder<Attribute> registerByRarityBucket(String bucket){
-        return ModAttributes.registerRanged(pathByBucket(bucket), 0.0, 0.0, 1.0);
+        return BetterBadgesAttributes.registerRanged(pathByBucket(bucket), 0.0, 0.0, 1.0);
     }
 
     private static String pathByBucket(String spawnBucket){
@@ -46,7 +46,7 @@ public class SpawningAttributes {
     }
 
     private static Holder<Attribute> registerIvByStat(Stats stat){
-        return ModAttributes.registerRanged(pathIvByStat(stat), 0.0, 0.0, IVs.MAX_VALUE);
+        return BetterBadgesAttributes.registerRanged(pathIvByStat(stat), 0.0, 0.0, IVs.MAX_VALUE);
     }
 
     private static String pathIvByStat(Stats stat){
@@ -58,7 +58,7 @@ public class SpawningAttributes {
     }
 
     private static Holder<Attribute> registerByElementalType(ElementalType type){
-        return ModAttributes.registerRanged(pathByElementalType(type));
+        return BetterBadgesAttributes.registerRanged(pathByElementalType(type));
     }
 
     private static String pathByElementalType(ElementalType type){

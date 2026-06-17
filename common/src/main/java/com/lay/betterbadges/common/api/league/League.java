@@ -1,9 +1,8 @@
 package com.lay.betterbadges.common.api.league;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.api.emblem.Emblem;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
-import com.lay.betterbadges.common.registry.ModRegistries;
+import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import dev.architectury.registry.registries.DeferredSupplier;
@@ -22,7 +21,7 @@ public class League {
     public static final Codec<League> CODEC = Codec.STRING.comapFlatMap(
             to -> {
                 try {
-                    League league = ModRegistries.LEAGUE.get(ResourceLocation.parse(to));
+                    League league = BetterBadgesRegistries.LEAGUE.get(ResourceLocation.parse(to));
                     return DataResult.success(league);
                 } catch (Exception e){
                     return DataResult.success(EMPTY);
@@ -118,7 +117,7 @@ public class League {
             if(count == 0){
                 BetterBadges.LOGGER.error("League: {} has no badges added", this.id);
             }
-            return ModRegistries.LEAGUE.register(this.id, () -> new League(this.id, this.badges));
+            return BetterBadgesRegistries.LEAGUE.register(this.id, () -> new League(this.id, this.badges));
         }
     }
 

@@ -1,19 +1,19 @@
 package com.lay.betterbadges.common;
 
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
-import com.lay.betterbadges.common.command.ModCommands;
-import com.lay.betterbadges.common.component.ModDataComponents;
-import com.lay.betterbadges.common.config.ModConfigs;
-import com.lay.betterbadges.common.datapack.ModDatapacks;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
+import com.lay.betterbadges.common.command.BetterBadgesCommands;
+import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
+import com.lay.betterbadges.common.config.BetetrBadgesConfigs;
+import com.lay.betterbadges.common.datapack.BetterBadgesDatapacks;
 import com.lay.betterbadges.common.api.emblem.ModEmblems;
 import com.lay.betterbadges.common.event.CobblemonEventsListener;
-import com.lay.betterbadges.common.item.ModCreativeTab;
-import com.lay.betterbadges.common.item.ModItems;
+import com.lay.betterbadges.common.item.BetterBadgesItems;
+import com.lay.betterbadges.common.item.BetterBadgesCreativeTab;
 import com.lay.betterbadges.common.api.league.ModLeagues;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
-import com.lay.betterbadges.common.network.ModNetworkChannel;
-import com.lay.betterbadges.common.registry.ModRegistries;
-import com.lay.betterbadges.common.render.screen.ModScreens;
+import com.lay.betterbadges.common.network.BetterBadgesNetworkChannel;
+import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
+import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -35,34 +35,34 @@ public final class BetterBadges {
 	public static void init() {
 		LOGGER.info("Initializing Better Badges");
 
-		ModRegistries.createRegistries();
-		ModDataComponents.registerDataComponents();
+		BetterBadgesRegistries.createRegistries();
+		BetterBadgesDataComponents.registerDataComponents();
 
 		// Attributes
-		ModAttributes.registerAttributes();
+		BetterBadgesAttributes.registerAttributes();
 
 		// Items
-		ModCreativeTab.registerItemGroups();
-		ModItems.registerModItems();
+		BetterBadgesCreativeTab.registerItemGroups();
+		BetterBadgesItems.registerModItems();
 
 		// Custom Registries
 		ModLeagues.registerLeagues();
 		ModEmblems.registerEmblems();
 
 		// Screens, duh
-		ModScreens.registerScreenHandlers();
+		BetterBadgesScreens.registerScreenHandlers();
 
 		// Networking
-		ModNetworkChannel.initialize();
+		BetterBadgesNetworkChannel.initialize();
 
 		// Datapacks
-		ModDatapacks.registerReloadListeners();
+		BetterBadgesDatapacks.registerReloadListeners();
 
 		CobblemonEventsListener.listen();
 
-		ModCommands.registerCommands();
+		BetterBadgesCommands.registerCommands();
 
-		ModConfigs.initializeConfigs();
+		BetetrBadgesConfigs.initializeConfigs();
 
 		LifecycleEvent.SERVER_STARTED.register(minecraftServer -> SERVER = minecraftServer);
 

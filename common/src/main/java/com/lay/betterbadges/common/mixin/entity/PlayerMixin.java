@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common.mixin.entity;
 
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,7 +18,7 @@ public class PlayerMixin {
             at = @At("RETURN")
     )
     private static AttributeSupplier.Builder betterbadges$createAttributes(AttributeSupplier.Builder builder){
-        for (Holder<Attribute> attribute : ModAttributes.ATTRIBUTES){
+        for (Holder<Attribute> attribute : BetterBadgesAttributes.ATTRIBUTES){
             builder.add(BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(attribute.unwrapKey().get()));
         }
         return builder;

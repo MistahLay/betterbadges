@@ -13,7 +13,7 @@ import net.minecraft.world.item.Rarity;
 
 import java.util.function.Supplier;
 
-public class ModItems {
+public class BetterBadgesItems {
 
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BetterBadges.MOD_ID, Registries.ITEM);
 
@@ -33,7 +33,7 @@ public class ModItems {
                     .rarity(Rarity.EPIC)
                     .stacksTo(1)
                     .fireResistant()
-                    .arch$tab(ModCreativeTab.BETTER_BADGES_ITEM_GROUP)
+                    .arch$tab(BetterBadgesCreativeTab.BETTER_BADGES_ITEM_GROUP)
     ));
 
     // Johto Badges
@@ -60,7 +60,7 @@ public class ModItems {
                 .stacksTo(1)
                 .rarity(Rarity.RARE)
                 .fireResistant()
-                .arch$tab(ModCreativeTab.BETTER_BADGES_ITEM_GROUP),
+                .arch$tab(BetterBadgesCreativeTab.BETTER_BADGES_ITEM_GROUP),
                 league
         ));
     }

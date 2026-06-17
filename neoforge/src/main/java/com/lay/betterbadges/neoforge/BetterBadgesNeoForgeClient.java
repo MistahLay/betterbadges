@@ -3,7 +3,7 @@ package com.lay.betterbadges.neoforge;
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.render.atlas.managers.ShineSpritesManager;
 import com.lay.betterbadges.common.render.atlas.sources.AnimationOverlayPermutations;
-import com.lay.betterbadges.common.render.screen.ModScreens;
+import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreen;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
@@ -30,6 +30,6 @@ public class BetterBadgesNeoForgeClient {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(ModScreens.BADGE_CASE_SCREEN_HANDLER.get(), BadgeCaseScreen::new);
+        event.register(BetterBadgesScreens.BADGE_CASE_SCREEN_HANDLER.get(), BadgeCaseScreen::new);
     }
 }

@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common.item.bounded;
 
-import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
 import com.lay.betterbadges.common.item.ItemStackWrapper;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.MinecraftServer;
@@ -20,7 +20,7 @@ public class BoundItemWrapper extends ItemStackWrapper {
     }
 
     public UUID getItemOwner(){
-        return this.item.get(ModDataComponents.ITEM_OWNER.get());
+        return this.item.get(BetterBadgesDataComponents.ITEM_OWNER.get());
     }
 
     public String getItemOwnerName(MinecraftServer server){
@@ -37,11 +37,11 @@ public class BoundItemWrapper extends ItemStackWrapper {
     }
 
     public void setItemOwner(UUID uuid){
-        this.item.set(ModDataComponents.ITEM_OWNER.get(), uuid);
+        this.item.set(BetterBadgesDataComponents.ITEM_OWNER.get(), uuid);
     }
 
     public boolean hasOwner() {
-        return this.item.get(ModDataComponents.ITEM_OWNER.get()) != null;
+        return this.item.get(BetterBadgesDataComponents.ITEM_OWNER.get()) != null;
     }
 
     public boolean canUse(Player player){

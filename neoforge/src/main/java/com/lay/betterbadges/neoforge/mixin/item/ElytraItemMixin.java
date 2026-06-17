@@ -1,6 +1,6 @@
 package com.lay.betterbadges.neoforge.mixin.item;
 
-import com.lay.betterbadges.common.api.attribute.ModAttributes;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +20,6 @@ public class ElytraItemMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V")
     )
     private boolean betterbadges$elytraFlightTick(ItemStack instance, int i, LivingEntity livingEntity, EquipmentSlot equipmentSlot){
-        return !ModAttributes.hasNaturalElytra(livingEntity);
+        return !BetterBadgesAttributes.hasNaturalElytra(livingEntity);
     }
 }

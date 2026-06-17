@@ -1,6 +1,6 @@
 package com.lay.betterbadges.common.item.cases;
 
-import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
 import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.api.emblem.Emblem;
 import com.lay.betterbadges.common.api.emblem.EmblemTargetItem;
@@ -52,11 +52,11 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
 
     // Emblems
     public Emblem getCurrentEmblem() {
-        return this.item.get(ModDataComponents.CURRENT_EMBLEM.get());
+        return this.item.get(BetterBadgesDataComponents.CURRENT_EMBLEM.get());
     }
 
     public void setCurrentEmblem(Emblem emblem, boolean updateBoost) {
-        this.item.set(ModDataComponents.CURRENT_EMBLEM.get(), emblem);
+        this.item.set(BetterBadgesDataComponents.CURRENT_EMBLEM.get(), emblem);
         if (updateBoost) this.updateBoosts(this.getEmblemInventoryManager(), emblem);
     }
 
@@ -65,7 +65,7 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     }
 
     public void setEmblemInventoryManager(EmblemBadgesManager manager, boolean updateBoost){
-        this.item.set(ModDataComponents.EMBLEM_INVENTORY_CONTENTS.get(), manager.serialize());
+        this.item.set(BetterBadgesDataComponents.EMBLEM_INVENTORY_CONTENTS.get(), manager.serialize());
         if(updateBoost) this.updateBoosts(manager, this.getCurrentEmblem());
     }
 
@@ -74,22 +74,22 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
     }
 
     public EmblemBadgesManager getEmblemInventoryManager(){
-        Map<Emblem, List<EmblemTargetItem>> data = this.item.get(ModDataComponents.EMBLEM_INVENTORY_CONTENTS.get());
+        Map<Emblem, List<EmblemTargetItem>> data = this.item.get(BetterBadgesDataComponents.EMBLEM_INVENTORY_CONTENTS.get());
         if(data == null) return new EmblemBadgesManager(new HashMap<>());
         return EmblemBadgesManager.deserialize(data);
     }
 
     // Leagues
     public League getCurrentLeague() {
-        return this.item.get(ModDataComponents.CURRENT_LEAGUE.get());
+        return this.item.get(BetterBadgesDataComponents.CURRENT_LEAGUE.get());
     }
 
     public void setCurrentLeague(League league){
-        this.item.set(ModDataComponents.CURRENT_LEAGUE.get(), league);
+        this.item.set(BetterBadgesDataComponents.CURRENT_LEAGUE.get(), league);
     }
 
     public void setInventoryManager(LeagueBadgesManager manager, RegistryAccess access){
-        this.item.set(ModDataComponents.LEAGUE_INVENTORY_CONTENTS.get(), manager.serialize(access));
+        this.item.set(BetterBadgesDataComponents.LEAGUE_INVENTORY_CONTENTS.get(), manager.serialize(access));
     }
 
     public LeagueBadgesManager getLeagueInventoryManager(RegistryAccess registryAccess){

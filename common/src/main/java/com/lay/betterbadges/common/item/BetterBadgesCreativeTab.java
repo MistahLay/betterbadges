@@ -9,13 +9,13 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import dev.architectury.registry.CreativeTabRegistry;
 
-public class ModCreativeTab {
+public class BetterBadgesCreativeTab {
 
     public static final DeferredRegister<CreativeModeTab> BETTER_BADGES_TAB_REGISTRY = DeferredRegister.create(BetterBadges.MOD_ID, Registries.CREATIVE_MODE_TAB);
     public static final RegistrySupplier<CreativeModeTab> BETTER_BADGES_ITEM_GROUP = // This is very long if I say so myself
             BETTER_BADGES_TAB_REGISTRY.register("betterbadges_tab",
                     () -> CreativeTabRegistry.create(Component.translatable("itemGroup.better-badges"),
-                            () -> new ItemStack(ModItems.VOLCANO_BADGE.get())
+                            () -> new ItemStack(BetterBadgesItems.VOLCANO_BADGE.get())
                     ));
 
     public static void registerItemGroups(){

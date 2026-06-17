@@ -9,14 +9,13 @@ import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
 import com.lay.betterbadges.common.network.ChangeEmblemPacket;
 import com.lay.betterbadges.common.network.ChangeLeaguePacket;
-import com.lay.betterbadges.common.network.ModNetworkChannel;
+import com.lay.betterbadges.common.network.BetterBadgesNetworkChannel;
 import com.lay.betterbadges.common.render.screen.CustomHighlightSlot;
-import com.lay.betterbadges.common.render.screen.ModScreens;
+import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 import com.lay.betterbadges.common.render.screen.widget.DynamicTextureWidget;
 import com.lay.betterbadges.common.util.Utils;
 import com.lay.betterbadges.common.util.texture.EmblemTexture;
 import com.lay.betterbadges.common.util.texture.LeagueTexture;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import io.wispforest.owo.ui.base.BaseUIModelHandledScreen;
 import io.wispforest.owo.ui.base.BaseUIModelScreen;
 import io.wispforest.owo.ui.component.ButtonComponent;
@@ -26,7 +25,6 @@ import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.Positioning;
 import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -42,11 +40,11 @@ import java.util.function.Supplier;
 
 public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeCaseScreenHandler> implements CustomHighlightSlot {
 
-    public static final ResourceLocation HIGHLIGHT_TEXTURE = ModScreens.getGuiTexture("slot/hover");
-    public static final ResourceLocation BASIC_TEXTURE = ModScreens.getGuiTexture("badgecase/badge_case");
-    public static final ResourceLocation BASIC_LEAGUE = ModScreens.getGuiTexture("badgecase/league/johto/tag");
+    public static final ResourceLocation HIGHLIGHT_TEXTURE = BetterBadgesScreens.getGuiTexture("slot/hover");
+    public static final ResourceLocation BASIC_TEXTURE = BetterBadgesScreens.getGuiTexture("badgecase/badge_case");
+    public static final ResourceLocation BASIC_LEAGUE = BetterBadgesScreens.getGuiTexture("badgecase/league/johto/tag");
 
-    public static final ResourceLocation INVENTORY_TEXTURE = ModScreens.getGuiTexture("badgecase/player_inventory");
+    public static final ResourceLocation INVENTORY_TEXTURE = BetterBadgesScreens.getGuiTexture("badgecase/player_inventory");
 
     private int ticks = 0;
     private Slot lastHovered = null;
@@ -101,7 +99,7 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
             Emblem emblem = this.getNextEmblem();
             this.menu.switchEmblem(emblem);
 
-            ModNetworkChannel.CHANNEL.clientHandle().send(new ChangeEmblemPacket(emblem.getId().toString()));
+            BetterBadgesNetworkChannel.CHANNEL.clientHandle().send(new ChangeEmblemPacket(emblem.getId().toString()));
         });
         nextLeagueButton.sizing(Sizing.fixed(6), Sizing.fixed(11));
         nextLeagueButton.renderer(ButtonComponent.Renderer.texture(BASIC_TEXTURE, 199, 0, 256, 256));
@@ -150,7 +148,7 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
             if (button.active) button.renderer(ButtonComponent.Renderer.texture(texture, u, 0, 256, 256));
             else button.renderer(ButtonComponent.Renderer.texture(texture, u, 11, 256, 256));
             Record record = packet.get();
-            if (record != null) ModNetworkChannel.CHANNEL.clientHandle().send(record);
+            if (record != null) BetterBadgesNetworkChannel.CHANNEL.clientHandle().send(record);
         });
         arrowButton.sizing(Sizing.fixed(6), Sizing.fixed(11));
         arrowButton.renderer(ButtonComponent.Renderer.texture(BASIC_TEXTURE, u, 0, 256, 256));
@@ -265,7 +263,7 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
         for (EmblemSlot slot : this.menu.getEmblem().getSlots()) {
             int x = slot.x() + BadgeCaseScreenHandler.EMBLEM_CONTAINER_POS.x() + this.leftPos - 1;
             int y = slot.y() + BadgeCaseScreenHandler.EMBLEM_CONTAINER_POS.y() + this.topPos - 1;
-            ResourceLocation path = ModScreens.getGuiTexture("slot/" + slot.category().name().toLowerCase() + "_slot");
+            ResourceLocation path = BetterBadgesScreens.getGuiTexture("slot/" + slot.category().name().toLowerCase() + "_slot");
             context.blit(
                     path,
                     x, y,

@@ -1,8 +1,8 @@
 package com.lay.betterbadges.common.inventory;
 
-import com.lay.betterbadges.common.component.ModDataComponents;
+import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
 import com.lay.betterbadges.common.api.league.League;
-import com.lay.betterbadges.common.registry.ModRegistries;
+import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +29,7 @@ public class LeagueBadgesManager {
 
     public static LeagueBadgesManager createEmpty(){
         Map<League, SimpleContainer> inventories = new HashMap<>();
-        for (League league : ModRegistries.LEAGUE){
+        for (League league : BetterBadgesRegistries.LEAGUE){
             if(league == League.EMPTY) continue;
             inventories.put(league, new SimpleContainer(league.getTotalBadges()));
         }
@@ -38,13 +38,13 @@ public class LeagueBadgesManager {
 
     public static LeagueBadgesManager deserialize(ItemStack itemStack, RegistryAccess registryAccess){
 
-        Map<League, CompoundTag> inventoryContents = itemStack.get(ModDataComponents.LEAGUE_INVENTORY_CONTENTS.get());
+        Map<League, CompoundTag> inventoryContents = itemStack.get(BetterBadgesDataComponents.LEAGUE_INVENTORY_CONTENTS.get());
 
         if(inventoryContents == null) return createEmpty();
 
         Map<League, SimpleContainer> inventories = new HashMap<>();
 
-        ModRegistries.LEAGUE.forEach(league -> {
+        BetterBadgesRegistries.LEAGUE.forEach(league -> {
             if(league == League.EMPTY) return;
 
             if(!inventoryContents.containsKey(league)){

@@ -6,7 +6,7 @@ import com.lay.betterbadges.common.api.league.BadgeSlot;
 import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
-import com.lay.betterbadges.common.registry.ModRegistries;
+import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.core.Holder;
@@ -42,7 +42,7 @@ public class BadgeItem extends BoundItem {
     }
 
     public League getLeague(){
-        League league = ModRegistries.LEAGUE.get(this.leagueLocation);
+        League league = BetterBadgesRegistries.LEAGUE.get(this.leagueLocation);
         if(league == null || league == League.EMPTY) throw new RuntimeException("League: " + this.leagueLocation.toString() + " does not exists");
         return league;
     }
