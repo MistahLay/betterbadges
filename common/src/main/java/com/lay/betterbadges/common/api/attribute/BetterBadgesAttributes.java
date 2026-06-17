@@ -1,7 +1,7 @@
 package com.lay.betterbadges.common.api.attribute;
 
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.api.attribute.cobblemon.BattlingAttributes;
+import com.lay.betterbadges.common.api.attribute.cobblemon.BattleRewardsAttributes;
 import com.lay.betterbadges.common.api.attribute.cobblemon.CatchingAttributes;
 import com.lay.betterbadges.common.api.attribute.cobblemon.SpawningAttributes;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -28,7 +28,7 @@ public class BetterBadgesAttributes {
     public static Holder<Attribute> POKEBALL_USE = registerRanged("player.cobblemon.pokeball.use", 1.0, 0.0, 1.0);
 
     static {
-        BattlingAttributes.registerBattlingAttributes();
+        BattleRewardsAttributes.registerBattlingAttributes();
         SpawningAttributes.registerSpawningAttributes();
         CatchingAttributes.registerCatchingAttributes();
 
@@ -50,7 +50,7 @@ public class BetterBadgesAttributes {
     }
 
     public static Holder<Attribute> registerRanged(String attributeId){
-        return register(attributeId, () -> new RangedAttribute(attributePrefix(attributeId), 0.0d, 0.0d, 1024.0d).setSyncable(true));
+        return register(attributeId, () -> new RangedAttribute(attributePrefix(attributeId), 1.0d, 0.0d, 1024.0d).setSyncable(true));
     }
 
     public static Holder<Attribute> registerBoolean(String attributeId, boolean defaulted){
@@ -65,5 +65,10 @@ public class BetterBadgesAttributes {
         AttributeInstance instance = entity.getAttribute(BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(BetterBadgesAttributes.ELYTRA_FLIGHT.unwrapKey().get()));
         if (instance == null) return false;
         return BooleanAttribute.toBoolean(instance.getValue());
+    }
+
+    // TODO: Fix the constants to work properly
+    public static Holder<Attribute> actual(Holder<Attribute> original){
+        return BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(original.unwrapKey().get());
     }
 }

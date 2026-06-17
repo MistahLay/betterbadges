@@ -4,10 +4,11 @@ import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
-public class BattlingAttributes {
+public class BattleRewardsAttributes {
 
-    public static Holder<Attribute> XP_REWARD = BetterBadgesAttributes.registerRanged(pathBattleRewards("xp"));
-    public static Holder<Attribute> LOOT_REWARD = BetterBadgesAttributes.registerRanged(pathBattleRewards("loot"));
+    public static Holder<Attribute> XP_BOOST = BetterBadgesAttributes.registerRanged(pathBattleRewards("xp_boost"));
+    public static Holder<Attribute> POSSIBLE_DROPS = BetterBadgesAttributes.registerRanged(pathBattleRewards("possible_drops"), 1.0, 1.0, 1024.0);
+    public static Holder<Attribute> XP_CANDY_BOOST = BetterBadgesAttributes.registerRanged("xp_candy_boost");
 
     private static String pathBattleRewards(String reward){
         return rootPath("reward." + reward);

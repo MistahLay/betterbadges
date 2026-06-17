@@ -31,7 +31,7 @@ public class CatchingAttributes {
     }
 
     private static Holder<Attribute> registerByElementalType(ElementalType type){
-        return BetterBadgesAttributes.registerRanged(pathByElementalType(type), 1.0, 0.0, 1024.0);
+        return BetterBadgesAttributes.registerRanged(pathByElementalType(type));
     }
 
     private static String pathByElementalType(ElementalType type){
