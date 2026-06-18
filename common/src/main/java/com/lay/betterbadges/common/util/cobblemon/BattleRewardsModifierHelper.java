@@ -1,26 +1,22 @@
-package com.lay.betterbadges.common.util;
+package com.lay.betterbadges.common.util.cobblemon;
 
 import com.cobblemon.mod.common.api.drop.DropEntry;
 import com.cobblemon.mod.common.api.drop.DropTable;
-import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.lay.betterbadges.common.api.attribute.cobblemon.BattleRewardsAttributes;
+import com.lay.betterbadges.common.util.PlayerAttributeHelper;
 import kotlin.ranges.IntRange;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 
 import java.util.List;
 
-public class BattleRewardsHelper {
+public class BattleRewardsModifierHelper extends PlayerAttributeHelper {
 
-    private final ServerPlayer player;
-
-    public static BattleRewardsHelper create(ServerPlayer player){
-        return new BattleRewardsHelper(player);
+    public static BattleRewardsModifierHelper create(ServerPlayer player){
+        return new BattleRewardsModifierHelper(player);
     }
 
-    public BattleRewardsHelper(ServerPlayer player){
-        this.player = player;
+    public BattleRewardsModifierHelper(ServerPlayer player) {
+        super(player);
     }
 
     public int getXpRewardBoost(int original){
@@ -37,10 +33,6 @@ public class BattleRewardsHelper {
     public void modifyLoot(DropTable dropTable, List<DropEntry> drops){
         drops.clear();
         drops.addAll(dropTable.getDrops(new IntRange(1, (int) this.attributeValue(BattleRewardsAttributes.POSSIBLE_DROPS)), null));
-    }
-
-    private float attributeValue(Holder<Attribute> attribute){
-        return (float) this.player.getAttributeValue(BetterBadgesAttributes.actual(attribute));
     }
 
 }

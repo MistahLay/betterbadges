@@ -8,6 +8,8 @@ import dev.architectury.registry.registries.DeferredRegister;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -26,6 +28,8 @@ public class BetterBadgesAttributes {
     // Cobblemon
     // Probability For the chance of using a pokeball TODO: Add a blacklist
     public static Holder<Attribute> POKEBALL_USE = registerRanged("player.cobblemon.pokeball.use", 1.0, 0.0, 1.0);
+
+    public static Holder<Attribute> POKEBALL_DESTROY = registerBoolean("pokeball.destroy", false);
 
     static {
         BattleRewardsAttributes.registerBattlingAttributes();
@@ -70,5 +74,10 @@ public class BetterBadgesAttributes {
     // TODO: Fix the constants to work properly
     public static Holder<Attribute> actual(Holder<Attribute> original){
         return BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(original.unwrapKey().get());
+    }
+
+    // TODO: Fix the constants to work properly
+    public static Holder<Attribute> actual(String id){
+        return BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(ResourceKey.create(Registries.ATTRIBUTE, BetterBadges.of(id)));
     }
 }

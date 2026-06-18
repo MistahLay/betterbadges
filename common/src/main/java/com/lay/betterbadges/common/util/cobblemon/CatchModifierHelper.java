@@ -1,7 +1,6 @@
-package com.lay.betterbadges.common.util;
+package com.lay.betterbadges.common.util.cobblemon;
 
 import com.cobblemon.mod.common.api.events.pokeball.PokemonCatchRateEvent;
-import com.cobblemon.mod.common.api.pokeball.PokeBalls;
 import com.cobblemon.mod.common.api.pokeball.catching.CatchRateModifier;
 import com.cobblemon.mod.common.api.pokeball.catching.modifiers.MultiplierModifier;
 import com.cobblemon.mod.common.api.types.ElementalType;
@@ -9,20 +8,15 @@ import com.cobblemon.mod.common.pokeball.PokeBall;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.lay.betterbadges.common.api.attribute.cobblemon.CatchingAttributes;
+import com.lay.betterbadges.common.util.PlayerAttributeHelper;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.player.Player;
 
-public class CatchModifierHelper {
+public class CatchModifierHelper extends PlayerAttributeHelper {
 
     private float value;
-    private final ServerPlayer thrower;
     private final Pokemon pokemon;
     private final PokeBall pokeball;
 
@@ -40,8 +34,8 @@ public class CatchModifierHelper {
     }
 
     public CatchModifierHelper(Float original, ServerPlayer thrower, Pokemon pokemon, PokeBall pokeball){
+        super(thrower);
         this.value = original;
-        this.thrower = thrower;
         this.pokemon = pokemon;
         this.pokeball = pokeball;
     }
@@ -49,7 +43,7 @@ public class CatchModifierHelper {
     public CatchModifierHelper applyFlatBoosts(){
         this.multiplyByAttribute(CatchingAttributes.FLAT_CATCHING);
 
-        if (PlayerExtensionsKt.isInBattle(this.thrower)) this.multiplyByAttribute(CatchingAttributes.IN_BATTLE_CATCHING);
+        if (PlayerExtensionsKt.isInBattle(this.player)) this.multiplyByAttribute(CatchingAttributes.IN_BATTLE_CATCHING);
         else this.multiplyByAttribute(CatchingAttributes.OUTSIDE_BATTLE_CATCHING);
 
         if (this.pokemon.getStatus() != null) this.multiplyByAttribute(CatchingAttributes.FLAT_STATUS_CATCHING);
@@ -64,7 +58,7 @@ public class CatchModifierHelper {
     public CatchModifierHelper applyOfBoostedPokeball(){
         if (this.pokeball.getCatchRateModifier() instanceof MultiplierModifier) return this;
 
-        if (PlayerExtensionsKt.isInBattle(this.thrower)) this.multiplyByAttribute(CatchingAttributes.SPECIAL_IN_BATTLE_CATCHING);
+        if (PlayerExtensionsKt.isInBattle(this.player)) this.multiplyByAttribute(CatchingAttributes.SPECIAL_IN_BATTLE_CATCHING);
         else this.multiplyByAttribute(CatchingAttributes.SPECIAL_OUTSIDE_BATTLE_CATCHING);
 
         return this;
@@ -90,10 +84,6 @@ public class CatchModifierHelper {
 
     private void multiply(float modifier){
         this.value = CatchRateModifier.Behavior.MULTIPLY.getMutator().invoke(modifier, this.value);
-    }
-
-    private float attributeValue(Holder<Attribute> attribute){
-        return (float) this.thrower.getAttributeValue(BetterBadgesAttributes.actual(attribute));
     }
 
     public float result() {

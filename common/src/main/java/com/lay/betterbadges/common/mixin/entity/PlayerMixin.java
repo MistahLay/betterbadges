@@ -21,7 +21,6 @@ public class PlayerMixin {
     private static AttributeSupplier.Builder betterbadges$createAttributes(AttributeSupplier.Builder builder){
         for (Holder<Attribute> attribute : BetterBadgesAttributes.ATTRIBUTES){
             builder.add(BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(attribute.unwrapKey().get()));
-            BetterBadges.LOGGER.info("{}", attribute.unwrapKey().get());
         }
         return builder;
     }
