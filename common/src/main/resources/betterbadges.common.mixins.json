@@ -7,7 +7,8 @@
 		"SlotMixin",
 		"TextureComponentMixin",
 		"SpriteSourcesMixin",
-		"entity.PlayerMixin"
+		"entity.PlayerMixin",
+		"cobblemon.entity.EmptyPokeBallEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

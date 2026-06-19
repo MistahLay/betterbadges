@@ -14,7 +14,7 @@ public abstract class PlayerAttributeHelper {
     }
 
     protected float attributeValue(Holder<Attribute> attribute){
-        return (float) this.player.getAttributeValue(BetterBadgesAttributes.actual(attribute));
+        return (float) this.player.getAttributeValue(attribute);
     }
 
 

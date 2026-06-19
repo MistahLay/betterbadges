@@ -72,7 +72,7 @@ public class SpawningModifierHelper extends PlayerAttributeHelper {
     }
 
     public float getBoostedShinyOdds(Float original){
-        double modifier = this.attributeValue(BetterBadgesAttributes.actual(SpawningAttributes.SHINY_SPAWNING));
+        double modifier = this.attributeValue(SpawningAttributes.SHINY_SPAWNING);
         return (float) (original / modifier);
     }
 
@@ -98,7 +98,7 @@ public class SpawningModifierHelper extends PlayerAttributeHelper {
     public void boostIvs(Pokemon pokemon){
         IVs ivs = pokemon.getIvs();
         for (Stat stat : Stats.Companion.getPERMANENT()) {
-            int ivIncrease = (int) this.attributeValue(SpawningAttributes.getByIvStat((Stats) stat));
+            int ivIncrease = (int) this.attributeValue(SpawningAttributes.getByIvStat(stat));
             pokemon.setIV(stat, Math.min(ivs.getOrDefault(stat) + ivIncrease, IVs.MAX_VALUE));
         }
     }

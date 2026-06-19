@@ -1,71 +1,53 @@
 package com.lay.betterbadges.common.api.attribute.cobblemon;
 
-import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.api.spawning.BestSpawner;
 import com.cobblemon.mod.common.api.spawning.SpawnBucket;
-import com.cobblemon.mod.common.api.spawning.preset.BestSpawnerConfig;
 import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.pokemon.IVs;
-import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes.registerRanged;
 
 public class SpawningAttributes {
 
-    public static Holder<Attribute> SHINY_SPAWNING = BetterBadgesAttributes.registerRanged(rootPath("shiny"), 1.0, 0.0, 8192.0f);
-
-    public static Map<Stats, Holder<Attribute>> IVS = new HashMap<>();
-
-    public static Holder<Attribute> HP_IV = registerIvByStat(Stats.HP);
-    public static Holder<Attribute> SPEED_IV = registerIvByStat(Stats.SPEED);
-    public static Holder<Attribute> SPECIAL_ATTACK_IV = registerIvByStat(Stats.SPECIAL_ATTACK);
-    public static Holder<Attribute> SPECIAL_DEFENCE_IV = registerIvByStat(Stats.SPECIAL_DEFENCE);
-    public static Holder<Attribute> ATTACK_IV = registerIvByStat(Stats.ATTACK);
-    public static Holder<Attribute> DEFENCE_IV = registerIvByStat(Stats.DEFENCE);
+    public static Holder<Attribute> SHINY_SPAWNING = registerRanged(rootPath("shiny"), 1.0, 0.0, 8192.0f);
 
     public static Holder<Attribute> getByRarityBucket(SpawnBucket bucket){
-        return BetterBadgesAttributes.actual(pathByBucket(bucket.getName()));
+        return BetterBadgesAttributes.get(pathByBucket(bucket.getName()));
     }
 
     private static Holder<Attribute> registerByRarityBucket(SpawnBucket bucket){
-        return BetterBadgesAttributes.registerRanged(pathByBucket(bucket.getName()), 0.0, 0.0, 100.0);
+        return registerRanged(pathByBucket(bucket.getName()), 0.0, 0.0, 100.0);
     }
 
     private static String pathByBucket(String spawnBucket){
         return rootPath("spawnbucket." + spawnBucket);
     }
 
-    public static Holder<Attribute> getByIvStat(Stats stat){
-        return BetterBadgesAttributes.actual(pathIvByStat(stat));
+    public static Holder<Attribute> getByIvStat(Stat stat){
+        return BetterBadgesAttributes.get(pathIvByStat(stat));
     }
 
-    private static Holder<Attribute> registerIvByStat(Stats stat){
-        Holder<Attribute> ivAttribute = BetterBadgesAttributes.registerRanged(pathIvByStat(stat), 0.0, 0.0, IVs.MAX_VALUE);
-        IVS.putIfAbsent(stat, ivAttribute);
-        return ivAttribute;
+    private static Holder<Attribute> registerIvByStat(Stat stat){
+        return registerRanged(pathIvByStat(stat), 0.0, 0.0, IVs.MAX_VALUE);
     }
 
-    private static String pathIvByStat(Stats stat){
-        return rootPath("iv.stat." + stat.name().toLowerCase());
+    private static String pathIvByStat(Stat stat){
+        return rootPath("iv.stat." + stat.getIdentifier().getPath());
     }
 
-    public static Holder<Attribute> getByElementalType(ElementalType status){
-        return BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(ResourceKey.create(Registries.ATTRIBUTE, BetterBadges.of(pathByElementalType(status))));
+    public static Holder<Attribute> getByElementalType(ElementalType type){
+        return BetterBadgesAttributes.get(pathByElementalType(type));
     }
 
     private static Holder<Attribute> registerByElementalType(ElementalType type){
-        return BetterBadgesAttributes.registerRanged(pathByElementalType(type));
+        return registerRanged(pathByElementalType(type));
     }
 
     private static String pathByElementalType(ElementalType type){
@@ -76,7 +58,7 @@ public class SpawningAttributes {
         return "player.cobbleattribbutes.spawning." + string;
     }
 
-    public static void registerSpawningAttributes(){
+    public static void registerAttributes(){
         for (ElementalType type : ElementalTypes.all()){
             registerByElementalType(type);
         }
@@ -84,5 +66,25 @@ public class SpawningAttributes {
         for (SpawnBucket spawnBucket : BestSpawner.INSTANCE.getConfig().getBuckets()){
             registerByRarityBucket(spawnBucket);
         }
+
+        for (Stat stat : Stats.Companion.getPERMANENT()){
+            registerIvByStat(stat);
+        }
+    }
+
+    public static void applyToBuilder(AttributeSupplier.Builder builder){
+        for (ElementalType type : ElementalTypes.all()){
+            builder.add(getByElementalType(type));
+        }
+
+        for (SpawnBucket spawnBucket : BestSpawner.INSTANCE.getConfig().getBuckets()){
+            builder.add(getByRarityBucket(spawnBucket));
+        }
+
+        for (Stat stat : Stats.Companion.getPERMANENT()){
+            builder.add(getByIvStat(stat));
+        }
+
+        builder.add(SHINY_SPAWNING);
     }
 }

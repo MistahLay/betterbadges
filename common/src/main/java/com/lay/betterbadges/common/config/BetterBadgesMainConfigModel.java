@@ -8,6 +8,8 @@ import java.util.List;
 @Config(name = "betterbadges", wrapperName = "BetterBadgesMainConfig")
 public class BetterBadgesMainConfigModel {
 
-    public List<String> blacklistedPokaballs = new ArrayList<>();
+    public List<String> BlacklistPokeballUse = new ArrayList<>();
+
+    public List<String> BlacklistPokeballBoosted = new ArrayList<>();
 
 }

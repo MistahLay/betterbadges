@@ -3,11 +3,15 @@ package com.lay.betterbadges.common.event;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.spawning.spawner.Spawner;
+import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.lay.betterbadges.common.util.cobblemon.BattleRewardsModifierHelper;
 import com.lay.betterbadges.common.util.cobblemon.CatchModifierHelper;
 import com.lay.betterbadges.common.util.cobblemon.SpawningModifierHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.Random;
 
 public class CobblemonEventsListener {
 
@@ -42,10 +46,6 @@ public class CobblemonEventsListener {
                 spawner.setSpawnPool(helper.createNewSpawnPool(spawner.getSpawnPool()));
                 event.setBucket(helper.createNewBucket(spawner.getInfluences()));
             }
-        });
-
-        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(event -> {
-
         });
 
         CobblemonEvents.POKEMON_CAPTURED.subscribe(event -> {

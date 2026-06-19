@@ -21,6 +21,8 @@ loom {
     enableTransitiveAccessWideners.set(true)
     silentMojangMappingsLicense()
 
+    accessWidenerPath = file("src/main/resources/betterbadges.fabric.classtweaker")
+
     mixin {
         defaultRefmapName.set("${project.name}.mixins.json")
     }

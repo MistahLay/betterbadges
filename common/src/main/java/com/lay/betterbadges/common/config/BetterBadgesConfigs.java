@@ -8,25 +8,31 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BetterBadgesConfigs {
 
-    private static List<PokeBallItem> BlacklistedPokeballs = new ArrayList<>();
+    private static final Set<PokeBallItem> BlacklistedPokeballsUse = new HashSet<>();
+
+    public static boolean canPokeballBeReturned(PokeBallItem pokeball){
+        return !BlacklistedPokeballsUse.contains(pokeball);
+    }
 
     public static List<PokeBallItem> getBlacklistedPokeballs(){
-        return new ArrayList<>(BlacklistedPokeballs);
+        return new ArrayList<>(BlacklistedPokeballsUse);
     }
 
     public static BetterBadgesMainConfig config = BetterBadgesMainConfig.createAndLoad();
 
     public static void initializeConfigs(){
-        for (String itemId : config.blacklistedPokaballs()){
+        for (String itemId : config.BlacklistPokeballUse()){
             try {
                 Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemId));
                 if (!(item instanceof PokeBallItem pokeball)) throw new RuntimeException("Blacklisted Pokeball is not a pokeball");
-                if (BlacklistedPokeballs.contains(pokeball)) continue;
-                BlacklistedPokeballs.add(pokeball);
+                if (BlacklistedPokeballsUse.contains(pokeball)) continue;
+                BlacklistedPokeballsUse.add(pokeball);
             } catch (Exception e) {
                 BetterBadges.LOGGER.error("Cannot add {} to the Pokeball Blacklist: {}", itemId, e.getMessage());
             }

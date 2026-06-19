@@ -6,9 +6,10 @@
   "mixins": [
     "ItemModelGeneratorsWidener",
     "AbstractContainerScreenMixin",
-    "entity.LivingEntityMixin",
+    "entity.PlayerMixin",
     "entity.LocalPlayerMixin",
-    "entity.PlayerMixin"
+    "entity.ServerPlayerMixin",
+    "network.ServerGamePacketListener"
   ],
   "injectors": {
     "defaultRequire": 1
