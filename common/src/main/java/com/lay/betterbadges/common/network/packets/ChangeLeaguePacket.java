@@ -1,4 +1,4 @@
-package com.lay.betterbadges.common.network;
+package com.lay.betterbadges.common.network.packets;
 
 import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.registry.BetterBadgesRegistries;
