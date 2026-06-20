@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
+import com.lay.betterbadges.common.api.attribute.MultiAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -25,52 +26,29 @@ public class CatchingAttributes {
 
     public static Holder<Attribute> FLAT_STATUS_CATCHING = registerRanged(rootPath("status.flat"));
 
-    public static Holder<Attribute> getByElementalType(ElementalType type){
-        return BetterBadgesAttributes.get(pathByElementalType(type));
-    }
+    public static MultiAttributes<ElementalType> TYPE_SPECIFIC_CATCHING = new MultiAttributes<>(
+            rootPath("type."),
+            original -> original.getName().toLowerCase(),
+            BetterBadgesAttributes::registerRanged,
+            ElementalTypes.all()
+    );
 
-    public static Holder<Attribute> getByStatus(Status status){
-        return BetterBadgesAttributes.get(pathByStatus(status));
-    }
-
-    private static Holder<Attribute> registerByElementalType(ElementalType type){
-        return registerRanged(pathByElementalType(type));
-    }
-
-    private static String pathByElementalType(ElementalType type){
-        return rootPath("type." + type.getName().toLowerCase());
-    }
-
-    public static Holder<Attribute> registerByStatus(Status status){
-        return registerRanged(pathByStatus(status));
-    }
-
-    private static String pathByStatus(Status status){
-        return rootPath("status." + status.getName().getPath().toLowerCase());
-    }
+    public static MultiAttributes<Status> STATUS_SPECIFIC_CATCHING = new MultiAttributes<>(
+            rootPath("status."),
+            original -> original.getName().getPath().toLowerCase(),
+            BetterBadgesAttributes::registerRanged,
+            Statuses.getPersistentStatuses()
+    );
 
     private static String rootPath(String string){
         return "player.cobbleattribbutes.catching." + string;
     }
 
-    public static void registerAttributes() {
-        for (ElementalType type : ElementalTypes.all()){
-            registerByElementalType(type);
-        }
-
-        for (Status status : Statuses.getPersistentStatuses()){
-            registerByStatus(status);
-        }
-    }
+    public static void registerAttributes() { }
 
     public static void applyToBuilder(AttributeSupplier.Builder builder){
-        for (ElementalType type : ElementalTypes.all()){
-            builder.add(getByElementalType(type));
-        }
-
-        for (Status status : Statuses.getPersistentStatuses()){
-            builder.add(getByStatus(status));
-        }
+        TYPE_SPECIFIC_CATCHING.applyToBuilder(builder);
+        STATUS_SPECIFIC_CATCHING.applyToBuilder(builder);
 
         builder
                 .add(FLAT_CATCHING)

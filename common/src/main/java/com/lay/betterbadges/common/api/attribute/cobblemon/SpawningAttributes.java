@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
+import com.lay.betterbadges.common.api.attribute.MultiAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -18,72 +19,37 @@ public class SpawningAttributes {
 
     public static Holder<Attribute> SHINY_SPAWNING = registerRanged(rootPath("shiny"), 1.0, 0.0, 8192.0f);
 
-    public static Holder<Attribute> getByRarityBucket(SpawnBucket bucket){
-        return BetterBadgesAttributes.get(pathByBucket(bucket.getName()));
-    }
+    public static MultiAttributes<SpawnBucket> RARITY_BUCKET_SPAWNING = new MultiAttributes<>(
+            rootPath("spawnbucket."),
+            SpawnBucket::getName,
+            id -> registerRanged(id, 0.0d, 0.0d, 100.0d),
+            BestSpawner.INSTANCE.getConfig().getBuckets()
+    );
 
-    private static Holder<Attribute> registerByRarityBucket(SpawnBucket bucket){
-        return registerRanged(pathByBucket(bucket.getName()), 0.0, 0.0, 100.0);
-    }
+    public static MultiAttributes<Stat> IV_BOOSTED_SPAWNING = new MultiAttributes<>(
+            rootPath("iv."),
+            original -> original.getIdentifier().getPath(),
+            id -> registerRanged(id, 0.0, 0.0, IVs.MAX_VALUE),
+            Stats.Companion.getPERMANENT()
+    );
 
-    private static String pathByBucket(String spawnBucket){
-        return rootPath("spawnbucket." + spawnBucket);
-    }
-
-    public static Holder<Attribute> getByIvStat(Stat stat){
-        return BetterBadgesAttributes.get(pathIvByStat(stat));
-    }
-
-    private static Holder<Attribute> registerIvByStat(Stat stat){
-        return registerRanged(pathIvByStat(stat), 0.0, 0.0, IVs.MAX_VALUE);
-    }
-
-    private static String pathIvByStat(Stat stat){
-        return rootPath("iv.stat." + stat.getIdentifier().getPath());
-    }
-
-    public static Holder<Attribute> getByElementalType(ElementalType type){
-        return BetterBadgesAttributes.get(pathByElementalType(type));
-    }
-
-    private static Holder<Attribute> registerByElementalType(ElementalType type){
-        return registerRanged(pathByElementalType(type));
-    }
-
-    private static String pathByElementalType(ElementalType type){
-        return rootPath("type." + type.getName().toLowerCase());
-    }
+    public static MultiAttributes<ElementalType> TYPE_BOOSTED_SPAWNING = new MultiAttributes<>(
+            rootPath("type."),
+            original -> original.getName().toLowerCase(),
+            BetterBadgesAttributes::registerRanged,
+            ElementalTypes.all()
+    );
 
     private static String rootPath(String string){
         return "player.cobbleattribbutes.spawning." + string;
     }
 
-    public static void registerAttributes(){
-        for (ElementalType type : ElementalTypes.all()){
-            registerByElementalType(type);
-        }
-
-        for (SpawnBucket spawnBucket : BestSpawner.INSTANCE.getConfig().getBuckets()){
-            registerByRarityBucket(spawnBucket);
-        }
-
-        for (Stat stat : Stats.Companion.getPERMANENT()){
-            registerIvByStat(stat);
-        }
-    }
+    public static void registerAttributes(){ }
 
     public static void applyToBuilder(AttributeSupplier.Builder builder){
-        for (ElementalType type : ElementalTypes.all()){
-            builder.add(getByElementalType(type));
-        }
-
-        for (SpawnBucket spawnBucket : BestSpawner.INSTANCE.getConfig().getBuckets()){
-            builder.add(getByRarityBucket(spawnBucket));
-        }
-
-        for (Stat stat : Stats.Companion.getPERMANENT()){
-            builder.add(getByIvStat(stat));
-        }
+        TYPE_BOOSTED_SPAWNING.applyToBuilder(builder);
+        RARITY_BUCKET_SPAWNING.applyToBuilder(builder);
+        IV_BOOSTED_SPAWNING.applyToBuilder(builder);
 
         builder.add(SHINY_SPAWNING);
     }

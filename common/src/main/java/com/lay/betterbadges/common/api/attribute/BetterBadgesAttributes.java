@@ -15,6 +15,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import org.w3c.dom.Attr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BetterBadgesAttributes{
 
@@ -43,7 +47,8 @@ public class BetterBadgesAttributes{
     }
 
     public static Holder<Attribute> registerRanged(String attributeId, double defaulted, double min, double max){
-        return register(BetterBadges.of(attributeId), new RangedAttribute(attributeTranslation(attributeId), defaulted, min, max).setSyncable(true));
+        RangedAttribute attribute = new RangedAttribute(attributeTranslation(attributeId), defaulted, min, max);
+        return register(BetterBadges.of(attributeId), attribute);
     }
 
     public static Holder<Attribute> registerRanged(String attributeId, double defaulted){
@@ -74,4 +79,5 @@ public class BetterBadgesAttributes{
     private static String attributeTranslation(String name){
         return "attribute.name." + name;
     }
+
 }
