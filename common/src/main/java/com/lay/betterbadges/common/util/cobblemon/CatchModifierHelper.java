@@ -33,7 +33,7 @@ public class CatchModifierHelper extends PlayerAttributeHelper {
         return result;
     }
 
-    public CatchModifierHelper(Float original, ServerPlayer thrower, Pokemon pokemon, PokeBall pokeball){
+    private CatchModifierHelper(Float original, ServerPlayer thrower, Pokemon pokemon, PokeBall pokeball){
         super(thrower);
         this.value = original;
         this.pokemon = pokemon;
@@ -66,14 +66,14 @@ public class CatchModifierHelper extends PlayerAttributeHelper {
 
     public CatchModifierHelper applyByStatus(){
         if (this.pokemon.getStatus() != null) {
-            this.multiplyByAttribute(CatchingAttributes.getByStatus(this.pokemon.getStatus().getStatus()));
+            this.multiplyByAttribute(CatchingAttributes.STATUS_SPECIFIC_CATCHING.get(this.pokemon.getStatus().getStatus()));
         }
         return this;
     }
 
     public CatchModifierHelper applyByTypes() {
         for (ElementalType type : this.pokemon.getTypes()){ // Which means that if there's like dual type pokemon, 1.5x1.5 TODO: Configurable to primary type
-            this.multiplyByAttribute(CatchingAttributes.getByElementalType(type));
+            this.multiplyByAttribute(CatchingAttributes.TYPE_SPECIFIC_CATCHING.get(type));
         }
         return this;
     }

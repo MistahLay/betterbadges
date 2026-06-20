@@ -15,8 +15,6 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import com.cobblemon.mod.common.util.CollectionUtilsKt;
 import com.cobblemon.mod.common.util.ResourceLocationExtensionsKt;
-import com.lay.betterbadges.common.BetterBadges;
-import com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes;
 import com.lay.betterbadges.common.api.attribute.cobblemon.SpawningAttributes;
 import com.lay.betterbadges.common.util.PlayerAttributeHelper;
 import kotlin.random.Random;
@@ -26,17 +24,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpawningModifierHelper extends PlayerAttributeHelper {
+import static com.lay.betterbadges.common.util.PlayerAttributeHelper.attributeValue;
 
-    public static SpawningModifierHelper create(ServerPlayer player){
-        return new SpawningModifierHelper(player);
-    }
+public class SpawningModifierHelper {
 
-    private SpawningModifierHelper(ServerPlayer player){
-        super(player);
-    }
-
-    public SpawnPool createNewSpawnPool(SpawnPool pool){
+    public static SpawnPool createNewSpawnPool(ServerPlayer player, SpawnPool pool){
         SpawnPool newPool = pool.copy(pool.getName() + "updated");
 
         Map<SpawnDetail, Float> rawPercentages = new LinkedHashMap<>();
@@ -52,9 +44,9 @@ public class SpawningModifierHelper extends PlayerAttributeHelper {
                         ResourceLocationExtensionsKt.asIdentifierDefaultingNamespace(orgSpeciesName, Cobblemon.MODID)
                 );
                 if (species == null) continue;
-                percentage += this.attributeValue(SpawningAttributes.getByElementalType(species.getPrimaryType()));
+                percentage += attributeValue(player, SpawningAttributes.TYPE_BOOSTED_SPAWNING.get(species.getPrimaryType()));
                 if (species.getSecondaryType() != null) {
-                    percentage += this.attributeValue(SpawningAttributes.getByElementalType(species.getSecondaryType())) / 2f;
+                    percentage += attributeValue(player, SpawningAttributes.TYPE_BOOSTED_SPAWNING.get(species.getSecondaryType())) / 2f;
                 }
             }
 
@@ -71,19 +63,19 @@ public class SpawningModifierHelper extends PlayerAttributeHelper {
         return newPool;
     }
 
-    public float getBoostedShinyOdds(Float original){
-        double modifier = this.attributeValue(SpawningAttributes.SHINY_SPAWNING);
+    public static float getBoostedShinyOdds(ServerPlayer player, Float original){
+        double modifier = attributeValue(player, SpawningAttributes.SHINY_SPAWNING);
         return (float) (original / modifier);
     }
 
     /**
-     * Redo the the choosing bucket probability
+     * Just redo the choosing bucket probability
      */
-    public SpawnBucket createNewBucket(List<SpawningInfluence> influences){
+    public static SpawnBucket createNewBucket(ServerPlayer player, List<SpawningInfluence> influences){
         List<SpawnBucket> buckets = BestSpawner.INSTANCE.getConfig().getBuckets();
         Map<SpawnBucket, Float> spawnBucketsMap = new LinkedHashMap<>();
         for (SpawnBucket bucket : buckets){
-            float newWeight = this.attributeValue(SpawningAttributes.getByRarityBucket(bucket));
+            float newWeight = attributeValue(player, SpawningAttributes.RARITY_BUCKET_SPAWNING.get(bucket));
             spawnBucketsMap.put(bucket, bucket.getWeight() + newWeight);
         }
         influences.forEach(influence -> influence.affectBucketWeights(spawnBucketsMap));
@@ -95,10 +87,10 @@ public class SpawningModifierHelper extends PlayerAttributeHelper {
         return (chosenEntry != null) ? chosenEntry.getKey() : buckets.getFirst();
     }
 
-    public void boostIvs(Pokemon pokemon){
+    public static void applyBoostedIvs(ServerPlayer player, Pokemon pokemon){
         IVs ivs = pokemon.getIvs();
         for (Stat stat : Stats.Companion.getPERMANENT()) {
-            int ivIncrease = (int) this.attributeValue(SpawningAttributes.getByIvStat(stat));
+            int ivIncrease = (int) attributeValue(player, SpawningAttributes.IV_BOOSTED_SPAWNING.get(stat));
             pokemon.setIV(stat, Math.min(ivs.getOrDefault(stat) + ivIncrease, IVs.MAX_VALUE));
         }
     }
