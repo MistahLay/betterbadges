@@ -8,6 +8,8 @@
 		"TextureComponentMixin",
 		"SpriteSourcesMixin",
 		"entity.PlayerMixin",
+		"entity.EntityMixin",
+		"item.ItemStackMixin",
 		"cobblemon.entity.EmptyPokeBallEntityMixin"
 	],
 	"injectors": {

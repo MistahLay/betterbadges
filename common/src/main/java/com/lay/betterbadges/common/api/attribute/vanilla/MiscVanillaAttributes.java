@@ -19,6 +19,8 @@ public class MiscVanillaAttributes {
     public static Holder<Attribute> SHOOTABLE_ENDER_PEARL = registerBoolean(rootPath("shootable_ender_pearl"), false);
     public static Holder<Attribute> NIGHT_VISION = registerBoolean(rootPath("night_vision"), false);
     public static Holder<Attribute> DOUBLE_JUMP = registerRanged(rootPath("double_jump"));
+    public static Holder<Attribute> UNBREAKABLE_HAND = registerRanged(rootPath("unbreakable_hand"));
+    public static Holder<Attribute> UNBREAKABLE_ARMOR = registerRanged(rootPath("unbreakable_armor"));
 
     private static String rootPath(String id){
         return "generic.vanilla." + id;
@@ -31,7 +33,9 @@ public class MiscVanillaAttributes {
                 .add(ELYTRA_FLIGHT)
                 .add(SHOOTABLE_ENDER_PEARL)
                 .add(NIGHT_VISION)
-                .add(DOUBLE_JUMP, 0.0f);
+                .add(DOUBLE_JUMP, 0.0f)
+                .add(UNBREAKABLE_HAND)
+                .add(UNBREAKABLE_ARMOR);
         builder.add(CREATIVE_FLIGHT); // Since neoforge will already register it
     }
 

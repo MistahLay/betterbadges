@@ -2,6 +2,7 @@ package com.lay.betterbadges.fabric;
 
 import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.BetterBadgesClient;
+import com.lay.betterbadges.common.misc.BetterBadgesKeyMappings;
 import com.lay.betterbadges.common.render.atlas.managers.ShineSpritesManager;
 import com.lay.betterbadges.common.render.atlas.sources.AnimationOverlayPermutations;
 import dev.architectury.event.events.client.ClientLifecycleEvent;

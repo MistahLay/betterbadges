@@ -13,9 +13,9 @@ import static com.lay.betterbadges.common.api.attribute.BetterBadgesAttributes.r
 public class MiscCobblemonAttributes {
 
     public static Holder<Attribute> POKEBALL_USE = registerPercentage(rootPath("pokeball_use"), 1.0);
-    public static Holder<Attribute> SCAN_POKEMON = registerRanged("scan_pokemon");
+    public static Holder<Attribute> SCAN_POKEMON = registerRanged(rootPath("scan_pokemon"));
 
-    public static Holder<Attribute> BERRY_YIELD_BONUS = registerRanged(rootPath("berry_yield"), 0.0);
+    public static Holder<Attribute> BERRY_YIELD_BONUS = registerRanged(rootPath("berry_harvest"), 0.0);
     public static Holder<Attribute> FRIENDSHIP_POINTS_BONUS = registerRanged(rootPath("friendship_points_bonus"), 0.0);
     public static Holder<Attribute> XP_CANDY_BOOST = registerRanged(rootPath("xp_candy_boost"));
 
@@ -23,9 +23,7 @@ public class MiscCobblemonAttributes {
         return "player.cobbleattribbutes.misc." + string;
     }
 
-    public static void registerAttributes(){
-
-    }
+    public static void registerAttributes(){ }
 
     public static void applyToBuilder(AttributeSupplier.Builder builder){
         builder

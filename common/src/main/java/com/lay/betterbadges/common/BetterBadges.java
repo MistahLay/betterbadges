@@ -7,6 +7,7 @@ import com.lay.betterbadges.common.config.BetterBadgesConfigs;
 import com.lay.betterbadges.common.datapack.BetterBadgesDatapacks;
 import com.lay.betterbadges.common.api.emblem.ModEmblems;
 import com.lay.betterbadges.common.event.CobblemonEventsListener;
+import com.lay.betterbadges.common.event.ServerEventsListener;
 import com.lay.betterbadges.common.item.BetterBadgesItems;
 import com.lay.betterbadges.common.item.BetterBadgesCreativeTab;
 import com.lay.betterbadges.common.api.league.ModLeagues;
@@ -17,6 +18,7 @@ import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
@@ -58,15 +60,25 @@ public final class BetterBadges {
 		// Datapacks
 		BetterBadgesDatapacks.registerReloadListeners();
 
+		BetterBadgesConfigs.initializeConfigs();
+
 		CobblemonEventsListener.listen();
+		ServerEventsListener.listen();
 
 		BetterBadgesCommands.registerCommands();
-
-		BetterBadgesConfigs.initializeConfigs();
 
 		LifecycleEvent.SERVER_STARTED.register(minecraftServer -> SERVER = minecraftServer);
 
 		PlayerEvent.PLAYER_JOIN.register(player -> BadgeAttributesManager.updateClients());
+	}
+
+	private static void registerKeybinds(){
+
+	}
+
+	@ExpectPlatform
+	public static void registerKeybind(){
+		throw new AssertionError();
 	}
 
 }

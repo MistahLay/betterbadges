@@ -47,8 +47,7 @@ public class BetterBadgesAttributes{
     }
 
     public static Holder<Attribute> registerRanged(String attributeId, double defaulted, double min, double max){
-        RangedAttribute attribute = new RangedAttribute(attributeTranslation(attributeId), defaulted, min, max);
-        return register(BetterBadges.of(attributeId), attribute);
+        return register(BetterBadges.of(attributeId), new RangedAttribute(attributeTranslation(attributeId), defaulted, min, max).setSyncable(true));
     }
 
     public static Holder<Attribute> registerRanged(String attributeId, double defaulted){
@@ -72,7 +71,7 @@ public class BetterBadgesAttributes{
     }
 
     @ExpectPlatform
-    public static Holder<Attribute> register(ResourceLocation id, Attribute attribute){
+    public static <T extends Attribute> Holder<T> register(ResourceLocation id, Attribute attribute){
         throw new AssertionError();
     }
 

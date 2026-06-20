@@ -14,7 +14,7 @@ public class PlayerMixin {
             method = "createAttributes()Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier$Builder;",
             at = @At("RETURN")
     )
-    private static AttributeSupplier.Builder betterbadges$createAttributes(AttributeSupplier.Builder builder){
+    private static AttributeSupplier.Builder betterbadges$createAttributes(AttributeSupplier.Builder builder) {
         BetterBadgesAttributes.applyToBuilder(builder);
         return builder;
     }

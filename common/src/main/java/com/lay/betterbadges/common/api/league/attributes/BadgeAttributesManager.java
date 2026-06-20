@@ -4,7 +4,7 @@ import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.network.BetterBadgesNetworkChannel;
-import com.lay.betterbadges.common.network.UpdateBadgeAttributesPacket;
+import com.lay.betterbadges.common.network.packets.UpdateBadgeAttributesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
 
