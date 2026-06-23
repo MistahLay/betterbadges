@@ -4,6 +4,7 @@ import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.api.emblem.Boost;
 import com.lay.betterbadges.common.api.emblem.Emblem;
 import com.lay.betterbadges.common.api.emblem.EmblemSlot;
+import com.lay.betterbadges.common.item.BetterBadgesItems;
 import com.lay.betterbadges.common.item.badges.BadgeItem;
 import com.lay.betterbadges.common.api.league.League;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttributesManager;
@@ -27,12 +28,14 @@ import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -311,4 +314,5 @@ public class BadgeCaseScreen extends BaseUIModelHandledScreen<FlowLayout, BadgeC
         }
         return false;
     }
+
 }

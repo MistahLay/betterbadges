@@ -6,15 +6,19 @@ import com.lay.betterbadges.common.api.emblem.EmblemSlot;
 import com.lay.betterbadges.common.api.emblem.EmblemTargetItem;
 import com.lay.betterbadges.common.inventory.EmblemBadgesManager;
 import com.lay.betterbadges.common.inventory.LeagueBadgesManager;
+import com.lay.betterbadges.common.item.BetterBadgesItems;
 import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.item.cases.BadgeCaseWrapper;
 import com.lay.betterbadges.common.api.league.BadgeSlot;
 import com.lay.betterbadges.common.api.league.League;
+import com.lay.betterbadges.common.item.cases.BasicCase;
 import com.lay.betterbadges.common.mixin.SlotMixin;
 import com.lay.betterbadges.common.render.screen.AbstractItemContainerMenu;
 import com.lay.betterbadges.common.render.screen.BetterBadgesScreens;
 import com.lay.betterbadges.common.render.screen.Vector2d;
 import net.minecraft.core.NonNullList;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.SlotAccess;
@@ -25,6 +29,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.constant.DataTickets;
 
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +57,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
     public BadgeCaseScreenHandler(int i, Inventory inventory, SlotAccess slot) {
         super(BetterBadgesScreens.BADGE_CASE_SCREEN_HANDLER.get(), i, inventory, slot);
         this.badgeCase = new BadgeCaseWrapper(slot.get());
+        badgeCase.setGuiOpen(true);
         this.leagueBadgesManager = this.badgeCase.getLeagueInventoryManager(inventory.player.registryAccess());
         this.emblemBadgesManager = this.badgeCase.getEmblemInventoryManager();
 
@@ -61,6 +68,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
                 this.currentEmblem = this.badgeCase.getCurrentEmblem();
                 if (!this.emblemBadgesManager.containsEmblem(this.currentEmblem)) this.currentEmblem = Emblem.EMPTY;
                 if (this.currentEmblem == null) this.currentEmblem = this.emblemBadgesManager.getEmblems().getFirst();
+                this.setEmblem(currentEmblem);
             }
         }
 
@@ -153,6 +161,7 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
             }
         }
         else {
+            this.setEmblem(currentEmblem);
             this.createEmblemBadgesSlots();
         }
 
@@ -278,7 +287,6 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
         Emblem currentEmblem = this.badgeCase.getCurrentEmblem();
         if(currentEmblem == null || currentEmblem == Emblem.EMPTY) return;
         NonNullList<EmblemTargetItem> targets = this.emblemBadgesManager.getTargets(currentEmblem);
-        this.setEmblem(currentEmblem);
         if(targets == null) return;
         int totalSlots = currentEmblem.getTotalSlots();
         for (int i = 0; i < Emblem.MAX_SLOTS; i++) {
@@ -298,6 +306,21 @@ public class BadgeCaseScreenHandler extends AbstractItemContainerMenu {
 
             this.addSlot(this.createEmblemBadgeSlot(emblemSlot, currentEmblem, target.targetSlot(), associatedContainer));
         }
+    }
+
+    @Override
+    public void removed(Player player) {
+        badgeCase.setGuiOpen(false);
+        super.removed(player);
+    }
+
+    @Override
+    public boolean stillValid(Player entity) {
+        boolean result = super.stillValid(entity);
+        if (!result) {
+            this.badgeCase.setGuiOpen(false);
+        }
+        return result;
     }
 
     public @Nullable ScreenEmblemSlot getHighlightedSlot(){

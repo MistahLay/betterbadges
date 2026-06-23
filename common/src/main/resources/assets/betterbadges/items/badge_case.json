@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "betterbadges:item/badge_case",
+    "model": {
+      "type": "minecraft:builtin/entity"
+    }
+  }
+}

@@ -7,6 +7,7 @@
 		"SlotMixin",
 		"TextureComponentMixin",
 		"SpriteSourcesMixin",
+		"ItemInHandRendererMixin",
 		"entity.PlayerMixin",
 		"entity.EntityMixin",
 		"item.ItemStackMixin",

@@ -22,6 +22,7 @@ public class BetterBadgesDataComponents {
     private static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.create(BetterBadges.MOD_ID, Registries.DATA_COMPONENT_TYPE);
 
     public static final RegistrySupplier<DataComponentType<UUID>> ITEM_OWNER = register("item_owner", uuidBuilder -> uuidBuilder.persistent(UUIDUtil.CODEC));
+
     public static final RegistrySupplier<DataComponentType<String>> CASE_BASE = register("case_base", base -> base.persistent(Codec.STRING));
     public static final RegistrySupplier<DataComponentType<String>> CASE_COVER = register("case_cover", cover -> cover.persistent(Codec.STRING));
 
@@ -31,6 +32,8 @@ public class BetterBadgesDataComponents {
     public static final RegistrySupplier<DataComponentType<Map<League, CompoundTag>>> LEAGUE_INVENTORY_CONTENTS = register("league_inventory_contents", builder -> builder.persistent(Codec.unboundedMap(League.CODEC, CompoundTag.CODEC)));
 
     public static final RegistrySupplier<DataComponentType<Map<Emblem, List<EmblemTargetItem>>>> EMBLEM_INVENTORY_CONTENTS = register("emblem_inventory_contents", builder -> builder.persistent(Codec.unboundedMap(Emblem.CODEC, EmblemTargetItem.CODEC.listOf())));
+
+    public static final RegistrySupplier<DataComponentType<Boolean>> ITEM_GUI_OPEN = register("item_gui_open", builder -> builder.persistent(Codec.BOOL));
 
     private static <T> RegistrySupplier<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator){
         return COMPONENTS.register(name, () -> builderUnaryOperator.apply(DataComponentType.builder()).build());

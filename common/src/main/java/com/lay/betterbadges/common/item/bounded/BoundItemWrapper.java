@@ -4,9 +4,11 @@ import com.lay.betterbadges.common.component.BetterBadgesDataComponents;
 import com.lay.betterbadges.common.item.ItemStackWrapper;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +23,12 @@ public class BoundItemWrapper extends ItemStackWrapper {
 
     public UUID getItemOwner(){
         return this.item.get(BetterBadgesDataComponents.ITEM_OWNER.get());
+    }
+
+    public @Nullable ServerPlayer getOnlineServerPlayerOwner(MinecraftServer server){
+        UUID itemOwner = this.getItemOwner();
+        if (itemOwner == null) return null;
+        return server.getPlayerList().getPlayer(itemOwner);
     }
 
     public String getItemOwnerName(MinecraftServer server){

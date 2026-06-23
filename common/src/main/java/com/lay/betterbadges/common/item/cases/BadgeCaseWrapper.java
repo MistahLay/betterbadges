@@ -10,11 +10,16 @@ import com.lay.betterbadges.common.item.bounded.BoundItemWrapper;
 import com.lay.betterbadges.common.api.league.BadgeSlot;
 import com.lay.betterbadges.common.api.league.attributes.BadgeAttribute;
 import com.lay.betterbadges.common.api.league.League;
+import com.lay.betterbadges.common.render.screen.badgecase.BadgeCaseScreenHandler;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
@@ -94,6 +99,15 @@ public class BadgeCaseWrapper extends BoundItemWrapper {
 
     public LeagueBadgesManager getLeagueInventoryManager(RegistryAccess registryAccess){
         return LeagueBadgesManager.deserialize(this.item, registryAccess);
+    }
+
+    public boolean isGuiOpen(){
+        var result = this.item.get(BetterBadgesDataComponents.ITEM_GUI_OPEN.get());
+        return result != null ? result : false;
+    }
+
+    public void setGuiOpen(boolean isOPen){
+        this.item.set(BetterBadgesDataComponents.ITEM_GUI_OPEN.get(), isOPen);
     }
 
 }

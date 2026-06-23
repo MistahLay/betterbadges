@@ -25,6 +25,16 @@ allprojects {
         maven("https://maven.su5ed.dev/releases")
         maven("https://maven.fabricmc.net")
         maven("https://maven.shedaniel.me")
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "GeckoLib"
+                    url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven")
+                }
+            }
+            filter { includeGroupAndSubgroups("software.bernie.geckolib") }
+        }
     }
 
     tasks {

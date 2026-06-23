@@ -7,6 +7,7 @@ import com.lay.betterbadges.common.render.atlas.managers.ShineSpritesManager;
 import com.lay.betterbadges.common.render.atlas.sources.AnimationOverlayPermutations;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,9 @@ import java.util.concurrent.Executor;
 public class BetterBadgesFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        ModelLoadingPlugin.register(context -> {
+            context.addModels();
+        });
         BetterBadgesClient.init();
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener() {
             @Override

@@ -24,7 +24,7 @@ public abstract class AbstractItemContainerMenu extends AbstractContainerMenu {
         super(menuType, i);
         this.playerInventory = inventory;
         this.itemSlot = slot;
-        this.itemStack = slot.get().copy();
+        this.itemStack = slot.get();
     }
 
     /**

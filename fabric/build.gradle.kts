@@ -41,6 +41,7 @@ dependencies {
     modImplementation("dev.architectury:architectury-fabric:${property("architectury_api_version")}")
 
     modImplementation("io.wispforest:accessories-fabric:${property("accessories_version")}")
+    modImplementation("software.bernie.geckolib:geckolib-fabric-${property("minecraft_version")}:${property("geckolib_version")}")
 
     modImplementation("io.wispforest:owo-lib:${property("owo_fabric_version")}")
     annotationProcessor("io.wispforest:owo-lib:${property("owo_fabric_version")}")

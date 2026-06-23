@@ -38,6 +38,7 @@ dependencies {
     modImplementation("com.cobblemon:neoforge:${property("cobblemon_version")}") { isTransitive = false }
 
     modImplementation("io.wispforest:accessories-neoforge:${property("accessories_version")}")
+    implementation("software.bernie.geckolib:geckolib-neoforge-${property("minecraft_version")}:${property("geckolib_version")}")
 
     forgeRuntimeLibrary("io.wispforest:endec:0.1.8")
     forgeRuntimeLibrary("io.wispforest.endec:gson:0.1.5")

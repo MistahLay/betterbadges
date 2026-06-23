@@ -1,6 +1,5 @@
 package com.lay.betterbadges.common.event;
 
-import com.lay.betterbadges.common.BetterBadges;
 import com.lay.betterbadges.common.api.attribute.cobblemon.MiscCobblemonAttributes;
 import com.lay.betterbadges.common.misc.BetterBadgesKeyMappings;
 import com.lay.betterbadges.common.util.cobblemon.HighlightPokemonAbilityHelper;
@@ -27,7 +26,6 @@ public class ClientEventsListener {
                     }
                 }
             }
-
         });
     }
 
